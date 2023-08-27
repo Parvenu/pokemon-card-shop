@@ -7,6 +7,7 @@
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
+      "runtimeExecutable": "C://Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
       "url": "http://localhost:4200/"
     },
     {

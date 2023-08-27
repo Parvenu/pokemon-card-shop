@@ -1,0 +1,7 @@
+<app-filter-cards></app-filter-cards>
+<div class="flex-container cards-container">
+    <div *ngFor="let card of (cards$ | async)" class="card-item">
+        <app-card-list-item [card]="card"></app-card-list-item>
+    </div>
+</div>
+<mat-spinner *ngIf="(areAllCardsLoaded$ | async) === false" [diameter]="50"></mat-spinner>

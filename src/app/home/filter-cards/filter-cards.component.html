@@ -1,0 +1,56 @@
+<div [formGroup]="filtersFrom" [@toggle]="toggle" class="filters-container">
+    <mat-form-field class="example-full-width">
+        <mat-label>Rarity</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Rarity"
+               matInput
+               [formControl]="raritySelectCtrl"
+               [matAutocomplete]="autoRarity">
+        <mat-autocomplete #autoRarity="matAutocomplete">
+        <mat-option *ngFor="let r of filteredRarityOptions$ | async" [value]="r">
+            {{r}}
+        </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Types</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Types"
+               matInput
+               [formControl]="typesSelectCtrl"
+               [matAutocomplete]="autoTypes">
+        <mat-autocomplete #autoTypes="matAutocomplete">
+        <mat-option *ngFor="let t of filteredTypesOptions$ | async" [value]="t">
+            {{t}}
+        </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Subtypes</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Suntypes"
+               matInput
+               [formControl]="subtypesSelectCtrl"
+               [matAutocomplete]="autoSubtypres">
+        <mat-autocomplete #autoSubtypres="matAutocomplete">
+        <mat-option *ngFor="let st of filteredSubtypesOptions$ | async" [value]="st">
+            {{st}}
+        </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+        <mat-label>Search by name</mat-label>
+        <input matInput type="text" [formControl]="searchInputCtrl">
+    </mat-form-field>
+    <span class="clear-filters-icon">
+        <mat-icon  (click)="onResetFilters()">highlight_off</mat-icon>
+    </span>
+    
+    <mat-divider></mat-divider>
+</div>
+
+<div class="filters-bottom-spacer"></div>
+

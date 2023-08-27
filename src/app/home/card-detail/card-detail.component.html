@@ -1,0 +1,23 @@
+<h2 class="dialog-title">{{card.name}}</h2>
+<mat-dialog-content class="dialog-content">
+    <img [src]="card.images.large" [alt]="card.name">
+    <div>
+        <div class="prices-title">Prices</div>
+        <mat-list>
+            <ng-container *ngFor="let f of foil">
+                <div class="foil-container">
+                    <ng-container *ngIf="card.tcgplayer && card.tcgplayer.prices[f]?.low">
+                        <mat-list-item >{{f | titlecase }} : {{card.tcgplayer.prices[f]?.low}} $</mat-list-item>
+                        <button mat-raised-button color="primary" (click)="add(f)"><mat-icon>add_shopping_cart</mat-icon></button>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </mat-list>
+        <p *ngIf="card.tcgplayer === undefined">
+            No pricing available from TCG Player
+        </p>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

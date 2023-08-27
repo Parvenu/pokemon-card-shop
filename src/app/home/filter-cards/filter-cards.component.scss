@@ -1,0 +1,31 @@
+@use '../../../scss/variables.scss' as vars;
+.filters-container {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    background-color: vars.$background-color;
+    position: fixed;
+    z-index: 1;
+    top: vars.$header-height;
+
+    // remvoving bellow input space for hints / validation errors as we have none
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+    // removing default border on mat-inputs
+    .mdc-line-ripple::before {
+        border-bottom: none;
+    }
+
+    .clear-filters-icon {
+        margin-left: 1rem;
+        display: inline-flex;
+        height: 2rem;
+        width: 2rem;
+        align-items: center;
+        cursor: pointer;
+    }
+  }
+.filters-bottom-spacer {
+    height: 4rem;
+}

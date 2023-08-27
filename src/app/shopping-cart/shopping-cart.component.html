@@ -1,0 +1,31 @@
+<div *ngIf="(shoppingCart$ | async)?.items?.length === 0; else itemList">
+    <h2 class="empty-cart">
+        Your cart is empty !
+    </h2>
+    
+</div>
+<ng-template #itemList>
+    <ng-container *ngFor="let item of (shoppingCart$ | async)?.items">
+        <div class="item-container">
+            <div class="flex-container list-item">
+            <app-card-list-item [card]="item.card" [displayLowestPrice]="false"></app-card-list-item>
+            <div class="price-details-container" *ngFor="let foil of getItemFoils(item.foilCount)">
+                {{item.card.name}} {{foil}}
+                x {{item.foilCount[foil]}} at {{ item.card.tcgplayer.prices[foil]!.low }} for a total of {{ countItemTotalPrice(item, foil) }} $
+                <div class="btn-container">
+                    <button mat-raised-button color="primary" (click)="add(item.card, foil)"><mat-icon class="cart-icon">add_shopping_cart</mat-icon></button>
+                    <button mat-raised-button color="warn" (click)="remove(item.card, foil)"><mat-icon class="cart-icon">remove_shopping_cart</mat-icon></button>
+                </div>
+            </div>
+        </div>
+        <div class="total-item">Toal : {{ countItemTotalPrice(item) }} $</div>
+        </div>
+        <mat-divider class="item-divider"></mat-divider>
+    </ng-container>
+    <div class="total-container">
+        <mat-divider></mat-divider>
+        <div class="total">
+            Total cart : {{shoppingCartTotalPrice$ | async}} $
+        </div>
+    </div>
+</ng-template>

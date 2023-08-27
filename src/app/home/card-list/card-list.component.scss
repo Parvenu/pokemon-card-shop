@@ -1,0 +1,16 @@
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    .card-item {
+        flex-basis: 12vw;
+    }
+}
+.cards-container {
+    margin-top: 1rem;
+}
+mat-spinner {
+    margin: 0 50%;
+    height: 4rem;
+}
