@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
-import { CardService } from '../core/services/card.service';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
@@ -12,6 +11,7 @@ import { FilterCardsComponent } from './filter-cards/filter-cards.component';
 import { cardsFeature } from '../redux-store/reducers/card.reducer';
 import { StoreModule } from '@ngrx/store';
 import { CoreModule } from '../core/core.module';
+import { FilterDataEffects } from '../redux-store/effects/filter-data.effect';
 
 
 const routes: Routes = [
@@ -32,13 +32,11 @@ const routes: Routes = [
         CommonModule,
         SharedModule,
         CoreModule,
-        EffectsModule.forFeature(CardEffects),
+        EffectsModule.forFeature(CardEffects, FilterDataEffects),
         StoreModule.forFeature(cardsFeature),
         RouterModule.forChild(routes)
     ],
     exports: [RouterModule, HomeComponent],
-    providers: [
-      CardService
-    ]
+    providers: []
   })
   export class HomeModule {}

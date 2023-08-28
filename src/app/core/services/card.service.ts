@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable, map, of, startWith, tap } from 'rxjs';
 import { Card, RARITY, SUBTYPES, TYPES } from '../../shared/models/card.model';
 import { environment } from 'src/environment/environment';
-import { ApiResponse } from 'src/app/shared/models/api-response.model';
+import { ApiResponse } from 'src/app/shared/models/api.model';
 import { Store } from '@ngrx/store';
 
 @Injectable()
