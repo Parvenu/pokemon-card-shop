@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { Card } from '../../shared/models/card.model'
 import { Observable} from 'rxjs'
-
 import { Store } from '@ngrx/store';
-import { CardsState } from 'src/app/redux-store/reducers/card.reducer';
+import { CardsState } from '../../redux-store/reducers/card.reducer';
 
 @Component({
   selector: 'app-card-list',

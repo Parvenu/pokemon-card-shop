@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store'
-import { Observable, map } from 'rxjs';
-import { shoppingCartState } from 'src/app/redux-store/selectors/shopping-cart.selector';
+import { Observable, map, tap } from 'rxjs';
+import { shoppingCartState } from '../../../redux-store/selectors/shopping-cart.selector';
 
 @Component({
   selector: 'app-shopping-cart-button',

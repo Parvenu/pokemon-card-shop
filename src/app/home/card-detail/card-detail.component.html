@@ -8,7 +8,7 @@
                 <div class="foil-container">
                     <ng-container *ngIf="card.tcgplayer && card.tcgplayer.prices[f]?.low">
                         <mat-list-item >{{f | titlecase }} : {{card.tcgplayer.prices[f]?.low}} $</mat-list-item>
-                        <button mat-raised-button color="primary" (click)="add(f)"><mat-icon>add_shopping_cart</mat-icon></button>
+                        <button mat-raised-button color="primary" (click)="add(f)"><mat-icon aria-hidden="false">add_shopping_cart</mat-icon></button>
                     </ng-container>
                 </div>
             </ng-container>

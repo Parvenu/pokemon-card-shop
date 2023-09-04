@@ -5,10 +5,6 @@ export class ShoppingCart {
 }
 
 export class CartItem {
-    // foilCount!: {
-    //     foil: FOIL
-    //     count: number
-    // }[]
     foilCount !: FoilCount
     card!: Card
 }

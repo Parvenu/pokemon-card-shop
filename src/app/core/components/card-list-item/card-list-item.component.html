@@ -4,7 +4,7 @@
             [alt]="card.name"
             [@cardImg]="animationState">
         <span *ngIf="animationState === 'active'">
-            <mat-icon>search</mat-icon> Details 
+            <mat-icon aria-hidden="false">search</mat-icon> Details 
         </span>
     </div>
     <p *ngIf="displayLowestPrice">PRICES as low as: {{lowestPrice}} $</p>

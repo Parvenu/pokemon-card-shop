@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
  
-import { CardService } from 'src/app/core/services/card.service';
+import { CardService } from '../../core/services/card.service';
 import { CardsApiActions } from '../actions/card.action';
 
 @Injectable()

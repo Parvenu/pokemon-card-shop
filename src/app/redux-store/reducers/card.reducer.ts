@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { Card } from 'src/app/shared/models/card.model';
+import { Card } from '../../shared/models/card.model';
 import { CardsApiActions } from '../actions/card.action';
  
 export interface CardsState {
@@ -7,7 +7,7 @@ export interface CardsState {
   allLoaded: boolean;
 }
  
-const initialState: CardsState = {
+export const initialState: CardsState = {
   cards: [],
   allLoaded: false,
 };

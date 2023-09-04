@@ -1,7 +1,7 @@
 import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Card, RARITY, SUBTYPES, TYPES } from '../../shared/models/card.model';
-import { CardFilters } from 'src/app/shared/models/api.model';
-import { FiltersData } from 'src/app/shared/models/filters-data.model';
+import { CardFilters } from '../../shared/models/api.model';
+import { FiltersData } from '../../shared/models/filters-data.model';
 
 export const FilterDataApiActions = createActionGroup({
     source: 'filterTypes',
@@ -14,6 +14,5 @@ export const FilterDataApiActions = createActionGroup({
         'Retrieved rarity data': props<{ rarity: string[]}>(),
         'Retrieved types data': props<{ types: string[]}>(),
         'Retrieved subtypes data': props<{ subtypes: string[]}>(),
-        'Error Loading Cards': props<{ errorMsg: string }>(),
     },
   });

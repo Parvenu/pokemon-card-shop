@@ -2,8 +2,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
-import { VisibilityState } from 'src/app/shared/models/visibility-state.enum';
-import { ScrollService } from 'src/app/shared/services/scroll.service';
+import { VisibilityState } from '../../../shared/models/visibility-state.enum';
+import { ScrollService } from '../../../shared/services/scroll.service';
 
 @Component({
   selector: 'app-header',

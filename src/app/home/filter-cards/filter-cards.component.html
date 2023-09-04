@@ -7,6 +7,9 @@
                matInput
                [formControl]="raritySelectCtrl"
                [matAutocomplete]="autoRarity">
+        <button *ngIf="raritySelectCtrl.value" matSuffix mat-icon-button aria-label="Clear" (click)="raritySelectCtrl.reset()">
+            <mat-icon aria-hidden="false">close</mat-icon>
+        </button>
         <mat-autocomplete #autoRarity="matAutocomplete">
         <mat-option *ngFor="let r of filteredRarityOptions$ | async" [value]="r">
             {{r}}
@@ -21,6 +24,9 @@
                matInput
                [formControl]="typesSelectCtrl"
                [matAutocomplete]="autoTypes">
+        <button *ngIf="typesSelectCtrl.value" matSuffix mat-icon-button aria-label="Clear" (click)="typesSelectCtrl.reset()">
+            <mat-icon aria-hidden="false">close</mat-icon>
+        </button>
         <mat-autocomplete #autoTypes="matAutocomplete">
         <mat-option *ngFor="let t of filteredTypesOptions$ | async" [value]="t">
             {{t}}
@@ -35,18 +41,24 @@
                matInput
                [formControl]="subtypesSelectCtrl"
                [matAutocomplete]="autoSubtypres">
+        <button *ngIf="subtypesSelectCtrl.value" matSuffix mat-icon-button aria-label="Clear" (click)="subtypesSelectCtrl.reset()">
+            <mat-icon aria-hidden="false">close</mat-icon>
+        </button>
         <mat-autocomplete #autoSubtypres="matAutocomplete">
         <mat-option *ngFor="let st of filteredSubtypesOptions$ | async" [value]="st">
             {{st}}
         </mat-option>
         </mat-autocomplete>
     </mat-form-field>
-    <mat-form-field class="example-form-field">
+    <mat-form-field>
         <mat-label>Search by name</mat-label>
         <input matInput type="text" [formControl]="searchInputCtrl">
+        <button *ngIf="searchInputCtrl.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchInputCtrl.reset()">
+            <mat-icon aria-hidden="false">close</mat-icon>
+        </button>
     </mat-form-field>
     <span class="clear-filters-icon">
-        <mat-icon  (click)="onResetFilters()">highlight_off</mat-icon>
+        <mat-icon (click)="onResetFilters()">highlight_off</mat-icon>
     </span>
     
     <mat-divider></mat-divider>

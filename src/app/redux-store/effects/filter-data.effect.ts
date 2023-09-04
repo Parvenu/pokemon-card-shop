@@ -3,7 +3,7 @@ import { catchError, exhaustMap, map, of, tap, zip } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
  
 import { FilterDataApiActions } from '../actions/filters-data.action';
-import { FilterTypesService } from 'src/app/core/services/filter-data.service';
+import { FilterTypesService } from '../../core/services/filter-data.service';
 
 @Injectable()
 export class FilterDataEffects {
@@ -25,9 +25,6 @@ export class FilterDataEffects {
                             }
                         }
                     )
-                ),
-                catchError((error: { message: string }) =>
-                  of(FilterDataApiActions.errorLoadingCards({ errorMsg: error.message }))
                 )
               )
             )

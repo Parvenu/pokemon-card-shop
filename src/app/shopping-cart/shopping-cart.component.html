@@ -13,8 +13,8 @@
                 {{item.card.name}} {{foil}}
                 x {{item.foilCount[foil]}} at {{ item.card.tcgplayer.prices[foil]!.low }} for a total of {{ countItemTotalPrice(item, foil) }} $
                 <div class="btn-container">
-                    <button mat-raised-button color="primary" (click)="add(item.card, foil)"><mat-icon class="cart-icon">add_shopping_cart</mat-icon></button>
-                    <button mat-raised-button color="warn" (click)="remove(item.card, foil)"><mat-icon class="cart-icon">remove_shopping_cart</mat-icon></button>
+                    <button mat-raised-button color="primary" (click)="add(item.card, foil)"><mat-icon aria-hidden="false" class="cart-icon">add_shopping_cart</mat-icon></button>
+                    <button mat-raised-button color="warn" (click)="remove(item.card, foil)"><mat-icon aria-hidden="false" class="cart-icon">remove_shopping_cart</mat-icon></button>
                 </div>
             </div>
         </div>

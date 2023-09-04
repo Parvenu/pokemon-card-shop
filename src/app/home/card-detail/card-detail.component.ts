@@ -1,8 +1,8 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { ShoppingCartAction } from 'src/app/redux-store/actions/shopping-cart.action';
-import { Card, FOIL, Foil } from 'src/app/shared/models/card.model';
+import { ShoppingCartAction } from '../../redux-store/actions/shopping-cart.action';
+import { Card, FOIL, Foil } from '../../shared/models/card.model';
 
 @Component({
   selector: 'app-card-detail',

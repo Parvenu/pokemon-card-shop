@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { Card } from 'src/app/shared/models/card.model'
+import { Card } from '../../../shared/models/card.model'
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material/dialog'
 import { CardDetailDialogComponent } from '../../../home/card-detail/card-detail.component'
 import { trigger, state, style, transition, animate } from '@angular/animations'

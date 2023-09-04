@@ -10,7 +10,7 @@ export class ApiResponse<T> {
 
 export class CardFilters {
     search?: string
-    rarity?: RARITY
-    types?: TYPES
-    subtypes?: SUBTYPES
+    rarity?: string
+    types?: string
+    subtypes?: string
 }

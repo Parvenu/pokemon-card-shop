@@ -12,6 +12,7 @@ import { cardsFeature } from '../redux-store/reducers/card.reducer';
 import { StoreModule } from '@ngrx/store';
 import { CoreModule } from '../core/core.module';
 import { FilterDataEffects } from '../redux-store/effects/filter-data.effect';
+import { ShoppingCartEffects } from '../redux-store/effects/shopping-cart.effect';
 
 
 const routes: Routes = [
@@ -32,7 +33,7 @@ const routes: Routes = [
         CommonModule,
         SharedModule,
         CoreModule,
-        EffectsModule.forFeature(CardEffects, FilterDataEffects),
+        EffectsModule.forFeature(CardEffects, FilterDataEffects, ShoppingCartEffects),
         StoreModule.forFeature(cardsFeature),
         RouterModule.forChild(routes)
     ],
