@@ -1,4 +1,5 @@
 # PokemonCardShop
+Sample project of a Pokémon card shop using [Pokémon TCG](https://pokemontcg.io/) API and [NgRx](https://v8.ngrx.io/docs)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
 
@@ -8,17 +9,17 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The appl
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`. If you don't have `Angular CLI` installed globally you can run `npx ng g ...`
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 
 Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-Tests are set up to run with Chromium, you will need to export your Chrome bin path to CHROME_BIN var.
+Tests are set up to run with Chrome, you will need to export your Chrome bin path to CHROME_BIN var.
 
 If you have Chrome installed at its default location you don't need to export this var.
 

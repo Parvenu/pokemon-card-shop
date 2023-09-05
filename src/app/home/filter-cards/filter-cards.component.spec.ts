@@ -9,8 +9,6 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { initialState as filterInitialState } from 'src/app/redux-store/reducers/filters-data.reducer';
 import { initialState as cardsInitialState } from 'src/app/redux-store/reducers/card.reducer';
 import { CardsApiActions } from 'src/app/redux-store/actions/card.action';
-import { Store } from '@ngrx/store';
-import { Observable, fromEvent } from 'rxjs';
 
 describe('FilterCardsComponent', () => {
   let component: FilterCardsComponent

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { createEffect, ofType, Actions } from '@ngrx/effects'
-import { exhaustMap, map, of } from 'rxjs'
+import { map } from 'rxjs'
 import { ShoppingCartAction } from '../actions/shopping-cart.action'
 
 @Injectable()

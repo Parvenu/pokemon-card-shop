@@ -1,4 +1,4 @@
-import { Card, FOIL, Foil } from './card.model';
+import { Card, FOIL } from './card.model';
 
 export class ShoppingCart {
     items!: CartItem[]

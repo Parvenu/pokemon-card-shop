@@ -1,6 +1,6 @@
 import { FoilCount } from 'src/app/shared/models/shopping-cart.model';
 import { addCard, removeCard } from './shopping-cart.reducer';
-import { FOIL, Card, Foil } from 'src/app/shared/models/card.model';
+import { FOIL, Card } from 'src/app/shared/models/card.model';
 
 
 describe('ShoppingCartReduer', () => {

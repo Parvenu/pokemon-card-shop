@@ -1,5 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import { catchError, exhaustMap, map, of, tap, zip } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { exhaustMap, map, zip } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
  
 import { FilterDataApiActions } from '../actions/filters-data.action';

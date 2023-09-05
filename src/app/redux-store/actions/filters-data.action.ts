@@ -1,6 +1,4 @@
-import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Card, RARITY, SUBTYPES, TYPES } from '../../shared/models/card.model';
-import { CardFilters } from '../../shared/models/api.model';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { FiltersData } from '../../shared/models/filters-data.model';
 
 export const FilterDataApiActions = createActionGroup({

@@ -1,5 +1,3 @@
-import { RARITY, TYPES, SUBTYPES } from './card.model'
-
 export class ApiResponse<T> {
     data!: T[]
     count!: number
