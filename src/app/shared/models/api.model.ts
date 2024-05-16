@@ -1,14 +1,14 @@
 export class ApiResponse<T> {
-    data!: T[]
-    count!: number
-    page!: number
-    pageSize!: number
-    totalCount!: number
+  data!: T[];
+  count!: number;
+  page!: number;
+  pageSize!: number;
+  totalCount!: number;
 }
 
 export class CardFilters {
-    search?: string
-    rarity?: string
-    types?: string
-    subtypes?: string
+  search?: string;
+  rarity?: string;
+  types?: string;
+  subtypes?: string;
 }

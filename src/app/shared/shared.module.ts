@@ -4,8 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ScrollService } from './services/scroll.service';
 
 @NgModule({
-    imports: [MaterialModule],
-    exports: [MaterialModule, ReactiveFormsModule],
-    providers: [ScrollService]
+  imports: [MaterialModule],
+  exports: [MaterialModule, ReactiveFormsModule],
+  providers: [ScrollService],
 })
 export class SharedModule {}

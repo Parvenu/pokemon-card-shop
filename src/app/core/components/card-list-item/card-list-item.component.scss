@@ -1,20 +1,21 @@
 .card-container {
-    position: relative;
-    img,span {
-        cursor: pointer;
+  position: relative;
+  img,
+  span {
+    cursor: pointer;
+  }
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: large;
+    font-weight: 700;
+    mat-icon {
+      vertical-align: middle;
     }
-    span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: large;
-        font-weight: 700;
-        mat-icon {
-            vertical-align: middle;
-        }
-    }
-    p {
-        text-align: center;
-    }
+  }
+  p {
+    text-align: center;
+  }
 }

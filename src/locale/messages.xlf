@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="8039819458043379463" datatype="html">
+        <source> prices as low as: <x id="INTERPOLATION" equiv-text="{{ lowestPrice | currency }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/card-list-item/card-list-item.component.html</context>
+          <context context-type="linenumber">10,12</context>
+        </context-group>
+        <note priority="1" from="description">lowest price tag for an item</note>
+        <note priority="1" from="meaning">item price tag</note>
+      </trans-unit>
+      <trans-unit id="8212098462181668112" datatype="html">
+        <source>No pricing available</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/components/card-list-item/card-list-item.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="description">placeholder if no prices to display</note>
+      </trans-unit>
+      <trans-unit id="148852243425380495" datatype="html">
+        <source> No pricing available from TCG Player </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/card-detail/card-detail.component.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+        <note priority="1" from="description">placeholder if no prices to display</note>
+      </trans-unit>
+      <trans-unit id="7819314041543176992" datatype="html">
+        <source>Close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/card-detail/card-detail.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <note priority="1" from="description">close button</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,8 +1,25 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { pipe, startWith, distinctUntilChanged, combineLatest, skip, Subscription, tap, debounceTime, Observable, map, merge, throttleTime, fromEvent, combineLatestWith, filter } from 'rxjs';
+import {
+  pipe,
+  startWith,
+  distinctUntilChanged,
+  combineLatest,
+  skip,
+  Subscription,
+  tap,
+  debounceTime,
+  Observable,
+  map,
+  merge,
+  throttleTime,
+  fromEvent,
+  combineLatestWith,
+  filter,
+  of,
+} from 'rxjs';
 import { CardsApiActions } from '../../redux-store/actions/card.action';
 import { CardsState } from '../../redux-store/reducers/card.reducer';
 import { filtersDataState } from '../../redux-store/selectors/filters-data.selector';
@@ -10,6 +27,8 @@ import { CardFilters } from '../../shared/models/api.model';
 import { FiltersData } from '../../shared/models/filters-data.model';
 import { VisibilityState } from '../../shared/models/visibility-state.enum';
 import { ScrollService } from '../../shared/services/scroll.service';
+import { MatAutocomplete } from '@angular/material/autocomplete';
+import { CardService } from 'src/app/core/services/card.service';
 
 @Component({
   selector: 'app-filter-cards',
@@ -26,126 +45,180 @@ import { ScrollService } from '../../shared/services/scroll.service';
   ],
 })
 export class FilterCardsComponent implements OnInit, OnDestroy {
-    public rarity: string[] = []
-    public types: string[] = []
-    public subtypes: string[] = []
+  public rarity: string[] = [];
+  public types: string[] = [];
+  public subtypes: string[] = [];
 
-    private page = 1  
+  private page = 1;
 
-    private isVisible = true
-    private scrollSubscription!: Subscription
-    public get toggle(): VisibilityState {
-        return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden
-      }
+  private isVisible = true;
+  private scrollSubscription!: Subscription;
+  public get toggle(): VisibilityState {
+    return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden;
+  }
 
-    public filtersData$ = this.store.select(filtersDataState)
-    public filtersFrom!: FormGroup
-    public raritySelectCtrl!: FormControl
-    public typesSelectCtrl!: FormControl
-    public subtypesSelectCtrl!: FormControl
-    public searchInputCtrl!: FormControl
+  public filtersData$ = this.store.select(filtersDataState);
+  public filtersForm!: FormGroup;
+  public raritySelectCtrl!: FormControl<string>;
+  public typesSelectCtrl!: FormControl<string>;
+  public subtypesSelectCtrl!: FormControl<string>;
+  public searchInputCtrl!: FormControl<string>;
 
-    public filteredRarityOptions$!: Observable<string[]>
-    public filteredTypesOptions$!: Observable<string[]>
-    public filteredSubtypesOptions$!: Observable<string[]>
+  public filteredRarityOptions$!: Observable<string[]>;
+  public filteredTypesOptions$!: Observable<string[]>;
+  public filteredSubtypesOptions$!: Observable<string[]>;
 
-    public scrollLoad$!: Observable<unknown>
-    private filterSubscription!: Subscription
-    private infiniteScrollSubscription!: Subscription
-    private resetForm$ = new EventEmitter()
+  public scrollLoad$!: Observable<unknown>;
+  public isLoading$ = this.cardsService.isLoading$.pipe(skip(1));
 
-    private filters!: CardFilters
-    
-    constructor(
-        private formBuilder: FormBuilder,
-        private scrollService: ScrollService,
-        private store: Store<{ cards: CardsState, filtersData: FiltersData }>,
-    ) {}
+  private filterSubscription!: Subscription;
+  private infiniteScrollSubscription!: Subscription;
 
-    ngOnInit() {
-        this.store.dispatch({ type: '[filterTypes] Load all filter data'})
-        this.filtersData$.pipe(tap(({rarity, types, subtypes}) => {
-            this.rarity = rarity
-            this.types = types
-            this.subtypes = subtypes
-        })).subscribe()
-        // init controls
-        this.raritySelectCtrl = this.formBuilder.control<string>('', { nonNullable: true })
-        this.typesSelectCtrl = this.formBuilder.control<string>('', { nonNullable: true })
-        this.subtypesSelectCtrl = this.formBuilder.control<string>('', { nonNullable: true })
-        this.searchInputCtrl = this.formBuilder.control<string>('')
-        // initFiltersForm
-        this.filtersFrom = this.formBuilder.group({
-            rarity: this.raritySelectCtrl,
-            types: this.typesSelectCtrl,
-            subtypes: this.subtypesSelectCtrl,
-            search: this.searchInputCtrl,
-        })
-        // setup change listners
-        const formControlPipe$ = (control: FormControl) => pipe(startWith(control.value), distinctUntilChanged(), debounceTime(300))
-        const raritySelectFilter$ = this.raritySelectCtrl.valueChanges.pipe(formControlPipe$(this.raritySelectCtrl))
-        const typesSelectFilter$ = this.typesSelectCtrl.valueChanges.pipe(formControlPipe$(this.typesSelectCtrl))
-        const subtypesSelectFilter$ = this.subtypesSelectCtrl.valueChanges.pipe(formControlPipe$(this.subtypesSelectCtrl))
-        const searchInputFilter$ = this.searchInputCtrl.valueChanges.pipe(formControlPipe$(this.searchInputCtrl))
+  private filters!: CardFilters;
 
-        // combineLatest so we can have all last values for every change, merging resetForm emitter because we have disabled 
-        // valueChanges on form reset to avoid having an event for every form field 
-        this.filterSubscription = merge(combineLatest([raritySelectFilter$, searchInputFilter$, typesSelectFilter$, subtypesSelectFilter$]), this.resetForm$)
-            .pipe(
-                skip(1),
-                tap(([rarity, search, types, subtypes]) => {
-                    this.page = 1
-                    this.filters = {rarity, search, types, subtypes}
-                    this.store.dispatch(CardsApiActions.loadFilterdCards({page: this.page, filters : this.filters}))
-                })      
-            ).subscribe()
+  private raritySelectFilter$: Observable<string> = of('');
+  private typesSelectFilter$: Observable<string> = of('');
+  private subtypesSelectFilter$: Observable<string> = of('');
+  private searchInputFilter$: Observable<string> = of('');
 
-        // select filters arrays, filtering user input to autocomplete
-        // merging streams that affect filters arrays so the select compoments can pickup the right data
-        this.filteredRarityOptions$ = merge(this.resetForm$, raritySelectFilter$, this.filtersData$).pipe(
-            map((input: string) => typeof input === 'string' ? this.filterSelectOptions(input, this.rarity) : this.rarity.slice())
-        )
-        this.filteredTypesOptions$ = merge(this.resetForm$, typesSelectFilter$, this.filtersData$).pipe(
-            map((input: string) => typeof input === 'string' ? this.filterSelectOptions(input, this.types) : this.types.slice())
-        )
-        this.filteredSubtypesOptions$ = merge(this.resetForm$, subtypesSelectFilter$, this.filtersData$).pipe(
-            map((input: string) => typeof input === 'string' ? this.filterSelectOptions(input, this.subtypes) : this.subtypes.slice())
-        )
+  @ViewChild('autoRarity') autoRarity!: MatAutocomplete;
+  @ViewChild('autoTypes') autoTypes!: MatAutocomplete;
+  @ViewChild('autoSubtypes') autoSubtypes!: MatAutocomplete;
 
-        const areAllCardsLoaded$ = this.store.select(state => state.cards.allLoaded)
+  constructor(
+    private readonly scrollService: ScrollService,
+    private readonly cardsService: CardService,
+    private formBuilder: FormBuilder,
+    private store: Store<{ cards: CardsState; filtersData: FiltersData }>,
+  ) {}
 
-        // infinite scroll, bottom of the page event combined with areAllCardsLoaded, so we will not spam call when we have loaded everything
-        this.scrollLoad$ = fromEvent(window, 'scroll')
-            .pipe(
-                throttleTime(50),
-                filter(() => window.innerHeight + window.scrollY >= document.body.scrollHeight - 100),
-                combineLatestWith(areAllCardsLoaded$),
-                filter(([, areAllCardsLoaded]) => areAllCardsLoaded === false),
-                tap(() => { 
-                    this.page += 1
-                    this.store.dispatch(CardsApiActions.loadFilterdCards({page: this.page, filters : this.filtersFrom.value}))
-                })
-        )
-        
-        this.infiniteScrollSubscription = this.scrollLoad$.subscribe()
+  ngOnInit() {
+    this.store.dispatch({ type: '[filterTypes] Load all filter data' });
+    this.filtersData$
+      .pipe(
+        tap(({ rarity, types, subtypes }) => {
+          this.rarity = rarity;
+          this.types = types;
+          this.subtypes = subtypes;
+        }),
+      )
+      .subscribe();
 
-        // toggle visibility for the filters
-        this.scrollSubscription = this.scrollService.isVisible$.pipe(tap(v => (this.isVisible = v))).subscribe()
-    }
+    this.initControls();
+    this.initFiltersForm();
+    this.initFormChangeListeners();
 
-    public onResetFilters() {
-        this.resetForm$.emit([null, '']) // emit the event manually so it dosen't emit for every from control
-        this.filtersFrom.reset({}, {emitEvent: false})
-    }
+    // combineLatest so we can have all last values for every change
+    this.filterSubscription = combineLatest([
+      this.raritySelectFilter$,
+      this.searchInputFilter$,
+      this.typesSelectFilter$,
+      this.subtypesSelectFilter$,
+    ])
+      .pipe(
+        skip(1),
+        debounceTime(30),
+        tap(([rarity, search, types, subtypes]) => {
+          this.page = 1;
+          this.filters = { rarity, search, types, subtypes };
+          this.store.dispatch(CardsApiActions.loadFilterdCards({ page: this.page, filters: this.filters }));
+        }),
+      )
+      .subscribe();
 
-    private filterSelectOptions<T extends string>(input: string, enumToFilter: T[]): T[] {
-        const filterValue = input.toLowerCase()
-        return enumToFilter.filter(i => i.toLowerCase().includes(filterValue))
-      }
+    this.initSelectFilters();
+    this.initScrollEvents();
+  }
 
-    ngOnDestroy(): void {
-        this.filterSubscription.unsubscribe()
-        this.scrollSubscription.unsubscribe()
-        this.infiniteScrollSubscription.unsubscribe()
-    }
+  // Due to a bug in the autoselect component we have to deselect manually on reset
+  // cf https://github.com/angular/components/issues/27652 or https://github.com/angular/components/issues/28093
+  public resetSelectFilter(selectCrtl: FormControl<string>, select: MatAutocomplete): void {
+    selectCrtl.reset();
+    select.options.first.deselect();
+  }
+
+  public onResetFilters() {
+    this.filtersForm.reset();
+    this.autoRarity.options.first.deselect();
+    this.autoTypes.options.first.deselect();
+    this.autoSubtypes.options.first.deselect();
+  }
+
+  private initControls(): void {
+    this.raritySelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
+    this.typesSelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
+    this.subtypesSelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
+    this.searchInputCtrl = this.formBuilder.control<string>('', { nonNullable: true });
+  }
+
+  private initFiltersForm(): void {
+    this.filtersForm = this.formBuilder.group({
+      rarity: this.raritySelectCtrl,
+      types: this.typesSelectCtrl,
+      subtypes: this.subtypesSelectCtrl,
+      search: this.searchInputCtrl,
+    });
+  }
+
+  private filterSelectOptions<T extends string>(input: string, enumToFilter: T[]): T[] {
+    const filterValue = input.toLowerCase();
+    return enumToFilter.filter((i) => i.toLowerCase().includes(filterValue));
+  }
+
+  private initSelectFilters(): void {
+    // select filters arrays, filtering user input to autocomplete
+    // merging streams that affect filters arrays so the select compoments can pickup the right data
+    this.filteredRarityOptions$ = merge(this.raritySelectFilter$, this.filtersData$).pipe(
+      map((input: string | FiltersData) =>
+        typeof input === 'string' ? this.filterSelectOptions(input, this.rarity) : this.rarity.slice(),
+      ),
+    );
+    this.filteredTypesOptions$ = merge(this.typesSelectFilter$, this.filtersData$).pipe(
+      map((input: string | FiltersData) =>
+        typeof input === 'string' ? this.filterSelectOptions(input, this.types) : this.types.slice(),
+      ),
+    );
+    this.filteredSubtypesOptions$ = merge(this.subtypesSelectFilter$, this.filtersData$).pipe(
+      map((input: string | FiltersData) =>
+        typeof input === 'string' ? this.filterSelectOptions(input, this.subtypes) : this.subtypes.slice(),
+      ),
+    );
+  }
+
+  private initFormChangeListeners(): void {
+    // setup change listners
+    const formControlPipe$ = (control: FormControl) =>
+      pipe(startWith(control.value), distinctUntilChanged(), debounceTime(300));
+    this.raritySelectFilter$ = this.raritySelectCtrl.valueChanges.pipe(formControlPipe$(this.raritySelectCtrl));
+    this.typesSelectFilter$ = this.typesSelectCtrl.valueChanges.pipe(formControlPipe$(this.typesSelectCtrl));
+    this.subtypesSelectFilter$ = this.subtypesSelectCtrl.valueChanges.pipe(formControlPipe$(this.subtypesSelectCtrl));
+    this.searchInputFilter$ = this.searchInputCtrl.valueChanges.pipe(formControlPipe$(this.searchInputCtrl));
+  }
+
+  private initScrollEvents(): void {
+    const areAllCardsFetched$ = this.store.select((state) => state.cards.allFetched);
+
+    // infinite scroll, bottom of the page event combined with areAllCardsFetched, so we will not spam call when we have loaded everything
+    this.scrollLoad$ = fromEvent(window, 'scroll').pipe(
+      throttleTime(50),
+      filter(() => window.innerHeight + window.scrollY >= document.body.scrollHeight - 100),
+      combineLatestWith(areAllCardsFetched$),
+      filter(([, areAllCardsFetched]) => areAllCardsFetched === false),
+      tap(() => {
+        this.page += 1;
+        this.store.dispatch(CardsApiActions.loadFilterdCards({ page: this.page, filters: this.filtersForm.value }));
+      }),
+    );
+
+    this.infiniteScrollSubscription = this.scrollLoad$.subscribe();
+
+    // toggle visibility for the filters
+    this.scrollSubscription = this.scrollService.isVisible$.pipe(tap((v) => (this.isVisible = v))).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.filterSubscription.unsubscribe();
+    this.scrollSubscription.unsubscribe();
+    this.infiniteScrollSubscription.unsubscribe();
+  }
 }

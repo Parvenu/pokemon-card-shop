@@ -6,23 +6,16 @@ import { ShoppingCartComponent } from './shopping-cart.component';
 import { CoreModule } from '../core/core.module';
 
 const routes: Routes = [
-    {
-      path: '',
-      component: ShoppingCartComponent,
-    }
-  ];
+  {
+    path: '',
+    component: ShoppingCartComponent,
+  },
+];
 
 @NgModule({
-    declarations:[
-        ShoppingCartComponent
-    ],
-    imports: [
-        CommonModule,
-        SharedModule,
-        CoreModule,
-        RouterModule.forChild(routes)
-    ],
-    exports: [RouterModule, ShoppingCartComponent],
-    providers: []
-  })
-  export class ShoppingCartModule {}
+  declarations: [ShoppingCartComponent],
+  imports: [CommonModule, SharedModule, CoreModule, RouterModule.forChild(routes)],
+  exports: [RouterModule, ShoppingCartComponent],
+  providers: [],
+})
+export class ShoppingCartModule {}

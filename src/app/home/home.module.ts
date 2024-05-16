@@ -14,30 +14,24 @@ import { CoreModule } from '../core/core.module';
 import { FilterDataEffects } from '../redux-store/effects/filter-data.effect';
 import { ShoppingCartEffects } from '../redux-store/effects/shopping-cart.effect';
 
-
 const routes: Routes = [
-    {
-      path: '',
-      component: HomeComponent,
-    }
-  ];
+  {
+    path: '',
+    component: HomeComponent,
+  },
+];
 
 @NgModule({
-    declarations:[
-       HomeComponent,
-       CardListComponent,
-       CardDetailDialogComponent,
-       FilterCardsComponent
-    ],
-    imports: [
-        CommonModule,
-        SharedModule,
-        CoreModule,
-        EffectsModule.forFeature(CardEffects, FilterDataEffects, ShoppingCartEffects),
-        StoreModule.forFeature(cardsFeature),
-        RouterModule.forChild(routes)
-    ],
-    exports: [RouterModule, HomeComponent],
-    providers: []
-  })
-  export class HomeModule {}
+  declarations: [HomeComponent, CardListComponent, CardDetailDialogComponent, FilterCardsComponent],
+  imports: [
+    CommonModule,
+    SharedModule,
+    CoreModule,
+    EffectsModule.forFeature(CardEffects, FilterDataEffects, ShoppingCartEffects),
+    StoreModule.forFeature(cardsFeature),
+    RouterModule.forChild(routes),
+  ],
+  exports: [RouterModule, HomeComponent],
+  providers: [],
+})
+export class HomeModule {}

@@ -1,8 +1,8 @@
-@use './scss/theme.scss';
-@use './scss/variables.scss' as vars;
+@use "./scss/theme.scss";
+@use "./scss/variables.scss" as vars;
 body {
-    margin: 0;
-    font-family: vars.$font-family;
-    background-color: vars.$background-color;
-    color: vars.$text-color;
+  margin: 0;
+  font-family: vars.$font-family;
+  background-color: vars.$background-color;
+  color: vars.$text-color;
 }

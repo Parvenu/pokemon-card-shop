@@ -8,12 +8,9 @@ import { FilterTypesService } from './services/filter-data.service';
 import { CardService } from './services/card.service';
 
 @NgModule({
-    declarations: [ShoppingCartButtonComponent, HeaderComponent, CardListItemComponent],
-    imports: [
-      SharedModule,
-      CommonModule
-    ],
-    exports: [ShoppingCartButtonComponent, HeaderComponent, CardListItemComponent],
-    providers: [CardService, FilterTypesService]
-  })
-  export class CoreModule {}
+  declarations: [ShoppingCartButtonComponent, HeaderComponent, CardListItemComponent],
+  imports: [SharedModule, CommonModule],
+  exports: [ShoppingCartButtonComponent, HeaderComponent, CardListItemComponent],
+  providers: [FilterTypesService],
+})
+export class CoreModule {}

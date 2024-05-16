@@ -1,24 +1,24 @@
-@use '../../../scss/variables.scss' as vars;
+@use "../../../scss/variables.scss" as vars;
 .card-detail-dialog {
-    .dialog-title {
-        text-align: center;
+  .dialog-title {
+    text-align: center;
+  }
+  .dialog-content {
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
+    color: #fff;
+    img {
+      max-height: inherit;
     }
-    .dialog-content {
-        display: flex;
-        padding: 0 10px;
-        align-items: center;
-        color: #fff;
-        img {
-            max-height: inherit;
-        }
-        .foil-container {
-            display: flex;
-            mat-icon {
-                margin: 0;
-            }
-        }
-        .prices-title {
-            text-align: center;
-        }
+    .foil-container {
+      display: flex;
+      mat-icon {
+        margin: 0;
+      }
     }
+    .prices-title {
+      text-align: center;
+    }
+  }
 }

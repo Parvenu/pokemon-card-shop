@@ -1,11 +1,14 @@
 <div class="card-container">
-    <div (click)="openDetailDialog()" (mouseenter)="changeAnimationState('active')" (mouseleave)="changeAnimationState('default')">
-        <img [src]="card.images.small"
-            [alt]="card.name"
-            [@cardImg]="animationState">
-        <span *ngIf="animationState === 'active'">
-            <mat-icon aria-hidden="false">search</mat-icon> Details 
-        </span>
-    </div>
-    <p *ngIf="displayLowestPrice">PRICES as low as: {{lowestPrice}} $</p>
+  <div
+    (click)="openDetailDialog()"
+    (mouseenter)="changeAnimationState('active')"
+    (mouseleave)="changeAnimationState('default')"
+  >
+    <img [src]="card.images.small" [alt]="card.name" [@cardImg]="animationState" />
+    <span *ngIf="animationState === 'active'"> <mat-icon aria-hidden="false ">search</mat-icon> Details </span>
+  </div>
+  <p *ngIf="lowestPrice !== null && displayLowestPrice" i18n="item price tag|lowest price tag for an item">
+    prices as low as: {{ lowestPrice | currency }}
+  </p>
+  <p *ngIf="lowestPrice === null" i18n="placeholder if no prices to display">No pricing available</p>
 </div>

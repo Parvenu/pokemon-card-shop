@@ -17,27 +17,27 @@ import { ScrollService } from '../../../shared/services/scroll.service';
     ]),
   ],
 })
-export class HeaderComponent implements OnInit, OnDestroy{
-    @HostBinding('@toggle')
-    public get toggle(): VisibilityState {
-      return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden
-    }
-    private isVisible = true
-    private scrollSubscription!: Subscription
-    constructor(private router: Router, private scrollService: ScrollService) {}
+export class HeaderComponent implements OnInit, OnDestroy {
+  @HostBinding('@toggle')
+  public get toggle(): VisibilityState {
+    return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden;
+  }
+  private isVisible = true;
+  private scrollSubscription!: Subscription;
+  constructor(
+    private router: Router,
+    private scrollService: ScrollService,
+  ) {}
 
-    public redirect(path: string) {
-        this.router.navigateByUrl(path)
-    }
+  public redirect(path: string) {
+    this.router.navigateByUrl(path);
+  }
 
-    ngOnInit(): void {
-        this.scrollSubscription = this.scrollService.isVisible$.pipe(
-            tap(v => (this.isVisible = v))
-        ).subscribe()
-    }
+  ngOnInit(): void {
+    this.scrollSubscription = this.scrollService.isVisible$.pipe(tap((v) => (this.isVisible = v))).subscribe();
+  }
 
-    ngOnDestroy(): void {
-        this.scrollSubscription.unsubscribe()
-    }
-
+  ngOnDestroy(): void {
+    this.scrollSubscription.unsubscribe();
+  }
 }

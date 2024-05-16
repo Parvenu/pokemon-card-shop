@@ -6,7 +6,10 @@ import { filterTypesReducer } from './reducers/filters-data.reducer';
 
 @NgModule({
   imports: [
-    StoreModule.forRoot({shoppingCart: shoppingCartReducer, filterTypes: filterTypesReducer}),
+    StoreModule.forRoot({
+      shoppingCart: shoppingCartReducer,
+      filterTypes: filterTypesReducer,
+    }),
     EffectsModule.forRoot([]),
   ],
 })
