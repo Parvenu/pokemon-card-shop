@@ -4,20 +4,24 @@
   <div>
     <div class="prices-title">Prices</div>
     <mat-list>
-      <ng-container *ngFor="let f of foil">
+      @for (f of foil; track f) {
+      <ng-container>
         <div class="foil-container">
-          <ng-container *ngIf="card.tcgplayer && card.tcgplayer.prices[f]?.low">
+          @if (card.tcgplayer && card.tcgplayer.prices[f]?.low) {
+          <ng-container>
             <mat-list-item>{{ f | titlecase }} : {{ card.tcgplayer.prices[f]?.low | currency }}</mat-list-item>
             <button mat-raised-button color="primary" (click)="add(f)">
               <mat-icon aria-hidden="false">add_shopping_cart</mat-icon>
             </button>
           </ng-container>
+          }
         </div>
       </ng-container>
+      }
     </mat-list>
-    <p *ngIf="card.tcgplayer === undefined" i18n="placeholder if no prices to display">
-      No pricing available from TCG Player
-    </p>
+    @if(card.tcgplayer === undefined) {
+    <p i18n="placeholder if no prices to display">No pricing available from TCG Player</p>
+    }
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

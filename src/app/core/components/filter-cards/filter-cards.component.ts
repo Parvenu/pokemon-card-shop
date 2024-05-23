@@ -20,13 +20,13 @@ import {
   filter,
   of,
 } from 'rxjs';
-import { CardsApiActions } from '../../redux-store/actions/card.action';
-import { CardsState } from '../../redux-store/reducers/card.reducer';
-import { filtersDataState } from '../../redux-store/selectors/filters-data.selector';
-import { CardFilters } from '../../shared/models/api.model';
-import { FiltersData } from '../../shared/models/filters-data.model';
-import { VisibilityState } from '../../shared/models/visibility-state.enum';
-import { ScrollService } from '../../shared/services/scroll.service';
+import { CardsApiActions } from '../../../redux-store/actions/card.action';
+import { CardsState } from '../../../redux-store/reducers/card.reducer';
+import { filtersDataState } from '../../../redux-store/selectors/filters-data.selector';
+import { CardFilters } from '../../../shared/models/api.model';
+import { FiltersData } from '../../../shared/models/filters-data.model';
+import { VisibilityState } from '../../../shared/models/visibility-state.enum';
+import { ScrollService } from '../../../shared/services/scroll.service';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { CardService } from 'src/app/core/services/card.service';
 
@@ -62,7 +62,6 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
   public raritySelectCtrl!: FormControl<string>;
   public typesSelectCtrl!: FormControl<string>;
   public subtypesSelectCtrl!: FormControl<string>;
-  public searchInputCtrl!: FormControl<string>;
 
   public filteredRarityOptions$!: Observable<string[]>;
   public filteredTypesOptions$!: Observable<string[]>;
@@ -89,7 +88,7 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     private readonly scrollService: ScrollService,
     private readonly cardsService: CardService,
     private formBuilder: FormBuilder,
-    private store: Store<{ cards: CardsState; filtersData: FiltersData }>,
+    private store: Store<{ cards: CardsState; filtersData: FiltersData }>
   ) {}
 
   ngOnInit() {
@@ -100,7 +99,7 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
           this.rarity = rarity;
           this.types = types;
           this.subtypes = subtypes;
-        }),
+        })
       )
       .subscribe();
 
@@ -111,18 +110,17 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     // combineLatest so we can have all last values for every change
     this.filterSubscription = combineLatest([
       this.raritySelectFilter$,
-      this.searchInputFilter$,
       this.typesSelectFilter$,
       this.subtypesSelectFilter$,
     ])
       .pipe(
         skip(1),
         debounceTime(30),
-        tap(([rarity, search, types, subtypes]) => {
+        tap(([rarity, types, subtypes]) => {
           this.page = 1;
-          this.filters = { rarity, search, types, subtypes };
+          this.filters = { rarity, types, subtypes };
           this.store.dispatch(CardsApiActions.loadFilterdCards({ page: this.page, filters: this.filters }));
-        }),
+        })
       )
       .subscribe();
 
@@ -148,7 +146,6 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     this.raritySelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
     this.typesSelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
     this.subtypesSelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
-    this.searchInputCtrl = this.formBuilder.control<string>('', { nonNullable: true });
   }
 
   private initFiltersForm(): void {
@@ -156,7 +153,6 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
       rarity: this.raritySelectCtrl,
       types: this.typesSelectCtrl,
       subtypes: this.subtypesSelectCtrl,
-      search: this.searchInputCtrl,
     });
   }
 
@@ -170,18 +166,18 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     // merging streams that affect filters arrays so the select compoments can pickup the right data
     this.filteredRarityOptions$ = merge(this.raritySelectFilter$, this.filtersData$).pipe(
       map((input: string | FiltersData) =>
-        typeof input === 'string' ? this.filterSelectOptions(input, this.rarity) : this.rarity.slice(),
-      ),
+        typeof input === 'string' ? this.filterSelectOptions(input, this.rarity) : this.rarity.slice()
+      )
     );
     this.filteredTypesOptions$ = merge(this.typesSelectFilter$, this.filtersData$).pipe(
       map((input: string | FiltersData) =>
-        typeof input === 'string' ? this.filterSelectOptions(input, this.types) : this.types.slice(),
-      ),
+        typeof input === 'string' ? this.filterSelectOptions(input, this.types) : this.types.slice()
+      )
     );
     this.filteredSubtypesOptions$ = merge(this.subtypesSelectFilter$, this.filtersData$).pipe(
       map((input: string | FiltersData) =>
-        typeof input === 'string' ? this.filterSelectOptions(input, this.subtypes) : this.subtypes.slice(),
-      ),
+        typeof input === 'string' ? this.filterSelectOptions(input, this.subtypes) : this.subtypes.slice()
+      )
     );
   }
 
@@ -192,7 +188,6 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     this.raritySelectFilter$ = this.raritySelectCtrl.valueChanges.pipe(formControlPipe$(this.raritySelectCtrl));
     this.typesSelectFilter$ = this.typesSelectCtrl.valueChanges.pipe(formControlPipe$(this.typesSelectCtrl));
     this.subtypesSelectFilter$ = this.subtypesSelectCtrl.valueChanges.pipe(formControlPipe$(this.subtypesSelectCtrl));
-    this.searchInputFilter$ = this.searchInputCtrl.valueChanges.pipe(formControlPipe$(this.searchInputCtrl));
   }
 
   private initScrollEvents(): void {
@@ -207,7 +202,7 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
       tap(() => {
         this.page += 1;
         this.store.dispatch(CardsApiActions.loadFilterdCards({ page: this.page, filters: this.filtersForm.value }));
-      }),
+      })
     );
 
     this.infiniteScrollSubscription = this.scrollLoad$.subscribe();

@@ -1,5 +1,8 @@
 <mat-toolbar color="primary">
-  <span (click)="redirect('home')" class="title">Pokémon Card Shop</span>
-  <span class="header-spacer"></span>
-  <app-shopping-cart-button></app-shopping-cart-button>
+  <span (click)="redirect('home')" class="toolbar__title">Pokémon Card Shop</span>
+  <app-search-cards></app-search-cards>
+  <button mat-icon-button class="toolbar__filter-btn">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <app-shopping-cart-button class="toolbar__shopping-cart-btn"></app-shopping-cart-button>
 </mat-toolbar>

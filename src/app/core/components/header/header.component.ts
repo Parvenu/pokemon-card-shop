@@ -24,10 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   private isVisible = true;
   private scrollSubscription!: Subscription;
-  constructor(
-    private router: Router,
-    private scrollService: ScrollService,
-  ) {}
+  constructor(private router: Router, private scrollService: ScrollService) {}
 
   public redirect(path: string) {
     this.router.navigateByUrl(path);

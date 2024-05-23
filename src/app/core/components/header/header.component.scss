@@ -1,11 +1,23 @@
-@use "../../../../scss/variables.scss" as vars;
+@use "/src/scss/variables/variables.scss" as vars;
+
 mat-toolbar {
   height: vars.$header-height;
-  .header-spacer {
-    flex: 1 1 auto;
-  }
-  .title {
+  justify-content: space-between;
+  & .toolbar__title {
+    flex: 1;
     cursor: pointer;
+  }
+  & app-search-cards {
+    flex: 3;
+  }
+  & .toolbar__filter-btn {
+    border-radius: 0 28px 28px 0;
+    height: 56px;
+    background-color: vars.$background-tint;
+  }
+  & .toolbar__shopping-cart-btn {
+    flex: 1;
+    text-align: right;
   }
 }
 

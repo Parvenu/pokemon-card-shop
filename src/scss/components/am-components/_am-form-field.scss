@@ -1,0 +1,22 @@
+@use "/src/scss/variables/variables.scss" as vars;
+.form__form-field--border-round {
+  & .mdc-text-field.mdc-text-field--filled {
+    border-radius: 28px;
+  }
+}
+
+.form__form-field--left-border-round {
+  & .mdc-text-field.mdc-text-field--filled {
+    border-radius: 28px 0 0 28px;
+  }
+}
+
+.form__form-field--width-full {
+  width: 100%;
+}
+
+mat-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  --mdc-filled-text-field-container-color: vars.$background-tint;
+  --mdc-filled-text-field-label-text-color: #e8eaed;
+  --mdc-filled-text-field-focus-label-text-color: #e8eaed;
+}

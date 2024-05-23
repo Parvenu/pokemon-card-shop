@@ -1,7 +1,7 @@
 @use "@angular/material" as mat;
-@import "./fonts.scss";
-@import "./variables.scss";
-@import "./palettes/dark-theme.palette.scss";
+@import "/src/scss/fonts.scss";
+@import "/src/scss/variables/variables.scss";
+@import "/src/scss/themes/palettes/dark-theme.palette.scss";
 @include mat.core();
 
 $typography: mat.define-typography-config(

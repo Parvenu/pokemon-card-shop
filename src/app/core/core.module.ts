@@ -5,12 +5,25 @@ import { ShoppingCartButtonComponent } from './components/shopping-cart-button/s
 import { HeaderComponent } from './components/header/header.component';
 import { CardListItemComponent } from './components/card-list-item/card-list-item.component';
 import { FilterTypesService } from './services/filter-data.service';
-import { CardService } from './services/card.service';
+import { FilterCardsComponent } from './components/filter-cards/filter-cards.component';
+import { SearchCardsComponent } from './components/search-cards/search-cards.component';
 
 @NgModule({
-  declarations: [ShoppingCartButtonComponent, HeaderComponent, CardListItemComponent],
+  declarations: [
+    ShoppingCartButtonComponent,
+    HeaderComponent,
+    CardListItemComponent,
+    FilterCardsComponent,
+    SearchCardsComponent,
+  ],
   imports: [SharedModule, CommonModule],
-  exports: [ShoppingCartButtonComponent, HeaderComponent, CardListItemComponent],
+  exports: [
+    ShoppingCartButtonComponent,
+    HeaderComponent,
+    CardListItemComponent,
+    FilterCardsComponent,
+    SearchCardsComponent,
+  ],
   providers: [FilterTypesService],
 })
 export class CoreModule {}

@@ -7,7 +7,6 @@ import { CardEffects } from '../redux-store/effects/card.effect';
 import { SharedModule } from '../shared/shared.module';
 import { CardListComponent } from './card-list/card-list.component';
 import { CardDetailDialogComponent } from './card-detail/card-detail.component';
-import { FilterCardsComponent } from './filter-cards/filter-cards.component';
 import { cardsFeature } from '../redux-store/reducers/card.reducer';
 import { StoreModule } from '@ngrx/store';
 import { CoreModule } from '../core/core.module';
@@ -22,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HomeComponent, CardListComponent, CardDetailDialogComponent, FilterCardsComponent],
+  declarations: [HomeComponent, CardListComponent, CardDetailDialogComponent],
   imports: [
     CommonModule,
     SharedModule,

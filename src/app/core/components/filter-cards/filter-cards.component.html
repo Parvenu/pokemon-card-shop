@@ -9,19 +9,20 @@
       [formControl]="raritySelectCtrl"
       [matAutocomplete]="autoRarity"
     />
+    @if (raritySelectCtrl.value) {
     <button
-      *ngIf="raritySelectCtrl.value"
       matSuffix
       mat-icon-button
       aria-label="Clear"
       (click)="resetSelectFilter(raritySelectCtrl, autoRarity)"
-    >
-      <mat-icon aria-hidden="false">close</mat-icon>
-    </button>
+    ></button>
+    }
     <mat-autocomplete #autoRarity="matAutocomplete">
-      <mat-option *ngFor="let r of filteredRarityOptions$ | async" [value]="r">
+      @for (r of filteredRarityOptions$ | async; track r) {
+      <mat-option [value]="r">
         {{ r }}
       </mat-option>
+      }
     </mat-autocomplete>
   </mat-form-field>
   <mat-form-field>
@@ -34,19 +35,20 @@
       [formControl]="typesSelectCtrl"
       [matAutocomplete]="autoTypes"
     />
+    @if (typesSelectCtrl.value) {
     <button
-      *ngIf="typesSelectCtrl.value"
       matSuffix
       mat-icon-button
       aria-label="Clear"
       (click)="resetSelectFilter(typesSelectCtrl, autoTypes)"
-    >
-      <mat-icon aria-hidden="false">close</mat-icon>
-    </button>
+    ></button>
+    }
     <mat-autocomplete #autoTypes="matAutocomplete">
-      <mat-option *ngFor="let t of filteredTypesOptions$ | async" [value]="t">
+      @for (t of filteredTypesOptions$ | async; track t) {
+      <mat-option [value]="t">
         {{ t }}
       </mat-option>
+      }
     </mat-autocomplete>
   </mat-form-field>
   <mat-form-field>
@@ -59,39 +61,29 @@
       [formControl]="subtypesSelectCtrl"
       [matAutocomplete]="autoSubtypes"
     />
+    @if (subtypesSelectCtrl.value) {
     <button
-      *ngIf="subtypesSelectCtrl.value"
       matSuffix
       mat-icon-button
       aria-label="Clear"
       (click)="resetSelectFilter(subtypesSelectCtrl, autoSubtypes)"
-    >
-      <mat-icon aria-hidden="false">close</mat-icon>
-    </button>
+    ></button>
+    }
     <mat-autocomplete #autoSubtypes="matAutocomplete">
-      <mat-option *ngFor="let st of filteredSubtypesOptions$ | async" [value]="st">
+      @for (st of filteredSubtypesOptions$ | async; track st) {
+      <mat-option [value]="st">
         {{ st }}
       </mat-option>
+      }
     </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Search by name</mat-label>
-    <input matInput type="text" [formControl]="searchInputCtrl" />
-    <button
-      *ngIf="searchInputCtrl.value"
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      (click)="searchInputCtrl.reset()"
-    >
-      <mat-icon aria-hidden="false">close</mat-icon>
-    </button>
   </mat-form-field>
   <span class="clear-filters-icon">
     <mat-icon (click)="onResetFilters()">highlight_off</mat-icon>
   </span>
 
-  <mat-progress-bar *ngIf="isLoading$ | async" mode="indeterminate"></mat-progress-bar>
+  @if (isLoading$ | async) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
   <mat-divider></mat-divider>
 </div>
 

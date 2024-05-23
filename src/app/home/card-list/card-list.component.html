@@ -1,13 +1,12 @@
-<app-filter-cards></app-filter-cards>
 <div class="flex-container cards-container">
-  <div *ngFor="let card of cards$ | async" class="card-item">
+  @for (card of cards$ | async; track card.id) {
+  <div class="card-item">
     <app-card-list-item [card]="card"></app-card-list-item>
   </div>
-  <h1
-    *ngIf="(areCardsFound$ | async) === false && (areAllCardsFetched$ | async) === true"
-    i18n="no cards found message"
-  >
-    No cards found for current filters
-  </h1>
+  } @if ((areCardsFound$ | async) === false && (areAllCardsFetched$ | async) === true) {
+  <h1 i18n="no cards found message">No cards found for current filters</h1>
+  }
 </div>
-<mat-spinner *ngIf="(areAllCardsFetched$ | async) === false" [diameter]="50"></mat-spinner>
+@if ((areAllCardsFetched$ | async) === false) {
+<mat-spinner [diameter]="50"></mat-spinner>
+}
