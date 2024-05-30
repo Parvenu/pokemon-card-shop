@@ -1,9 +1,10 @@
-@use "/src/scss/variables.scss" as vars;
 .filters-container {
   margin: auto;
   text-align: center;
   width: 100%;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
 
   // remvoving bellow input space for hints / validation errors as we have none
   .mat-mdc-form-field-subscript-wrapper {
@@ -22,4 +23,14 @@
     align-items: center;
     cursor: pointer;
   }
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-reset {
+  text-align: left;
 }

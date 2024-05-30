@@ -14,14 +14,6 @@ import { VisibilityState } from 'src/app/shared/models/visibility-state.enum';
   templateUrl: './search-cards.component.html',
   styleUrls: ['./search-cards.component.scss'],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }], // removing the "hint" section under our mat-input
-  // toggle animation to show / hide filters when scrolling down / up
-  //   animations: [
-  //     trigger('toggle', [
-  //       state(VisibilityState.Hidden, style({ opacity: 0, transform: 'translateY(-100%)' })),
-  //       state(VisibilityState.Visible, style({ opacity: 1, transform: 'translateY(0)' })),
-  //       transition('* => *', animate('200ms ease-in')),
-  //     ]),
-  //   ],
 })
 export class SearchCardsComponent implements OnInit {
   public searchInputCtrl!: FormControl<string>;

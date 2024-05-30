@@ -1,18 +1,11 @@
 <div class="container">
-  <mat-sidenav-container
-    class="example-sidenav-container"
-    [style.marginTop.rem]="(mobileQuery | async)?.matches ? 4 : 4"
-  >
-    <mat-sidenav
-      #snav
-      [mode]="(mobileQuery | async)?.matches ? 'over' : 'side'"
-      [fixedInViewport]="(mobileQuery | async)?.matches"
-      fixedTopGap="56"
-    >
-      <app-filter-cards class="filters-container"></app-filter-cards>
-    </mat-sidenav>
-    <mat-sidenav-content>
+  <div [@toggleSpacer]="isHeaderVisible$ | async" class="header-spacer"></div>
+  <mat-drawer-container [style.marginTop.rem]="0">
+    <mat-drawer #filtersNav [mode]="(mobileQuery$ | async)?.matches ? 'over' : 'side'" fixedTopGap="56">
+      <app-filter-cards class="filters-container" (closeDrawerEvent)="closeDrawer()"></app-filter-cards>
+    </mat-drawer>
+    <mat-drawer-content cdkScrollable>
       <app-card-list></app-card-list>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>

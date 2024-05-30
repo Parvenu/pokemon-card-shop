@@ -1,11 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, merge, of } from 'rxjs';
 import { ApiResponse } from '../../shared/models/api.model';
 import { environment } from '../../../environment/environment';
 
-@Injectable()
-export class FilterTypesService {
+@Injectable({ providedIn: 'root' })
+export class FilterDataService {
+  private _toggleFilterNav$ = new Observable<boolean>();
+
+  public set toggleFilterNav$(v: Observable<boolean>) {
+    this._toggleFilterNav$ = merge(v, this._toggleFilterNav$);
+  }
+
+  public get toggleFilterNav$(): Observable<boolean> {
+    return this._toggleFilterNav$;
+  }
+
   constructor(private http: HttpClient) {}
 
   public getRarity(): Observable<string[]> {
@@ -16,7 +26,7 @@ export class FilterTypesService {
         }
         return res.data;
       }),
-      catchError(this.handleError),
+      catchError(this.handleError)
     );
   }
 
@@ -27,7 +37,7 @@ export class FilterTypesService {
           throw new Error('could not get types data');
         }
         return res.data;
-      }),
+      })
     );
   }
 
@@ -38,7 +48,7 @@ export class FilterTypesService {
           throw new Error('could not get filters subtypes');
         }
         return res.data;
-      }),
+      })
     );
   }
 

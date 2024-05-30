@@ -1,7 +1,8 @@
-@use "./scss/themes/theme.scss";
-@use "./scss/variables/variables.scss" as vars;
+@use "/src/scss/themes/theme.scss";
+@use "/src/scss/variables/variables.scss" as vars;
 @import "/src/scss/components/am-components/am-form-field";
 @import "/src/scss/components/am-components/am-sidenav";
+@import "/src/scss/components/am-components/am-button";
 body {
   margin: 0;
   font-family: vars.$font-family;

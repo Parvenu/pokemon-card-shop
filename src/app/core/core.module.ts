@@ -4,7 +4,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ShoppingCartButtonComponent } from './components/shopping-cart-button/shopping-cart-button.component';
 import { HeaderComponent } from './components/header/header.component';
 import { CardListItemComponent } from './components/card-list-item/card-list-item.component';
-import { FilterTypesService } from './services/filter-data.service';
 import { FilterCardsComponent } from './components/filter-cards/filter-cards.component';
 import { SearchCardsComponent } from './components/search-cards/search-cards.component';
 
@@ -24,6 +23,5 @@ import { SearchCardsComponent } from './components/search-cards/search-cards.com
     FilterCardsComponent,
     SearchCardsComponent,
   ],
-  providers: [FilterTypesService],
 })
 export class CoreModule {}

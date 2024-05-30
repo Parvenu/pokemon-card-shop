@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import {
@@ -26,7 +26,6 @@ import { filtersDataState } from '../../../redux-store/selectors/filters-data.se
 import { CardFilters } from '../../../shared/models/api.model';
 import { FiltersData } from '../../../shared/models/filters-data.model';
 import { VisibilityState } from '../../../shared/models/visibility-state.enum';
-import { ScrollService } from '../../../shared/services/scroll.service';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { CardService } from 'src/app/core/services/card.service';
 
@@ -40,7 +39,7 @@ import { CardService } from 'src/app/core/services/card.service';
     trigger('toggle', [
       state(VisibilityState.Hidden, style({ opacity: 0, transform: 'translateY(-100%)' })),
       state(VisibilityState.Visible, style({ opacity: 1, transform: 'translateY(0)' })),
-      transition('* => *', animate('200ms ease-in')),
+      transition('* => *', animate('100ms ease-in')),
     ]),
   ],
 })
@@ -52,7 +51,6 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
   private page = 1;
 
   private isVisible = true;
-  private scrollSubscription!: Subscription;
   public get toggle(): VisibilityState {
     return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden;
   }
@@ -68,7 +66,7 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
   public filteredSubtypesOptions$!: Observable<string[]>;
 
   public scrollLoad$!: Observable<unknown>;
-  public isLoading$ = this.cardsService.isLoading$.pipe(skip(1));
+  public isLoading$ = this.cardsService.isLoading$; //.pipe(skip(1));
 
   private filterSubscription!: Subscription;
   private infiniteScrollSubscription!: Subscription;
@@ -78,14 +76,14 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
   private raritySelectFilter$: Observable<string> = of('');
   private typesSelectFilter$: Observable<string> = of('');
   private subtypesSelectFilter$: Observable<string> = of('');
-  private searchInputFilter$: Observable<string> = of('');
 
   @ViewChild('autoRarity') autoRarity!: MatAutocomplete;
   @ViewChild('autoTypes') autoTypes!: MatAutocomplete;
   @ViewChild('autoSubtypes') autoSubtypes!: MatAutocomplete;
 
+  @Output() closeDrawerEvent = new EventEmitter<unknown>();
+
   constructor(
-    private readonly scrollService: ScrollService,
     private readonly cardsService: CardService,
     private formBuilder: FormBuilder,
     private store: Store<{ cards: CardsState; filtersData: FiltersData }>
@@ -204,16 +202,14 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
         this.store.dispatch(CardsApiActions.loadFilterdCards({ page: this.page, filters: this.filtersForm.value }));
       })
     );
+  }
 
-    this.infiniteScrollSubscription = this.scrollLoad$.subscribe();
-
-    // toggle visibility for the filters
-    this.scrollSubscription = this.scrollService.isVisible$.pipe(tap((v) => (this.isVisible = v))).subscribe();
+  public closeDrawer() {
+    this.closeDrawerEvent.emit();
   }
 
   ngOnDestroy(): void {
     this.filterSubscription.unsubscribe();
-    this.scrollSubscription.unsubscribe();
     this.infiniteScrollSubscription.unsubscribe();
   }
 }

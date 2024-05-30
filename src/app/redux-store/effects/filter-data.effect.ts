@@ -3,7 +3,7 @@ import { exhaustMap, map, zip } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { FilterDataApiActions } from '../actions/filters-data.action';
-import { FilterTypesService } from '../../core/services/filter-data.service';
+import { FilterDataService } from '../../core/services/filter-data.service';
 
 @Injectable()
 export class FilterDataEffects {
@@ -28,14 +28,11 @@ export class FilterDataEffects {
                 types: types.types,
                 subtypes: subtypes.subtypes,
               },
-            }),
-          ),
-        ),
-      ),
+            })
+          )
+        )
+      )
     );
   });
-  constructor(
-    private actions$: Actions,
-    private filterTypesService: FilterTypesService,
-  ) {}
+  constructor(private actions$: Actions, private filterTypesService: FilterDataService) {}
 }
