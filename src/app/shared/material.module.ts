@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,12 +8,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   exports: [
-    MatProgressSpinnerModule,
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
@@ -24,7 +21,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatDialogModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatProgressBarModule,
     MatSidenavModule,
   ],
 })
