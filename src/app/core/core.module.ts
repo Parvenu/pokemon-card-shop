@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { CardListItemComponent } from './components/card-list-item/card-list-item.component';
 import { FilterCardsComponent } from './components/filter-cards/filter-cards.component';
 import { SearchCardsComponent } from './components/search-cards/search-cards.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { SearchCardsComponent } from './components/search-cards/search-cards.com
     CardListItemComponent,
     FilterCardsComponent,
     SearchCardsComponent,
+    LogoComponent,
   ],
   imports: [SharedModule, CommonModule],
   exports: [
@@ -22,6 +24,7 @@ import { SearchCardsComponent } from './components/search-cards/search-cards.com
     CardListItemComponent,
     FilterCardsComponent,
     SearchCardsComponent,
+    LogoComponent,
   ],
 })
 export class CoreModule {}

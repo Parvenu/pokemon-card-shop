@@ -1,10 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subscription, combineLatest, map } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FilterDataService } from '../core/services/filter-data.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { ScrollService } from '../shared/services/scroll.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -23,15 +22,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('filtersNav', { read: MatDrawer }) filtersNav!: MatDrawer;
   @ViewChild(CdkScrollable) scrollable!: CdkScrollable;
   mobileQuery$!: Observable<BreakpointState>;
-  isHeaderVisible$: Observable<boolean>;
   private navSub!: Subscription;
-  constructor(
-    private readonly scrollService: ScrollService,
-    private breakpointObserver: BreakpointObserver,
-    private filterDataService: FilterDataService
-  ) {
+  constructor(private breakpointObserver: BreakpointObserver, private filterDataService: FilterDataService) {
     this.mobileQuery$ = this.breakpointObserver.observe(Breakpoints.XSmall);
-    this.isHeaderVisible$ = this.scrollService.isHeaderVisible$;
   }
 
   public closeDrawer() {

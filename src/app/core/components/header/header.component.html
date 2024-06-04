@@ -1,5 +1,5 @@
 <mat-toolbar [@toggle]="isVisible" color="primary">
-  <span (click)="redirect('home')" class="toolbar__title">Pokémon Card Shop</span>
+  <app-logo></app-logo>
   <app-search-cards></app-search-cards>
   <button mat-icon-button class="toolbar__filter-btn" #filterButton (click)="toggleFilterNav()">
     <mat-icon>menu</mat-icon>

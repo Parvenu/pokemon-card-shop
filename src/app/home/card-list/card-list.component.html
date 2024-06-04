@@ -1,12 +1,13 @@
 <div class="flex-container cards-container">
   @for (card of cards$ | async; track card.id) {
   <div class="card-item">
-    <app-card-list-item [card]="card"></app-card-list-item>
+    <app-card-list-item [card]="card" [isLoading$]="isLoading$"></app-card-list-item>
   </div>
   } @if ((areCardsFound$ | async) === false && (areAllCardsFetched$ | async) === true) {
   <h1 i18n="no cards found message">No cards found for current filters</h1>
   }
 </div>
-@if ((areAllCardsFetched$ | async) === false) {
+
+<!-- @if ((areAllCardsFetched$ | async) === false) {
 <mat-spinner [diameter]="50"></mat-spinner>
-}
+} -->

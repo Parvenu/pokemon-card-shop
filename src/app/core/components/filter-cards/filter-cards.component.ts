@@ -8,19 +8,14 @@ import {
   distinctUntilChanged,
   combineLatest,
   skip,
-  Subscription,
   tap,
   debounceTime,
   Observable,
   map,
   merge,
-  throttleTime,
-  fromEvent,
-  combineLatestWith,
-  filter,
   of,
+  Subject,
 } from 'rxjs';
-import { CardsApiActions } from '../../../redux-store/actions/card.action';
 import { CardsState } from '../../../redux-store/reducers/card.reducer';
 import { filtersDataState } from '../../../redux-store/selectors/filters-data.selector';
 import { CardFilters } from '../../../shared/models/api.model';
@@ -28,6 +23,8 @@ import { FiltersData } from '../../../shared/models/filters-data.model';
 import { VisibilityState } from '../../../shared/models/visibility-state.enum';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { CardService } from 'src/app/core/services/card.service';
+import { Router } from '@angular/router';
+import { FilterActions } from 'src/app/redux-store/actions/filter.action';
 
 @Component({
   selector: 'app-filter-cards',
@@ -48,8 +45,6 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
   public types: string[] = [];
   public subtypes: string[] = [];
 
-  private page = 1;
-
   private isVisible = true;
   public get toggle(): VisibilityState {
     return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden;
@@ -66,10 +61,8 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
   public filteredSubtypesOptions$!: Observable<string[]>;
 
   public scrollLoad$!: Observable<unknown>;
-  public isLoading$ = this.cardsService.isLoading$; //.pipe(skip(1));
 
-  private filterSubscription!: Subscription;
-  private infiniteScrollSubscription!: Subscription;
+  private destoryedSubject = new Subject<boolean>();
 
   private filters!: CardFilters;
 
@@ -84,9 +77,11 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
   @Output() closeDrawerEvent = new EventEmitter<unknown>();
 
   constructor(
+    private readonly router: Router,
     private readonly cardsService: CardService,
+
     private formBuilder: FormBuilder,
-    private store: Store<{ cards: CardsState; filtersData: FiltersData }>
+    private store: Store<{ cards: CardsState; filtersData: FiltersData; filters: CardFilters }>
   ) {}
 
   ngOnInit() {
@@ -106,24 +101,18 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     this.initFormChangeListeners();
 
     // combineLatest so we can have all last values for every change
-    this.filterSubscription = combineLatest([
-      this.raritySelectFilter$,
-      this.typesSelectFilter$,
-      this.subtypesSelectFilter$,
-    ])
+    combineLatest([this.raritySelectFilter$, this.typesSelectFilter$, this.subtypesSelectFilter$])
       .pipe(
         skip(1),
         debounceTime(30),
         tap(([rarity, types, subtypes]) => {
-          this.page = 1;
           this.filters = { rarity, types, subtypes };
-          this.store.dispatch(CardsApiActions.loadFilterdCards({ page: this.page, filters: this.filters }));
+          this.store.dispatch(FilterActions.filterChange({ ...this.filters }));
         })
       )
       .subscribe();
 
     this.initSelectFilters();
-    this.initScrollEvents();
   }
 
   // Due to a bug in the autoselect component we have to deselect manually on reset
@@ -188,28 +177,15 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     this.subtypesSelectFilter$ = this.subtypesSelectCtrl.valueChanges.pipe(formControlPipe$(this.subtypesSelectCtrl));
   }
 
-  private initScrollEvents(): void {
-    const areAllCardsFetched$ = this.store.select((state) => state.cards.allFetched);
-
-    // infinite scroll, bottom of the page event combined with areAllCardsFetched, so we will not spam call when we have loaded everything
-    this.scrollLoad$ = fromEvent(window, 'scroll').pipe(
-      throttleTime(50),
-      filter(() => window.innerHeight + window.scrollY >= document.body.scrollHeight - 100),
-      combineLatestWith(areAllCardsFetched$),
-      filter(([, areAllCardsFetched]) => areAllCardsFetched === false),
-      tap(() => {
-        this.page += 1;
-        this.store.dispatch(CardsApiActions.loadFilterdCards({ page: this.page, filters: this.filtersForm.value }));
-      })
-    );
-  }
-
   public closeDrawer() {
     this.closeDrawerEvent.emit();
   }
 
+  public redirect(path: string) {
+    this.router.navigateByUrl(path);
+  }
+
   ngOnDestroy(): void {
-    this.filterSubscription.unsubscribe();
-    this.infiniteScrollSubscription.unsubscribe();
+    this.destoryedSubject.next(true);
   }
 }

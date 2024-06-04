@@ -1,3 +1,4 @@
+@use "/src/scss/variables/variables.scss" as vars;
 .filters-container {
   margin: auto;
   text-align: center;
@@ -29,6 +30,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.filter-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-logo {
+  display: flex;
+  align-items: center;
+  height: vars.$header-height;
+  padding: 0 6px;
 }
 
 .button-reset {

@@ -3,7 +3,7 @@
 } @else { @for (item of (shoppingCart$ | async)?.items; track item.card.id) {
 <div class="item-container">
   <div class="flex-container list-item">
-    <app-card-list-item [card]="item.card" [displayLowestPrice]="false"></app-card-list-item>
+    <app-card-list-item [card]="item.card" [displayLowestPrice]="false" [isLoading$]="isLoading$"></app-card-list-item>
     @for(foil of getItemFoils(item.foilCount); track foil) {
     <div class="price-details-container">
       {{ item.card.name }} {{ foil }} x {{ item.foilCount.get(foil) }} at

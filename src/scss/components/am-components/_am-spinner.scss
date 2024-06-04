@@ -1,0 +1,6 @@
+@use "/src/scss/variables/variables.scss" as vars;
+.mat-mdc-progress-spinner.mdc-circular-progress {
+  svg {
+    stroke: vars.$text-color;
+  }
+}

@@ -1,5 +1,6 @@
+<app-logo class="filter-logo"></app-logo>
 <div class="filter-header">
-  <div class="filter-header">
+  <div class="filter-title">
     <mat-icon>filter_alt</mat-icon>
     <span i18n>Filters</span>
   </div>
@@ -93,9 +94,6 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  @if (isLoading$ | async) {
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  }
   <mat-divider></mat-divider>
 </div>
 

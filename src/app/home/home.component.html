@@ -1,10 +1,10 @@
 <div class="container">
-  <div [@toggleSpacer]="isHeaderVisible$ | async" class="header-spacer"></div>
   <mat-drawer-container [style.marginTop.rem]="0">
     <mat-drawer #filtersNav [mode]="(mobileQuery$ | async)?.matches ? 'over' : 'side'" fixedTopGap="56">
       <app-filter-cards class="filters-container" (closeDrawerEvent)="closeDrawer()"></app-filter-cards>
     </mat-drawer>
     <mat-drawer-content cdkScrollable>
+      <div class="header-spacer"></div>
       <app-card-list></app-card-list>
     </mat-drawer-content>
   </mat-drawer-container>

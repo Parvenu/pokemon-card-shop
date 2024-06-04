@@ -5,6 +5,7 @@ import { CartItem, FoilCount, ShoppingCart } from '../shared/models/shopping-car
 import { shoppingCartState } from '../redux-store/selectors/shopping-cart.selector';
 import { Card, FOIL } from '../shared/models/card.model';
 import { ShoppingCartAction } from '../redux-store/actions/shopping-cart.action';
+import { CardService } from '../core/services/card.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,7 +16,8 @@ import { ShoppingCartAction } from '../redux-store/actions/shopping-cart.action'
 export class ShoppingCartComponent implements OnInit {
   public shoppingCart$!: Observable<ShoppingCart>;
   public shoppingCartTotalPrice$!: Observable<string>;
-  constructor(private store: Store) {}
+  public isLoading$ = this.cardsService.isLoading$;
+  constructor(private store: Store, private readonly cardsService: CardService) {}
   ngOnInit(): void {
     this.shoppingCart$ = this.store.select(shoppingCartState);
     this.shoppingCartTotalPrice$ = this.shoppingCart$.pipe(
@@ -24,8 +26,8 @@ export class ShoppingCartComponent implements OnInit {
           .reduce((acc, curr) => {
             return acc + parseFloat(this.countItemTotalPrice(curr));
           }, 0)
-          .toFixed(2),
-      ),
+          .toFixed(2)
+      )
     );
   }
 

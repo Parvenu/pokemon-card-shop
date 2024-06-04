@@ -3,6 +3,7 @@ import { Card } from '../../../shared/models/card.model';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material/dialog';
 import { CardDetailDialogComponent } from '../../../home/card-detail/card-detail.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-card-list-item',
@@ -20,7 +21,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
         'active',
         style({
           opacity: '.2',
-        }),
+        })
       ),
       transition('default => active', [animate('200ms ease-in-out')]),
       transition('active => default', [animate('500ms ease-in-out')]),
@@ -28,8 +29,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ],
 })
 export class CardListItemComponent implements OnInit {
-  @Input() card!: Card;
+  @Input({ required: true }) card!: Card;
   @Input() displayLowestPrice: boolean = true;
+  @Input({ required: true }) isLoading$!: Observable<boolean>;
   public lowestPrice!: number | null;
   public animationState = 'default';
   constructor(private dialog: MatDialog) {}

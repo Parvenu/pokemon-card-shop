@@ -5,7 +5,9 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { Store } from '@ngrx/store';
 import { Observable, debounceTime, distinctUntilChanged, of, startWith } from 'rxjs';
 import { CardsApiActions } from 'src/app/redux-store/actions/card.action';
+import { FilterActions } from 'src/app/redux-store/actions/filter.action';
 import { CardsState } from 'src/app/redux-store/reducers/card.reducer';
+import { CardFilters } from 'src/app/shared/models/api.model';
 import { FiltersData } from 'src/app/shared/models/filters-data.model';
 import { VisibilityState } from 'src/app/shared/models/visibility-state.enum';
 
@@ -21,7 +23,7 @@ export class SearchCardsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<{ cards: CardsState; filtersData: FiltersData }>
+    private store: Store<{ cards: CardsState; filtersData: FiltersData; filters: CardFilters }>
   ) {}
 
   ngOnInit(): void {
@@ -31,8 +33,8 @@ export class SearchCardsComponent implements OnInit {
       distinctUntilChanged(),
       debounceTime(300)
     );
-    this.searchInputFilter$.subscribe((search) =>
-      this.store.dispatch(CardsApiActions.loadFilterdCards({ page: 1, filters: { search } }))
-    );
+    this.searchInputFilter$.subscribe((search) => {
+      this.store.dispatch(FilterActions.searchChange({ search }));
+    });
   }
 }
