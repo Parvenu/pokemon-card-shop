@@ -21,7 +21,7 @@ import { Observable } from 'rxjs';
         'active',
         style({
           opacity: '.2',
-        })
+        }),
       ),
       transition('default => active', [animate('200ms ease-in-out')]),
       transition('active => default', [animate('500ms ease-in-out')]),
@@ -41,7 +41,10 @@ export class CardListItemComponent implements OnInit {
   }
 
   public openDetailDialog() {
-    this.dialog.open(CardDetailDialogComponent, { data: { card: this.card }, panelClass: 'card-detail-dialog' });
+    this.dialog.open(CardDetailDialogComponent, {
+      data: { card: this.card },
+      panelClass: 'card-detail-dialog',
+    });
   }
 
   public changeAnimationState(state: 'active' | 'default') {

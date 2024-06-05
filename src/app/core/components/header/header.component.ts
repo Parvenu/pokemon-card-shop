@@ -22,7 +22,10 @@ export class HeaderComponent implements AfterViewInit {
   @ViewChild('filterButton', { read: ElementRef }) filterButton!: ElementRef;
   @Input({ required: true }) isVisible!: VisibilityState;
   public isLoading$ = this.cardsService.isLoading$;
-  constructor(private readonly filterDataService: FilterDataService, private readonly cardsService: CardService) {}
+  constructor(
+    private readonly filterDataService: FilterDataService,
+    private readonly cardsService: CardService,
+  ) {}
 
   public toggleFilterNav() {}
   public ngAfterViewInit(): void {

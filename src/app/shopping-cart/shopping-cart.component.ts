@@ -17,7 +17,10 @@ export class ShoppingCartComponent implements OnInit {
   public shoppingCart$!: Observable<ShoppingCart>;
   public shoppingCartTotalPrice$!: Observable<string>;
   public isLoading$ = this.cardsService.isLoading$;
-  constructor(private store: Store, private readonly cardsService: CardService) {}
+  constructor(
+    private store: Store,
+    private readonly cardsService: CardService,
+  ) {}
   ngOnInit(): void {
     this.shoppingCart$ = this.store.select(shoppingCartState);
     this.shoppingCartTotalPrice$ = this.shoppingCart$.pipe(
@@ -26,8 +29,8 @@ export class ShoppingCartComponent implements OnInit {
           .reduce((acc, curr) => {
             return acc + parseFloat(this.countItemTotalPrice(curr));
           }, 0)
-          .toFixed(2)
-      )
+          .toFixed(2),
+      ),
     );
   }
 

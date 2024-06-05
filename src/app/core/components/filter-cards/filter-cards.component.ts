@@ -81,7 +81,7 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     private readonly cardsService: CardService,
 
     private formBuilder: FormBuilder,
-    private store: Store<{ cards: CardsState; filtersData: FiltersData; filters: CardFilters }>
+    private store: Store<{ cards: CardsState; filtersData: FiltersData; filters: CardFilters }>,
   ) {}
 
   ngOnInit() {
@@ -92,7 +92,7 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
           this.rarity = rarity;
           this.types = types;
           this.subtypes = subtypes;
-        })
+        }),
       )
       .subscribe();
 
@@ -108,7 +108,7 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
         tap(([rarity, types, subtypes]) => {
           this.filters = { rarity, types, subtypes };
           this.store.dispatch(FilterActions.filterChange({ ...this.filters }));
-        })
+        }),
       )
       .subscribe();
 
@@ -153,18 +153,18 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
     // merging streams that affect filters arrays so the select compoments can pickup the right data
     this.filteredRarityOptions$ = merge(this.raritySelectFilter$, this.filtersData$).pipe(
       map((input: string | FiltersData) =>
-        typeof input === 'string' ? this.filterSelectOptions(input, this.rarity) : this.rarity.slice()
-      )
+        typeof input === 'string' ? this.filterSelectOptions(input, this.rarity) : this.rarity.slice(),
+      ),
     );
     this.filteredTypesOptions$ = merge(this.typesSelectFilter$, this.filtersData$).pipe(
       map((input: string | FiltersData) =>
-        typeof input === 'string' ? this.filterSelectOptions(input, this.types) : this.types.slice()
-      )
+        typeof input === 'string' ? this.filterSelectOptions(input, this.types) : this.types.slice(),
+      ),
     );
     this.filteredSubtypesOptions$ = merge(this.subtypesSelectFilter$, this.filtersData$).pipe(
       map((input: string | FiltersData) =>
-        typeof input === 'string' ? this.filterSelectOptions(input, this.subtypes) : this.subtypes.slice()
-      )
+        typeof input === 'string' ? this.filterSelectOptions(input, this.subtypes) : this.subtypes.slice(),
+      ),
     );
   }
 

@@ -26,7 +26,7 @@ export class FilterDataService {
         }
         return res.data;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -37,7 +37,7 @@ export class FilterDataService {
           throw new Error('could not get types data');
         }
         return res.data;
-      })
+      }),
     );
   }
 
@@ -48,7 +48,7 @@ export class FilterDataService {
           throw new Error('could not get filters subtypes');
         }
         return res.data;
-      })
+      }),
     );
   }
 

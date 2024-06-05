@@ -23,7 +23,7 @@ export class SearchCardsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<{ cards: CardsState; filtersData: FiltersData; filters: CardFilters }>
+    private store: Store<{ cards: CardsState; filtersData: FiltersData; filters: CardFilters }>,
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class SearchCardsComponent implements OnInit {
     this.searchInputFilter$ = this.searchInputCtrl.valueChanges.pipe(
       startWith(this.searchInputCtrl.value),
       distinctUntilChanged(),
-      debounceTime(300)
+      debounceTime(300),
     );
     this.searchInputFilter$.subscribe((search) => {
       this.store.dispatch(FilterActions.searchChange({ search }));

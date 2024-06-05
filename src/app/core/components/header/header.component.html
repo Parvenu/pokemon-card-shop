@@ -1,8 +1,9 @@
 <mat-toolbar [@toggle]="isVisible" color="primary">
   <app-logo></app-logo>
   <app-search-cards></app-search-cards>
+  <mat-divider [vertical]="true"></mat-divider>
   <button mat-icon-button class="toolbar__filter-btn" #filterButton (click)="toggleFilterNav()">
-    <mat-icon>menu</mat-icon>
+    <mat-icon>tune</mat-icon> <span class="toolbar__filter-btn__text">Filters</span>
   </button>
   <app-shopping-cart-button class="toolbar__shopping-cart-btn"></app-shopping-cart-button>
 </mat-toolbar>

@@ -1,18 +1,23 @@
 @use "/src/scss/variables/variables.scss" as vars;
-.form__form-field--border-round {
-  & .mdc-text-field.mdc-text-field--filled {
-    border-radius: 28px;
-  }
-}
 
-.form__form-field--left-border-round {
-  & .mdc-text-field.mdc-text-field--filled {
-    border-radius: 28px 0 0 28px;
-  }
-}
-
-.form__form-field--width-full {
+.form__form-field__search-input {
+  background-color: vars.$background-tint;
+  border-radius: 28px 0 0 28px;
   width: 100%;
+  & .mat-mdc-form-field-flex {
+    align-items: center;
+    & .mat-mdc-form-field-text-prefix {
+      display: inherit;
+    }
+  }
+  & .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple {
+    &::before {
+      border-bottom: none;
+    }
+    &::after {
+      border-bottom: none;
+    }
+  }
 }
 
 mat-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {

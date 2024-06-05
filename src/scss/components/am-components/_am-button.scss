@@ -1,3 +1,9 @@
 button.mdc-button.button--round {
   border-radius: 28px;
 }
+
+.toolbar__filter-btn {
+  & .mat-mdc-button-persistent-ripple.mdc-icon-button__ripple {
+    border-radius: unset;
+  }
+}

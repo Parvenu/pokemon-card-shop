@@ -25,7 +25,7 @@ export class CardListComponent implements OnInit, OnDestroy {
   constructor(
     private readonly scrollDispatcher: ScrollDispatcher,
     private cardsService: CardService,
-    private store: Store<{ cards: CardsState; filters: CardFilters }>
+    private store: Store<{ cards: CardsState; filters: CardFilters }>,
   ) {}
   ngOnInit() {
     this.store.dispatch({ type: '[Cards API] Load cards' });
@@ -51,7 +51,7 @@ export class CardListComponent implements OnInit, OnDestroy {
         tap(() => {
           this.page.set(this.page() + 1);
           this.store.dispatch(CardsApiActions.loadFilterdCards({ page: this.page(), filters: this.filters }));
-        })
+        }),
       )
       .subscribe();
   }

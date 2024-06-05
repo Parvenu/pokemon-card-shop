@@ -4,7 +4,10 @@
 @import "/src/scss/components/am-components/am-sidenav";
 @import "/src/scss/components/am-components/am-button";
 @import "/src/scss/components/am-components/am-spinner";
-body {
+* {
+  font-family: vars.$font-family;
+}
+html {
   margin: 0;
   font-family: vars.$font-family;
   background-color: vars.$background-color;

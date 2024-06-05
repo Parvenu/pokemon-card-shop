@@ -23,7 +23,10 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild(CdkScrollable) scrollable!: CdkScrollable;
   mobileQuery$!: Observable<BreakpointState>;
   private navSub!: Subscription;
-  constructor(private breakpointObserver: BreakpointObserver, private filterDataService: FilterDataService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private filterDataService: FilterDataService,
+  ) {
     this.mobileQuery$ = this.breakpointObserver.observe(Breakpoints.XSmall);
   }
 

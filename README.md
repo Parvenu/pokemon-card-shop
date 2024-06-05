@@ -1,4 +1,5 @@
 # PokemonCardShop
+
 Sample project of a Pokémon card shop using [Pokémon TCG](https://pokemontcg.io/) API and [NgRx](https://v8.ngrx.io/docs)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.

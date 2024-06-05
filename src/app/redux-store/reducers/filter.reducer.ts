@@ -20,5 +20,5 @@ export const filterReducer = createReducer(
   on(FilterActions.searchChange, (state, { search }) => ({
     ...state,
     search,
-  }))
+  })),
 );

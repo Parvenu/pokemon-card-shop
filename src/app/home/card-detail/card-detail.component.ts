@@ -8,7 +8,6 @@ import { Card, FOIL, Foil } from '../../shared/models/card.model';
   selector: 'app-card-detail',
   templateUrl: './card-detail.component.html',
   styleUrls: ['./card-detail.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class CardDetailDialogComponent {
   public card!: Card;

@@ -7,12 +7,14 @@ import { CardListItemComponent } from './components/card-list-item/card-list-ite
 import { FilterCardsComponent } from './components/filter-cards/filter-cards.component';
 import { SearchCardsComponent } from './components/search-cards/search-cards.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { CardListItemPlaceholderComponent } from './components/card-list-item/placeholder/card-list-item-placeholder.component';
 
 @NgModule({
   declarations: [
     ShoppingCartButtonComponent,
     HeaderComponent,
     CardListItemComponent,
+    CardListItemPlaceholderComponent,
     FilterCardsComponent,
     SearchCardsComponent,
     LogoComponent,
@@ -22,6 +24,7 @@ import { LogoComponent } from './components/logo/logo.component';
     ShoppingCartButtonComponent,
     HeaderComponent,
     CardListItemComponent,
+    CardListItemPlaceholderComponent,
     FilterCardsComponent,
     SearchCardsComponent,
     LogoComponent,

@@ -28,7 +28,7 @@ export class AppComponent {
         map(({ direction, currentOffset }) => this.isHeaderHidden(direction, currentOffset)),
         distinctUntilChanged(),
         map((v) => (v ? VisibilityState.Hidden : VisibilityState.Visible)),
-        tap((v) => this.headerVisibilityState.set(v))
+        tap((v) => this.headerVisibilityState.set(v)),
       )
       .subscribe();
 

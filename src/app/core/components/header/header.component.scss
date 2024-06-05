@@ -11,8 +11,15 @@ mat-toolbar {
   }
   & .toolbar__filter-btn {
     border-radius: 0 28px 28px 0;
-    height: 56px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: vars.$header-search-input-height;
     background-color: vars.$background-tint;
+    & .toolbar__filter-btn__text {
+      font-size: large;
+    }
   }
   & .toolbar__shopping-cart-btn {
     flex: 1;

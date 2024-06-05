@@ -6,6 +6,14 @@
   .card-item {
     flex-basis: 12vw;
   }
+  & .cards-container__placeholder-contianer {
+    display: flex;
+    flex: auto;
+    margin-left: 20px;
+    & .placeholder-item {
+      margin-right: 20px;
+    }
+  }
 }
 .cards-container {
   margin-top: 1rem;

@@ -28,11 +28,14 @@ export class FilterDataEffects {
                 types: types.types,
                 subtypes: subtypes.subtypes,
               },
-            })
-          )
-        )
-      )
+            }),
+          ),
+        ),
+      ),
     );
   });
-  constructor(private actions$: Actions, private filterTypesService: FilterDataService) {}
+  constructor(
+    private actions$: Actions,
+    private filterTypesService: FilterDataService,
+  ) {}
 }

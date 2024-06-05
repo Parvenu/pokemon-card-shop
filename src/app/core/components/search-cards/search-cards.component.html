@@ -1,10 +1,7 @@
-<mat-form-field
-  class="form__form-field--left-border-round form__form-field--width-full form__form-field--background-colorless"
->
-  <mat-label></mat-label>
+<mat-form-field class="form__form-field__search-input">
   <mat-icon matTextPrefix class="form-field__icon">search</mat-icon>
-  <input matInput type="text" [formControl]="searchInputCtrl" />
+  <input matInput type="text" [formControl]="searchInputCtrl" placeholder="Search cards" />
   @if (searchInputCtrl.value) {
-  <button matSuffix mat-icon-button aria-label="Clear" (click)="searchInputCtrl.reset()"></button>
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="searchInputCtrl.reset()"></button>
   }
 </mat-form-field>

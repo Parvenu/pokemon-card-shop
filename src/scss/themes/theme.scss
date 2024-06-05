@@ -12,6 +12,7 @@ $dark-theme: mat.define-theme(
     ),
     typography: (
       brand-family: $font-family,
+      plain-family: $font-family,
       bold-weight: 400,
     ),
     density: (

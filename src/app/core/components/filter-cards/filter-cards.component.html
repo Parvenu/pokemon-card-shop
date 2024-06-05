@@ -26,18 +26,18 @@
       [matAutocomplete]="autoRarity"
     />
     @if (raritySelectCtrl.value) {
-    <button
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      (click)="resetSelectFilter(raritySelectCtrl, autoRarity)"
-    ></button>
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="resetSelectFilter(raritySelectCtrl, autoRarity)"
+      ></button>
     }
     <mat-autocomplete #autoRarity="matAutocomplete">
       @for (r of filteredRarityOptions$ | async; track r) {
-      <mat-option [value]="r">
-        {{ r }}
-      </mat-option>
+        <mat-option [value]="r">
+          {{ r }}
+        </mat-option>
       }
     </mat-autocomplete>
   </mat-form-field>
@@ -52,18 +52,18 @@
       [matAutocomplete]="autoTypes"
     />
     @if (typesSelectCtrl.value) {
-    <button
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      (click)="resetSelectFilter(typesSelectCtrl, autoTypes)"
-    ></button>
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="resetSelectFilter(typesSelectCtrl, autoTypes)"
+      ></button>
     }
     <mat-autocomplete #autoTypes="matAutocomplete">
       @for (t of filteredTypesOptions$ | async; track t) {
-      <mat-option [value]="t">
-        {{ t }}
-      </mat-option>
+        <mat-option [value]="t">
+          {{ t }}
+        </mat-option>
       }
     </mat-autocomplete>
   </mat-form-field>
@@ -78,18 +78,18 @@
       [matAutocomplete]="autoSubtypes"
     />
     @if (subtypesSelectCtrl.value) {
-    <button
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      (click)="resetSelectFilter(subtypesSelectCtrl, autoSubtypes)"
-    ></button>
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="resetSelectFilter(subtypesSelectCtrl, autoSubtypes)"
+      ></button>
     }
     <mat-autocomplete #autoSubtypes="matAutocomplete">
       @for (st of filteredSubtypesOptions$ | async; track st) {
-      <mat-option [value]="st">
-        {{ st }}
-      </mat-option>
+        <mat-option [value]="st">
+          {{ st }}
+        </mat-option>
       }
     </mat-autocomplete>
   </mat-form-field>
