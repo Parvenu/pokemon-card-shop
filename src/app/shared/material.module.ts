@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   exports: [
@@ -22,6 +23,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatInputModule,
     MatAutocompleteModule,
     MatSidenavModule,
+    MatTooltipModule,
   ],
 })
 export class MaterialModule {}

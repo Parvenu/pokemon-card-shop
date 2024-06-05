@@ -8,6 +8,7 @@ import { FilterCardsComponent } from './components/filter-cards/filter-cards.com
 import { SearchCardsComponent } from './components/search-cards/search-cards.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { CardListItemPlaceholderComponent } from './components/card-list-item/placeholder/card-list-item-placeholder.component';
+import { ReturnToTopButtonComponent } from './components/return-to-top-button/return-to-top-button.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CardListItemPlaceholderComponent } from './components/card-list-item/pl
     FilterCardsComponent,
     SearchCardsComponent,
     LogoComponent,
+    ReturnToTopButtonComponent,
   ],
   imports: [SharedModule, CommonModule],
   exports: [
@@ -28,6 +30,7 @@ import { CardListItemPlaceholderComponent } from './components/card-list-item/pl
     FilterCardsComponent,
     SearchCardsComponent,
     LogoComponent,
+    ReturnToTopButtonComponent,
   ],
 })
 export class CoreModule {}

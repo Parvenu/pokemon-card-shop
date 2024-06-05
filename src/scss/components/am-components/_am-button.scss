@@ -1,3 +1,4 @@
+@use "/src/scss/variables/variables.scss" as vars;
 button.mdc-button.button--round {
   border-radius: 28px;
 }
@@ -5,5 +6,14 @@ button.mdc-button.button--round {
 .toolbar__filter-btn {
   & .mat-mdc-button-persistent-ripple.mdc-icon-button__ripple {
     border-radius: unset;
+  }
+}
+
+.mat-mdc-fab.mat-mdc-button-base {
+  color: vars.$text-color;
+  background-color: vars.$background-tint;
+
+  &:not(.mdc-fab--extended).button--round {
+    border-radius: 28px;
   }
 }

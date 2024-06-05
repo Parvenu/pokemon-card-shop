@@ -15,6 +15,7 @@ import {
   merge,
   of,
   Subject,
+  take,
 } from 'rxjs';
 import { CardsState } from '../../../redux-store/reducers/card.reducer';
 import { filtersDataState } from '../../../redux-store/selectors/filters-data.selector';
@@ -22,7 +23,6 @@ import { CardFilters } from '../../../shared/models/api.model';
 import { FiltersData } from '../../../shared/models/filters-data.model';
 import { VisibilityState } from '../../../shared/models/visibility-state.enum';
 import { MatAutocomplete } from '@angular/material/autocomplete';
-import { CardService } from 'src/app/core/services/card.service';
 import { Router } from '@angular/router';
 import { FilterActions } from 'src/app/redux-store/actions/filter.action';
 
@@ -78,8 +78,6 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly router: Router,
-    private readonly cardsService: CardService,
-
     private formBuilder: FormBuilder,
     private store: Store<{ cards: CardsState; filtersData: FiltersData; filters: CardFilters }>,
   ) {}
@@ -130,9 +128,18 @@ export class FilterCardsComponent implements OnInit, OnDestroy {
   }
 
   private initControls(): void {
-    this.raritySelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
-    this.typesSelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
-    this.subtypesSelectCtrl = this.formBuilder.control<string>('', { nonNullable: true });
+    this.store
+      .select('filters')
+      .pipe(
+        take(1),
+        tap((filters) => {
+          this.filters = filters;
+          this.raritySelectCtrl = this.formBuilder.control<string>(filters.rarity ?? '', { nonNullable: true });
+          this.typesSelectCtrl = this.formBuilder.control<string>(filters.types ?? '', { nonNullable: true });
+          this.subtypesSelectCtrl = this.formBuilder.control<string>(filters.subtypes ?? '', { nonNullable: true });
+        }),
+      )
+      .subscribe();
   }
 
   private initFiltersForm(): void {

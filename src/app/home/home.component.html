@@ -9,3 +9,6 @@
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
+@if (canScrollToTop$ | async) {
+  <app-return-to-top-button (returnToTop)="scrollToTop()"></app-return-to-top-button>
+}
