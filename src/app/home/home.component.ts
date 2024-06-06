@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subscription, debounceTime, filter, map } from 'rxjs';
+import { Observable, Subject, debounceTime, map, takeUntil, tap } from 'rxjs';
 import { FilterDataService } from '../core/services/filter-data.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Store } from '@ngrx/store';
+import { DrawerStateActions } from '../redux-store/actions/drawer-state.action';
 
 @Component({
   selector: 'app-home',
@@ -23,20 +25,25 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild(CdkScrollable) scrollable!: CdkScrollable;
   mobileQuery$!: Observable<BreakpointState>;
   canScrollToTop$!: Observable<boolean>;
-  private navSub!: Subscription;
+  isDrawerOpen$!: Observable<boolean>;
+  private destroySubject = new Subject<boolean>();
   constructor(
-    private breakpointObserver: BreakpointObserver,
-    private filterDataService: FilterDataService,
+    private readonly breakpointObserver: BreakpointObserver,
+    private readonly filterDataService: FilterDataService,
+    private readonly store: Store<{ isDrawerOpen: boolean }>,
   ) {
     this.mobileQuery$ = this.breakpointObserver.observe(Breakpoints.XSmall);
+    this.isDrawerOpen$ = this.store.select('isDrawerOpen');
   }
 
-  public closeDrawer() {
+  public closeDrawer(): void {
     this.filtersNav.close();
+    this.store.dispatch(DrawerStateActions.drawerStateChange({ isDrawerOpen: false }));
   }
 
-  private toggleFiltersNav() {
+  private toggleFiltersNav(): void {
     this.filtersNav.toggle();
+    this.store.dispatch(DrawerStateActions.drawerStateChange({ isDrawerOpen: this.filtersNav.opened }));
   }
 
   public scrollToTop(): void {
@@ -44,7 +51,9 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.navSub = this.filterDataService.toggleFilterNav$.subscribe(() => this.toggleFiltersNav());
+    this.filterDataService.toggleFilterNav$
+      .pipe(takeUntil(this.destroySubject))
+      .subscribe(() => this.toggleFiltersNav());
     this.canScrollToTop$ = this.scrollable.elementScrolled().pipe(
       debounceTime(100),
       map(() => this.scrollable.measureScrollOffset('top') > 100),
@@ -52,6 +61,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.navSub.unsubscribe();
+    this.destroySubject.next(true);
   }
 }

@@ -1,23 +1,33 @@
 @use "/src/scss/variables/variables.scss" as vars;
-.card-container {
-  position: relative;
-  img,
-  span {
-    cursor: pointer;
-  }
-  .details-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    mat-icon {
-      transform: scale(2);
+
+.list-item__mat-card {
+  margin: 15px;
+  width: 445px;
+
+  & .mat-card-header {
+    &__details-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      & mat-icon {
+        transform: scale(2);
+      }
+    }
+    &__image-break {
+      transform: rotate(90deg) translate(-50px, -100px);
     }
   }
-  p {
-    text-align: center;
-  }
-  .pricetag {
-    color: vars.$text-color-accent;
+
+  & .mat-card-content {
+    margin: auto 0 auto 0;
+
+    &__price-text {
+      text-align: center;
+    }
+
+    &__pricetag {
+      color: vars.$text-color-accent;
+    }
   }
 }

@@ -1,0 +1,23 @@
+@use "/src/scss/variables/variables.scss" as vars;
+
+mat-card {
+  &.mat-card__card-slim {
+    background-color: vars.$background-tint;
+    & .mat-mdc-card-header {
+      padding: 0;
+      & :first-child {
+        padding-top: 0;
+      }
+    }
+    // & .mat-mdc-card-content {
+    //   padding: 0;
+    //   & :first-child {
+    //     padding-top: 0;
+    //   }
+    // }
+  }
+  &.mat-card__horizontal {
+    display: flex;
+    flex-direction: row;
+  }
+}

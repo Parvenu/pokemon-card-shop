@@ -4,10 +4,12 @@ export class Card {
   supertype!: string;
   subtypes!: string[];
   types!: string[];
-  rarity!: string;
+  rarity?: string;
   images!: Images;
   tcgplayer!: Tcgplayer;
-  [x: string]: Object; // Other unused props are returned, more info at https://docs.pokemontcg.io/api-reference/cards/card-object
+  set!: Set;
+  number!: string;
+  // Other unused props are returned, more info at https://docs.pokemontcg.io/api-reference/cards/card-object
 }
 
 export class Images {
@@ -19,6 +21,35 @@ export class Tcgplayer {
   url!: string;
   updatedAt!: string;
   prices!: Foil;
+}
+
+export class Set {
+  id!: string;
+  images!: SetImage;
+  legalities!: Legality;
+  name!: string;
+  printedTotal!: number;
+  ptcgoCode!: string;
+  releaseDate!: string;
+  series!: string;
+  total!: number;
+  updatedAt!: string;
+}
+
+export class SetImage {
+  symbol!: string;
+  logo!: string;
+}
+
+export enum LEGALITY {
+  LEGAL = 'Legal',
+  BANNED = 'Banned',
+}
+
+export class Legality {
+  expanded: Legality | undefined;
+  standard: Legality | undefined;
+  unlimited: Legality | undefined;
 }
 
 export class Foil {

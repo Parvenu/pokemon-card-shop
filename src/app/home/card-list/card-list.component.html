@@ -1,6 +1,6 @@
-<div class="flex-container cards-container">
+<div class="cards-container">
   @for (card of cards$ | async; track card.id) {
-    <div class="card-item">
+    <div class="cards-container__card-item">
       <app-card-list-item [card]="card" [isLoading$]="isLoading$"></app-card-list-item>
     </div>
   } @empty {
@@ -9,13 +9,11 @@
     }
   }
   @if ((areAllCardsFetched$ | async) === false) {
-    <div class="cards-container__placeholder-contianer">
-      @for (i of "1234"; track i; let index = $index) {
-        <app-card-list-item-placeholder
-          [opacity]="1 / (index + 1)"
-          class="placeholder-item"
-        ></app-card-list-item-placeholder>
-      }
-    </div>
+    @for (i of "123"; track i; let index = $index) {
+      <app-card-list-item-placeholder
+        [opacity]="1 / (index + 1)"
+        class="placeholder-item"
+      ></app-card-list-item-placeholder>
+    }
   }
 </div>

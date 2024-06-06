@@ -1,6 +1,11 @@
 <div class="container">
   <mat-drawer-container [style.marginTop.rem]="0" class="drawer-container__height-full">
-    <mat-drawer #filtersNav [mode]="(mobileQuery$ | async)?.matches ? 'over' : 'side'" fixedTopGap="56">
+    <mat-drawer
+      #filtersNav
+      [mode]="(mobileQuery$ | async)?.matches ? 'over' : 'side'"
+      fixedTopGap="56"
+      [opened]="isDrawerOpen$ | async"
+    >
       <app-filter-cards class="filters-container" (closeDrawerEvent)="closeDrawer()"></app-filter-cards>
     </mat-drawer>
     <mat-drawer-content cdkScrollable>
