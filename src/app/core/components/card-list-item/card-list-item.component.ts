@@ -4,6 +4,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material/dialog'
 import { CardDetailDialogComponent } from '../../../home/card-detail/card-detail.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
+import { CardService } from '../../services/card.service';
 
 @Component({
   selector: 'app-card-list-item',
@@ -34,18 +35,25 @@ export class CardListItemComponent implements OnInit {
   @Input({ required: true }) isLoading$!: Observable<boolean>;
   public lowestPrice!: number | null;
   public animationState = 'default';
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private readonly cardsService: CardService,
+  ) {}
 
   public ngOnInit(): void {
     this.lowestPrice = this.getLowestPrice(this.card);
   }
 
-  public openDetailDialog() {
-    this.dialog.open(CardDetailDialogComponent, {
-      data: { card: this.card },
-      panelClass: 'card-detail-dialog',
-    });
+  public viewDetails() {
+    this.cardsService.viewDetails(this.card);
   }
+
+  // public openDetailDialog() {
+  //   this.dialog.open(CardDetailDialogComponent, {
+  //     data: { card: this.card },
+  //     panelClass: 'card-detail-dialog',
+  //   });
+  // }
 
   public changeAnimationState(state: 'active' | 'default') {
     this.animationState = state;

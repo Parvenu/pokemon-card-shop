@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, tap, BehaviorSubject } from 'rxjs';
+import { Observable, map, tap, BehaviorSubject, Subject } from 'rxjs';
 import { Card } from '../../shared/models/card.model';
 import { environment } from '../../../environment/environment';
 import { ApiResponse, CardFilters } from '../../shared/models/api.model';
@@ -9,9 +9,18 @@ import { ApiResponse, CardFilters } from '../../shared/models/api.model';
 export class CardService {
   private pageSize = 21;
   loadingSubject = new BehaviorSubject<boolean>(false);
+  viewDetailsSubject = new Subject<Card>();
 
   public get isLoading$(): Observable<boolean> {
     return this.loadingSubject.asObservable();
+  }
+
+  public get viewDetails$(): Observable<Card> {
+    return this.viewDetailsSubject.asObservable();
+  }
+
+  public viewDetails(card: Card): void {
+    this.viewDetailsSubject.next(card);
   }
 
   constructor(private http: HttpClient) {}

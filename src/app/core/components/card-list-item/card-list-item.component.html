@@ -1,28 +1,30 @@
 @defer (when !(isLoading$ | async)) {
   <mat-card
-    (click)="openDetailDialog()"
+    (click)="viewDetails()"
     (mouseenter)="changeAnimationState('active')"
     (mouseleave)="changeAnimationState('default')"
     appearance="outlined"
-    class="mat-card__card-slim mat-card__horizontal list-item__mat-card"
+    class="mat-card__card-slim mat-card mat-card__layout-horizontal"
+    [class]="card.rarity === 'Rare BREAK' ? 'mat-card__image-break' : ''"
   >
-    <mat-card-header class="mat-card-header">
-      <img
-        [src]="card.images.small"
-        [alt]="card.name"
-        [className]="card.rarity === 'Rare BREAK' ? 'mat-card-header__image-break' : ''"
-        [@cardImg]="animationState"
-      />
+    <mat-card-header
+      class="mat-card-header"
+      [class]="card.rarity === 'Rare BREAK' ? 'mat-card-header__image-break' : ''"
+    >
+      <img [src]="card.images.small" [alt]="card.name" [@cardImg]="animationState" />
       @if (animationState === "active") {
         <span class="mat-card-header__details-icon"><mat-icon aria-hidden="false">search</mat-icon></span>
       }
     </mat-card-header>
-    <mat-card-content class="mat-card-content">
+    <mat-card-content
+      class="mat-card-content"
+      [class]="card.rarity === 'Rare BREAK' ? 'mat-card-content__image-break' : ''"
+    >
       @if (lowestPrice !== null && displayLowestPrice) {
         <p>{{ card.set.name }}</p>
         <p>{{ card.rarity ?? "Promo" }}, #{{ card.number }}/{{ card.set.printedTotal }}</p>
         <p>{{ card.name }}</p>
-        <p class="mat-card-content__price-text" i18n="item price tag|lowest price tag for an item">
+        <p i18n="item price tag|lowest price tag for an item">
           Prices from <span class="mat-card-content__pricetag">{{ lowestPrice | currency }}</span>
         </p>
       }

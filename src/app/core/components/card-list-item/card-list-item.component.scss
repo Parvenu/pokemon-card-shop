@@ -1,8 +1,16 @@
 @use "/src/scss/variables/variables.scss" as vars;
 
-.list-item__mat-card {
+.mat-card {
   margin: 15px;
   width: 445px;
+
+  &__image-break {
+    margin-top: 25%;
+    -webkit-transform: rotate(90deg) translatez(0) translateX(-50px);
+    transform: rotate(90deg) translatez(0) translateX(-50px);
+    -webkit-transform-origin: 50% 51%;
+    transform-origin: 50% 51%;
+  }
 
   & .mat-card-header {
     &__details-icon {
@@ -14,20 +22,17 @@
         transform: scale(2);
       }
     }
-    &__image-break {
-      transform: rotate(90deg) translate(-50px, -100px);
-    }
   }
 
   & .mat-card-content {
     margin: auto 0 auto 0;
 
-    &__price-text {
-      text-align: center;
-    }
-
     &__pricetag {
       color: vars.$text-color-accent;
+    }
+    &__image-break {
+      -webkit-transform: rotate(-90deg) translatez(0);
+      transform: rotate(-90deg) translatez(0);
     }
   }
 }

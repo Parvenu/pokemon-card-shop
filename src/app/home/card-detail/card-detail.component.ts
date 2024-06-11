@@ -1,8 +1,7 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ShoppingCartAction } from '../../redux-store/actions/shopping-cart.action';
-import { Card, FOIL, Foil } from '../../shared/models/card.model';
+import { Attack, Card, FOIL, Foil } from '../../shared/models/card.model';
 
 @Component({
   selector: 'app-card-detail',
@@ -10,16 +9,16 @@ import { Card, FOIL, Foil } from '../../shared/models/card.model';
   styleUrls: ['./card-detail.component.scss'],
 })
 export class CardDetailDialogComponent {
-  public card!: Card;
+  @Input({ required: true }) card!: Card;
+  @Output() closeDrawerEvent = new EventEmitter<unknown>();
   public foil = Object.keys(FOIL) as Array<keyof Foil>;
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { card: Card },
-    private store: Store,
-  ) {
-    this.card = data.card;
-  }
+  constructor(private store: Store) {}
 
   public add(foil: keyof typeof FOIL) {
     this.store.dispatch(ShoppingCartAction.addCard({ card: this.card, foil: FOIL[foil] }));
+  }
+
+  public close() {
+    this.closeDrawerEvent.emit();
   }
 }

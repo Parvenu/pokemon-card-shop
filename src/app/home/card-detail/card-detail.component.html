@@ -1,29 +1,47 @@
-<h2 class="dialog-title">{{ card.name }}</h2>
-<mat-dialog-content class="dialog-content">
-  <img [src]="card.images.large" [alt]="card.name" />
-  <div>
-    <div class="prices-title">Prices</div>
-    <mat-list>
-      @for (f of foil; track f) {
-        <ng-container>
+<mat-card class="mat-card mat-card__layout-horizontal">
+  <mat-card-header class="mat-card-header" [class]="card.rarity === 'Rare BREAK' ? 'mat-card-header__image-break' : ''">
+    <img class="mat-card-header__image-large" [src]="card.images.large" [alt]="card.name" />
+  </mat-card-header>
+  <mat-card-content class="mat-card-content">
+    <div class="mat-card-content__details-container">
+      <h3>{{ card.name }} - {{ card.set.name }}</h3>
+      <h4>Product details</h4>
+      <p class="mat-card-content__text">
+        <span class="mat-card-content__text-highlight">Number / Rarity:</span> #{{ card.number }}/{{
+          card.set.printedTotal
+        }}, {{ card.rarity ?? "Promo" }}
+      </p>
+      <p class="mat-card-content__text">
+        <span class="mat-card-content__text-highlight">Card Type / HP / Stage:</span> {{ card.types }} / {{ card.hp }} /
+        {{ card.subtypes }}
+      </p>
+      @for (attack of card.attacks; track attack; let index = $index) {
+        <p>
+          <span class="mat-card-content__text-highlight">Attack {{ index + 1 }}:</span> {{ attack | formatAttackCost }}
+          {{ attack.text }}
+        </p>
+      }
+    </div>
+    <div>
+      <div class="prices-title">Prices</div>
+      <mat-list>
+        @for (f of foil; track f) {
           <div class="foil-container">
             @if (card.tcgplayer && card.tcgplayer.prices[f]?.low) {
-              <ng-container>
-                <mat-list-item>{{ f | titlecase }} : {{ card.tcgplayer.prices[f]?.low | currency }}</mat-list-item>
-                <button mat-raised-button color="primary" (click)="add(f)">
-                  <mat-icon aria-hidden="false">add_shopping_cart</mat-icon>
-                </button>
-              </ng-container>
+              <mat-list-item>{{ f | titlecase }} : {{ card.tcgplayer.prices[f]?.low | currency }}</mat-list-item>
+              <button mat-raised-button color="primary" (click)="add(f)">
+                <mat-icon aria-hidden="false">add_shopping_cart</mat-icon>
+              </button>
             }
           </div>
-        </ng-container>
+        }
+      </mat-list>
+      @if (card.tcgplayer === undefined) {
+        <p i18n="placeholder if no prices to display">No pricing available from TCG Player</p>
       }
-    </mat-list>
-    @if (card.tcgplayer === undefined) {
-      <p i18n="placeholder if no prices to display">No pricing available from TCG Player</p>
-    }
-  </div>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close i18n="close button">Close</button>
-</mat-dialog-actions>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button mat-dialog-close i18n="close button">Close</button>
+  </mat-card-actions>
+</mat-card>

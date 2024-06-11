@@ -1,6 +1,7 @@
 export class Card {
   id!: string;
   name!: string;
+  hp!: string;
   supertype!: string;
   subtypes!: string[];
   types!: string[];
@@ -9,6 +10,7 @@ export class Card {
   tcgplayer!: Tcgplayer;
   set!: Set;
   number!: string;
+  attacks!: Attack[];
   // Other unused props are returned, more info at https://docs.pokemontcg.io/api-reference/cards/card-object
 }
 
@@ -34,6 +36,14 @@ export class Set {
   series!: string;
   total!: number;
   updatedAt!: string;
+}
+
+export class Attack {
+  convertedEnergyCost!: number;
+  cost!: string[];
+  damage!: string;
+  name!: string;
+  text!: string;
 }
 
 export class SetImage {

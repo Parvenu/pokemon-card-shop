@@ -8,12 +8,11 @@ div.mat-drawer-inner-container {
   overflow-x: hidden;
 }
 
-.mat-drawer.mat-drawer-opened {
+.mat-drawer-opened.mat-drawer {
   padding: 0 10px;
   background-color: vars.$background-color;
   border-right-color: vars.$background-tint;
-}
-
-.drawer-container__height-full {
-  height: 100%;
+  &__details-drawer {
+    width: 80%;
+  }
 }

@@ -7,6 +7,8 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Store } from '@ngrx/store';
 import { DrawerStateActions } from '../redux-store/actions/drawer-state.action';
+import { CardService } from '../core/services/card.service';
+import { Card } from '../shared/models/card.model';
 
 @Component({
   selector: 'app-home',
@@ -21,46 +23,58 @@ import { DrawerStateActions } from '../redux-store/actions/drawer-state.action';
   ],
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('filtersNav', { read: MatDrawer }) filtersNav!: MatDrawer;
+  @ViewChild('filtersNav') filtersDrawer!: MatDrawer;
+  @ViewChild('detailsNav') detailsDrawer!: MatDrawer;
   @ViewChild(CdkScrollable) scrollable!: CdkScrollable;
-  mobileQuery$!: Observable<BreakpointState>;
-  canScrollToTop$!: Observable<boolean>;
-  isDrawerOpen$!: Observable<boolean>;
+  public mobileQuery$!: Observable<BreakpointState>;
+  public canScrollToTop$!: Observable<boolean>;
+  public isFiltersDrawerOpen$!: Observable<boolean>;
+  public detailsCard!: Card;
   private destroySubject = new Subject<boolean>();
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
     private readonly filterDataService: FilterDataService,
-    private readonly store: Store<{ isDrawerOpen: boolean }>,
+    private readonly cardsService: CardService,
+    private readonly store: Store<{ isFiltersDrawerOpen: boolean }>,
   ) {
     this.mobileQuery$ = this.breakpointObserver.observe(Breakpoints.XSmall);
-    this.isDrawerOpen$ = this.store.select('isDrawerOpen');
+    this.isFiltersDrawerOpen$ = this.store.select('isFiltersDrawerOpen');
   }
 
-  public closeDrawer(): void {
-    this.filtersNav.close();
-    this.store.dispatch(DrawerStateActions.drawerStateChange({ isDrawerOpen: false }));
-  }
-
-  private toggleFiltersNav(): void {
-    this.filtersNav.toggle();
-    this.store.dispatch(DrawerStateActions.drawerStateChange({ isDrawerOpen: this.filtersNav.opened }));
+  public closeFiltersDrawer(): void {
+    this.filtersDrawer.close();
+    this.store.dispatch(DrawerStateActions.drawerStateChange({ isFiltersDrawerOpen: false }));
   }
 
   public scrollToTop(): void {
     this.scrollable.scrollTo({ top: 0 });
   }
 
-  ngAfterViewInit(): void {
+  private toggleFiltersDrawer(): void {
+    this.filtersDrawer.toggle();
+    this.store.dispatch(DrawerStateActions.drawerStateChange({ isFiltersDrawerOpen: this.filtersDrawer.opened }));
+  }
+  private openDetailsDrawer(): void {
+    this.detailsDrawer.open();
+  }
+
+  public ngAfterViewInit(): void {
     this.filterDataService.toggleFilterNav$
       .pipe(takeUntil(this.destroySubject))
-      .subscribe(() => this.toggleFiltersNav());
+      .subscribe(() => this.toggleFiltersDrawer());
+
+    this.cardsService.viewDetails$.pipe(takeUntil(this.destroySubject)).subscribe((card: Card) => {
+      this.detailsCard = card;
+      this.openDetailsDrawer();
+    });
+
     this.canScrollToTop$ = this.scrollable.elementScrolled().pipe(
       debounceTime(100),
       map(() => this.scrollable.measureScrollOffset('top') > 100),
     );
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroySubject.next(true);
   }
 }

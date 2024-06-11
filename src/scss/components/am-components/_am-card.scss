@@ -9,15 +9,14 @@ mat-card {
         padding-top: 0;
       }
     }
-    // & .mat-mdc-card-content {
-    //   padding: 0;
-    //   & :first-child {
-    //     padding-top: 0;
-    //   }
-    // }
   }
-  &.mat-card__horizontal {
+  &.mat-card__layout-horizontal {
     display: flex;
     flex-direction: row;
+  }
+
+  &.mat-card__vertical {
+    display: flex;
+    flex-direction: column;
   }
 }

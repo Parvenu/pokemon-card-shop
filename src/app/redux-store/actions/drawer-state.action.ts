@@ -1,8 +1,8 @@
 import { createActionGroup, props } from '@ngrx/store';
 
 export const DrawerStateActions = createActionGroup({
-  source: 'drawerStateChange',
+  source: 'filtersDrawerStateChange',
   events: {
-    'Drawer state change': props<{ isDrawerOpen: boolean }>(),
+    'Drawer state change': props<{ isFiltersDrawerOpen: boolean }>(),
   },
 });

@@ -5,5 +5,5 @@ const initialState = false;
 
 export const drawerStateReducer = createReducer(
   initialState,
-  on(DrawerStateActions.drawerStateChange, (state, { isDrawerOpen }) => isDrawerOpen),
+  on(DrawerStateActions.drawerStateChange, (state, { isFiltersDrawerOpen }) => isFiltersDrawerOpen),
 );

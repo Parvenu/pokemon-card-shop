@@ -1,12 +1,26 @@
 <div class="container">
-  <mat-drawer-container [style.marginTop.rem]="0" class="drawer-container__height-full">
+  <mat-drawer-container [style.marginTop.rem]="0" class="drawer-container" [autosize]="true">
     <mat-drawer
       #filtersNav
       [mode]="(mobileQuery$ | async)?.matches ? 'over' : 'side'"
       fixedTopGap="56"
-      [opened]="isDrawerOpen$ | async"
+      [opened]="isFiltersDrawerOpen$ | async"
+      [position]="'start'"
     >
-      <app-filter-cards class="filters-container" (closeDrawerEvent)="closeDrawer()"></app-filter-cards>
+      <app-filter-cards class="filters-container" (closeDrawerEvent)="closeFiltersDrawer()"></app-filter-cards>
+    </mat-drawer>
+    <mat-drawer
+      #detailsNav
+      class="mat-drawer__details-drawer"
+      [mode]="'over'"
+      fixedTopGap="56"
+      [opened]="isFiltersDrawerOpen$ | async"
+      [position]="'end'"
+    >
+      @if (detailsCard) {
+        <div class="header-spacer"></div>
+        <app-card-detail [card]="detailsCard" (closeDrawerEvent)="detailsNav.close()"></app-card-detail>
+      }
     </mat-drawer>
     <mat-drawer-content cdkScrollable>
       <div class="header-spacer"></div>

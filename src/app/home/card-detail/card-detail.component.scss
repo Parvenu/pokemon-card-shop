@@ -1,24 +1,19 @@
 @use "/src/scss/variables/variables.scss" as vars;
-.card-detail-dialog {
-  .dialog-title {
-    text-align: center;
+
+.mat-card {
+  height: calc(100% - vars.$header-height);
+  & .mat-card-header {
+    &__image-large {
+      max-height: 80%;
+    }
   }
-  .dialog-content {
-    display: flex;
-    padding: 0 10px;
-    align-items: center;
-    color: #fff;
-    img {
-      max-height: inherit;
-    }
-    .foil-container {
-      display: flex;
-      mat-icon {
-        margin: 0;
+  & .mat-card-content {
+    &__details-container {
+      & .mat-card-content__text {
+        &-highlight {
+          font-weight: bold;
+        }
       }
-    }
-    .prices-title {
-      text-align: center;
     }
   }
 }

@@ -9,6 +9,7 @@ import { SearchCardsComponent } from './components/search-cards/search-cards.com
 import { LogoComponent } from './components/logo/logo.component';
 import { CardListItemPlaceholderComponent } from './components/card-list-item/placeholder/card-list-item-placeholder.component';
 import { ReturnToTopButtonComponent } from './components/return-to-top-button/return-to-top-button.component';
+import { FormatAttackCostPipe } from './pipes/format-attack-cost.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ReturnToTopButtonComponent } from './components/return-to-top-button/re
     SearchCardsComponent,
     LogoComponent,
     ReturnToTopButtonComponent,
+    FormatAttackCostPipe,
   ],
   imports: [SharedModule, CommonModule],
   exports: [
@@ -31,6 +33,7 @@ import { ReturnToTopButtonComponent } from './components/return-to-top-button/re
     SearchCardsComponent,
     LogoComponent,
     ReturnToTopButtonComponent,
+    FormatAttackCostPipe,
   ],
 })
 export class CoreModule {}
