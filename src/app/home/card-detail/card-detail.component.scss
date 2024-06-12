@@ -2,17 +2,40 @@
 
 .mat-card {
   height: calc(100% - vars.$header-height);
-  & .mat-card-header {
-    &__image-large {
-      max-height: 80%;
+  & .mat-card-content {
+    display: flex;
+    &__div-image-container {
+      &__image-large {
+        max-height: 500px;
+      }
+    }
+    &__div-details-container {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+      &-section {
+        padding: 15px;
+        &__text {
+          &-highlight {
+            font-weight: bold;
+          }
+        }
+      }
     }
   }
-  & .mat-card-content {
-    &__details-container {
-      & .mat-card-content__text {
-        &-highlight {
-          font-weight: bold;
-        }
+  & .mat-card-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  & .prices-container {
+    display: flex;
+    &__container {
+      &-text {
+        flex: 1;
+      }
+      &-button {
+        flex: 3;
       }
     }
   }

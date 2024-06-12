@@ -5,7 +5,7 @@ import { Attack } from 'src/app/shared/models/card.model';
   name: 'formatAttackCost',
 })
 export class FormatAttackCostPipe implements PipeTransform {
-  transform(value: Attack, ...args: unknown[]): string {
+  transform(value: Attack): string {
     const costMap = new Map<string, number>();
     value.cost.map((cost) => {
       const currentCost = costMap.get(cost);

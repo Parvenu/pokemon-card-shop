@@ -1,6 +1,6 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { fromEvent } from 'rxjs';
+import { Observable, concat, concatAll, exhaustMap, fromEvent, merge, of, switchMap, tap } from 'rxjs';
 import { VisibilityState } from '../../../shared/models/visibility-state.enum';
 import { FilterDataService } from '../../services/filter-data.service';
 import { CardService } from '../../services/card.service';
@@ -18,17 +18,16 @@ import { CardService } from '../../services/card.service';
     ]),
   ],
 })
-export class HeaderComponent implements AfterViewInit {
-  @ViewChild('filterButton', { read: ElementRef }) filterButton!: ElementRef;
+export class HeaderComponent {
   @Input({ required: true }) isVisible!: VisibilityState;
+  @Input({ required: true }) canSearch = false;
   public isLoading$ = this.cardsService.isLoading$;
   constructor(
     private readonly filterDataService: FilterDataService,
     private readonly cardsService: CardService,
   ) {}
 
-  public toggleFilterNav() {}
-  public ngAfterViewInit(): void {
-    this.filterDataService.toggleFilterNav$ = fromEvent(this.filterButton.nativeElement, 'click');
+  public toggleFiltersNav(): void {
+    this.filterDataService.toggleFilterNav();
   }
 }

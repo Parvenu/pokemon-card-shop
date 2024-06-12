@@ -1,19 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, merge, of } from 'rxjs';
+import { Observable, Subject, catchError, concat, map, merge, of, tap } from 'rxjs';
 import { ApiResponse } from '../../shared/models/api.model';
 import { environment } from '../../../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class FilterDataService {
-  private _toggleFilterNav$ = new Observable<boolean>();
+  private toggleFilterNavSubject = new Subject<void>();
 
-  public set toggleFilterNav$(v: Observable<boolean>) {
-    this._toggleFilterNav$ = merge(v, this._toggleFilterNav$);
+  public toggleFilterNav() {
+    this.toggleFilterNavSubject.next();
   }
 
-  public get toggleFilterNav$(): Observable<boolean> {
-    return this._toggleFilterNav$;
+  public get toggleFilterNav$(): Observable<void> {
+    return this.toggleFilterNavSubject.asObservable();
   }
 
   constructor(private http: HttpClient) {}

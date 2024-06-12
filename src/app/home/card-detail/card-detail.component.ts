@@ -14,11 +14,15 @@ export class CardDetailDialogComponent {
   public foil = Object.keys(FOIL) as Array<keyof Foil>;
   constructor(private store: Store) {}
 
-  public add(foil: keyof typeof FOIL) {
+  public add(foil: keyof typeof FOIL): void {
     this.store.dispatch(ShoppingCartAction.addCard({ card: this.card, foil: FOIL[foil] }));
   }
 
-  public close() {
+  public remove(foil: keyof typeof FOIL): void {
+    this.store.dispatch(ShoppingCartAction.removeCard({ card: this.card, foil: FOIL[foil] }));
+  }
+
+  public close(): void {
     this.closeDrawerEvent.emit();
   }
 }

@@ -10,6 +10,7 @@ export class Card {
   tcgplayer!: Tcgplayer;
   set!: Set;
   number!: string;
+  artist!: string;
   attacks!: Attack[];
   // Other unused props are returned, more info at https://docs.pokemontcg.io/api-reference/cards/card-object
 }

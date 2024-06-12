@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { distinctUntilChanged, filter, map, pairwise, tap } from 'rxjs';
+import { distinctUntilChanged, filter, map, merge, of, pairwise, tap } from 'rxjs';
 import { VisibilityState } from './shared/models/visibility-state.enum';
 import { Direction } from './shared/models/direction.enum';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,15 @@ import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'pokemon-card-shop';
-  loading = true;
-  headerVisibilityState = signal(VisibilityState.Visible);
+  public title = 'pokemon-card-shop';
+  public headerVisibilityState = signal(VisibilityState.Visible);
+  public readonly SEARCHABLE_PAGES = ['/home'];
+  public isHeaderSearchable$ = of(false);
 
-  constructor(private readonly scrollDispatcher: ScrollDispatcher) {
+  constructor(
+    private readonly scrollDispatcher: ScrollDispatcher,
+    private readonly router: Router,
+  ) {
     this.scrollDispatcher
       .scrolled(30)
       .pipe(
@@ -31,11 +36,19 @@ export class AppComponent {
         tap((v) => this.headerVisibilityState.set(v)),
       )
       .subscribe();
-
-    this.headerVisibilityState;
+    this.isHeaderSearchable$ = merge(
+      this.router.events.pipe(
+        filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+        map((e) => this.canSearch(e.url)),
+      ),
+    );
   }
 
   private isHeaderHidden(scrollDirection: Direction, scrollOffset: number): boolean {
     return scrollDirection === Direction.Down && scrollOffset > 150;
+  }
+
+  private canSearch(url: string): boolean {
+    return this.SEARCHABLE_PAGES.includes(url);
   }
 }

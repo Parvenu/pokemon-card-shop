@@ -1,4 +1,5 @@
 <div class="main-content">
-  <app-header [isVisible]="headerVisibilityState()"></app-header>
+  <app-header [isVisible]="headerVisibilityState()" [canSearch]="(isHeaderSearchable$ | async) ?? false"></app-header>
+  <div class="header-spacer"></div>
   <router-outlet></router-outlet>
 </div>

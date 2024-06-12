@@ -1,6 +1,11 @@
 @use "/src/scss/variables/variables.scss" as vars;
-button.mdc-button.button--round {
-  border-radius: 28px;
+button.mdc-button.button {
+  &--round {
+    border-radius: 28px;
+  }
+  &--near-square {
+    border-radius: 4px;
+  }
 }
 
 .toolbar__filter-btn {
