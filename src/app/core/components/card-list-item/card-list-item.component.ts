@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Card } from '../../../shared/models/card.model';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material/dialog';
-import { CardDetailDialogComponent } from '../../../home/card-detail/card-detail.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { CardService } from '../../services/card.service';
@@ -10,12 +8,6 @@ import { CardService } from '../../services/card.service';
   selector: 'app-card-list-item',
   templateUrl: './card-list-item.component.html',
   styleUrls: ['./card-list-item.component.scss'],
-  providers: [
-    {
-      provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: { maxHeight: 1500, maxWidth: 1500, minHeight: 1500, minWidth: 1500 },
-    },
-  ],
   animations: [
     trigger('cardImg', [
       state(
@@ -32,13 +24,12 @@ import { CardService } from '../../services/card.service';
 export class CardListItemComponent implements OnInit {
   @Input({ required: true }) card!: Card;
   @Input() displayLowestPrice: boolean = true;
+  @Input() canViewDetails: boolean = true;
   @Input({ required: true }) isLoading$!: Observable<boolean>;
   public lowestPrice!: number | null;
   public animationState = 'default';
-  constructor(
-    private dialog: MatDialog,
-    private readonly cardsService: CardService,
-  ) {}
+
+  constructor(private readonly cardsService: CardService) {}
 
   public ngOnInit(): void {
     this.lowestPrice = this.getLowestPrice(this.card);
@@ -47,13 +38,6 @@ export class CardListItemComponent implements OnInit {
   public viewDetails() {
     this.cardsService.viewDetails(this.card);
   }
-
-  // public openDetailDialog() {
-  //   this.dialog.open(CardDetailDialogComponent, {
-  //     data: { card: this.card },
-  //     panelClass: 'card-detail-dialog',
-  //   });
-  // }
 
   public changeAnimationState(state: 'active' | 'default') {
     this.animationState = state;

@@ -1,66 +1,81 @@
-<mat-card class="mat-card mat-card__layout-horizontal">
-  <mat-card-content class="mat-card-content">
-    <div class="mat-card-content__div-image-container">
-      <img class="mat-card-content__div-image-container__image-large" [src]="card.images.large" [alt]="card.name" />
-    </div>
-    <div class="mat-card-content__div-details-container">
-      <div class="mat-card-content__div-details-container-section">
-        <h3>{{ card.name }} - {{ card.set.name }}</h3>
-        <h4>Product details</h4>
-        <mat-list class="mat-card-content__div-details-container-section__text">
-          <mat-list-item>
-            <span class="mat-card-content__div-details-container-section__text-highlight">Number / Rarity:</span> #{{
-              card.number
-            }}/{{ card.set.printedTotal }}, {{ card.rarity ?? "Promo" }}
-          </mat-list-item>
-          <mat-list-item class="mat-card-content__div-details-container-section__text">
-            <span class="mat-card-content__div-details-container-section__text-highlight">Card Type / HP / Stage:</span>
-            {{ card.types }} / {{ card.hp }} /
-            {{ card.subtypes }}
-          </mat-list-item>
-          @for (attack of card.attacks; track attack; let index = $index) {
-            <mat-list-item>
-              <span matListItemTitle class="mat-card-content__div-details-container-section__text-highlight"
-                >Attack {{ index + 1 }}: {{ attack.name }}, cost: {{ attack | formatAttackCost }}
-                @if (attack.damage) {
-                  ({{ attack.damage }})
-                }
-              </span>
-              <span matListItemLine>{{ attack.text }}</span>
-            </mat-list-item>
-          }
-          <mat-list-item>
-            <span class="mat-card-content__div-details-container-section__text-highlight">Artist: </span
-            >{{ card.artist }}
-          </mat-list-item>
-        </mat-list>
-      </div>
-      <div class="mat-card-content__div-details-container-section">
-        <mat-list>
-          @for (f of foil; track f) {
-            @if (card.tcgplayer && card.tcgplayer.prices[f]?.low) {
-              <mat-list-item>
-                <div class="prices-container">
-                  <div class="prices-container__container-text">
-                    {{ f | titlecase }} : {{ card.tcgplayer.prices[f]?.low | currency }}
-                  </div>
-                  <div class="prices-container__container-button">
-                    <button mat-flat-button class="button--near-square" (click)="add(f)">Add to cart</button>
-                  </div>
-                </div>
-              </mat-list-item>
-            }
-          }
-        </mat-list>
-        @if (card.tcgplayer === undefined) {
-          <p i18n="placeholder if no prices to display">No pricing available from TCG Player</p>
-        }
-      </div>
-    </div>
-  </mat-card-content>
-  <mat-card-actions i18n="close button" class="mat-card-actions">
+<mat-card class="mat-card mat-card--layout-horizontal mat-card--actions">
+  <mat-card-actions>
     <button mat-icon-button (click)="close()">
       <mat-icon>close</mat-icon>
     </button>
   </mat-card-actions>
+  <mat-card-content class="mat-card-content">
+    <div class="mat-card-content__div">
+      <mat-list>
+        @for (f of foil; track f) {
+          @if (card.tcgplayer && card.tcgplayer.prices[f]?.low) {
+            <mat-list-item>
+              <div class="prices-container">
+                <div class="prices-container__container-text">
+                  {{ f | titlecase }} : {{ card.tcgplayer.prices[f]?.low | currency }}
+                </div>
+                <div class="prices-container__container-button">
+                  <button mat-flat-button class="button--near-square" (click)="add(f)">Add to cart</button>
+                </div>
+              </div>
+            </mat-list-item>
+          }
+        }
+      </mat-list>
+      @if (card.tcgplayer === undefined) {
+        <p i18n="placeholder if no prices to display">No pricing available from TCG Player</p>
+      }
+    </div>
+    <div class="mat-card-content__div">
+      <div
+        class="mat-card-content__div-image-container"
+        [class]="card.isHorizontal ? 'mat-card-content__div-image-container--horizontal' : ''"
+      >
+        <img
+          class="mat-card-content__div-image-container__image--large"
+          [class]="card.isHorizontal ? 'mat-card-content__div-image-container__image--horizontal' : ''"
+          [src]="card.images.large"
+          [alt]="card.name"
+        />
+      </div>
+      <div
+        class="mat-card-content__div-details-container"
+        [class]="card.isHorizontal ? 'mat-card-content__div-details-container--horizontal' : ''"
+      >
+        <div class="mat-card-content__div-details-container-section">
+          <h3>{{ card.name }} - {{ card.set.name }}</h3>
+          <h4>Product details</h4>
+          <mat-list class="mat-card-content__div-details-container-section__text">
+            <mat-list-item>
+              <span class="mat-card-content__div-details-container-section__text-highlight">Number / Rarity:</span> #{{
+                card.number
+              }}/{{ card.set.printedTotal }}, {{ card.rarity ?? "Promo" }}
+            </mat-list-item>
+            <mat-list-item class="mat-card-content__div-details-container-section__text">
+              <span class="mat-card-content__div-details-container-section__text-highlight"
+                >Card Type / HP / Stage:</span
+              >
+              {{ card.types }} / {{ card.hp }} /
+              {{ card.subtypes }}
+            </mat-list-item>
+            @for (attack of card.attacks; track attack; let index = $index) {
+              <mat-list-item>
+                <span matListItemTitle class="mat-card-content__div-details-container-section__text-highlight"
+                  >Attack {{ index + 1 }}: {{ attack.name }}, cost: {{ attack | formatAttackCost }}
+                  @if (attack.damage) {
+                    ({{ attack.damage }})
+                  }
+                </span>
+                <span matListItemLine>{{ attack.text }}</span>
+              </mat-list-item>
+            }
+            <mat-list-item>
+              <span class="mat-card-content__div-details-container-section__text-highlight">Artist: </span
+              >{{ card.artist }}
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>

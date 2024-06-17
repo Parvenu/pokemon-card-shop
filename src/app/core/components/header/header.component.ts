@@ -1,6 +1,5 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { Observable, concat, concatAll, exhaustMap, fromEvent, merge, of, switchMap, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { VisibilityState } from '../../../shared/models/visibility-state.enum';
 import { FilterDataService } from '../../services/filter-data.service';
 import { CardService } from '../../services/card.service';

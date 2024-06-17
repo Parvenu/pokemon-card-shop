@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, concat, map, merge, of, tap } from 'rxjs';
+import { Observable, Subject, catchError, map, of } from 'rxjs';
 import { ApiResponse } from '../../shared/models/api.model';
 import { environment } from '../../../environment/environment';
 
@@ -8,15 +8,15 @@ import { environment } from '../../../environment/environment';
 export class FilterDataService {
   private toggleFilterNavSubject = new Subject<void>();
 
-  public toggleFilterNav() {
-    this.toggleFilterNavSubject.next();
-  }
-
   public get toggleFilterNav$(): Observable<void> {
     return this.toggleFilterNavSubject.asObservable();
   }
 
   constructor(private http: HttpClient) {}
+
+  public toggleFilterNav() {
+    this.toggleFilterNavSubject.next();
+  }
 
   public getRarity(): Observable<string[]> {
     return this.http.get<Partial<ApiResponse<string>>>(`${environment.apiUrl}/rarities`).pipe(

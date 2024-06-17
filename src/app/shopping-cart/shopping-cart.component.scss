@@ -1,64 +1,66 @@
 @use "/src/scss/variables/variables.scss" as vars;
-
-.item-container {
-  position: relative;
-}
-
-.flex-container {
-  display: flex;
-  align-items: center;
-}
-
-.list-item {
-  margin: 2rem 0 2rem 50%;
-  transform: translateX(-50%);
-  .cart-icon {
-    margin: 0 !important;
-  }
-  .price-details-container {
-    margin-left: 5rem;
-    height: 10rem;
-    width: 30rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-around;
-    .btn-container {
-      display: flex;
-      justify-content: space-evenly;
-      width: 100%;
-      button {
-        width: 10rem;
-      }
-    }
-  }
-}
-
-mat-divider.item-divider {
-  border-top-color: #4dcfd0;
-}
-
-.total-item {
-  position: absolute;
-  right: 20%;
-  bottom: 1rem;
-}
-
-.total-container {
-  height: 5vh;
-  position: fixed;
-  bottom: 0;
-  background-color: vars.$background-color;
-  width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  .total {
-    margin-right: 5rem;
-  }
-}
+$total-bar-height: 50px;
 
 .empty-cart {
   text-align: center;
-  margin-top: 10rem;
+  margin-top: 200px;
+}
+
+.cart-container {
+  position: absolute;
+  top: vars.$header-height;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.cart-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 1000px;
+  margin: auto;
+  &__card {
+    width: 500px;
+    height: 375px;
+    margin: 15px 0;
+  }
+  &__details {
+    width: 500px;
+    height: 375px;
+    display: flex;
+    flex-direction: column;
+    &__action-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+    }
+    &__total {
+      text-align: right;
+      margin-top: auto;
+    }
+  }
+}
+.cart-checkout {
+  height: $total-bar-height;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  &-spacer {
+    height: $total-bar-height;
+  }
+  &__container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    background-color: vars.$background-color;
+    &__button {
+      margin: 0 15px;
+    }
+    &__total-price {
+      margin: 0 15px;
+    }
+  }
 }

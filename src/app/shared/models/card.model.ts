@@ -12,6 +12,7 @@ export class Card {
   number!: string;
   artist!: string;
   attacks!: Attack[];
+  isHorizontal!: boolean;
   // Other unused props are returned, more info at https://docs.pokemontcg.io/api-reference/cards/card-object
 }
 

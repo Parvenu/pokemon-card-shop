@@ -1,10 +1,9 @@
 @use "/src/scss/variables/variables.scss" as vars;
 
 .mat-card {
-  margin: 15px;
   width: 445px;
 
-  &__image-break {
+  &--horizontal {
     margin-top: 25%;
     -webkit-transform: rotate(90deg) translatez(0) translateX(-50px);
     transform: rotate(90deg) translatez(0) translateX(-50px);
@@ -12,34 +11,30 @@
     transform-origin: 50% 51%;
   }
 
+  & .mat-card-header {
+    &__image {
+      max-height: 342px;
+    }
+    &__details-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      & mat-icon {
+        transform: scale(2);
+      }
+    }
+  }
+
   & .mat-card-content {
     margin: auto 0 auto 0;
 
-    &__div-container {
-      padding: 5px;
+    &__pricetag {
+      color: vars.$text-color-accent;
     }
-    &__image-container {
-      &__image {
-        max-height: 330px;
-      }
-      &__details-icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        & mat-icon {
-          transform: scale(2);
-        }
-      }
-    }
-    &__details-container {
-      &__pricetag {
-        color: vars.$text-color-accent;
-      }
-      &__image-break {
-        -webkit-transform: rotate(-90deg) translatez(0);
-        transform: rotate(-90deg) translatez(0);
-      }
+    &--horizontal {
+      -webkit-transform: rotate(-90deg) translatez(0);
+      transform: rotate(-90deg) translatez(0);
     }
   }
 }

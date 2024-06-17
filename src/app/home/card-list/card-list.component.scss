@@ -3,9 +3,8 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  margin-top: 1rem;
 
   &__card-item {
-    flex-basis: 12vw;
+    margin: 15px;
   }
 }

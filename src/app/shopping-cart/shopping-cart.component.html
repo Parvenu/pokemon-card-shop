@@ -1,35 +1,54 @@
-@if ((shoppingCart$ | async)?.items?.length === 0) {
-  <h2 class="empty-cart">Your cart is empty !</h2>
-} @else {
-  @for (item of (shoppingCart$ | async)?.items; track item.card.id) {
-    <div class="item-container">
-      <div class="flex-container list-item">
-        <app-card-list-item
-          [card]="item.card"
-          [displayLowestPrice]="false"
-          [isLoading$]="isLoading$"
-        ></app-card-list-item>
-        @for (foil of getItemFoils(item.foilCount); track foil) {
-          <div class="price-details-container">
-            {{ item.card.name }} {{ foil }} x {{ item.foilCount.get(foil) }} at
-            {{ item.card.tcgplayer.prices[foil]!.low }} for a total of {{ countItemTotalPrice(item, foil) }} $
-            <div class="btn-container">
-              <button mat-raised-button color="primary" (click)="add(item.card, foil)">
-                <mat-icon aria-hidden="false" class="cart-icon">add_shopping_cart</mat-icon>
-              </button>
-              <button mat-raised-button color="warn" (click)="remove(item.card, foil)">
-                <mat-icon aria-hidden="false" class="cart-icon">remove_shopping_cart</mat-icon>
-              </button>
+<div class="cart-container">
+  @if ((shoppingCart$ | async)?.items; as cartItems) {
+    @if (cartItems?.length === 0) {
+      <h2 class="empty-cart">Your cart is empty !</h2>
+    } @else {
+      @for (item of cartItems; track item.card.id; let index = $index) {
+        <div class="cart-item">
+          <app-card-list-item
+            [card]="item.card"
+            [displayLowestPrice]="false"
+            [isLoading$]="isLoading$"
+            [canViewDetails]="false"
+            class="cart-item__card"
+          ></app-card-list-item>
+          <div class="cart-item__details">
+            <div class="cart-item__details__action-container">
+              @for (foil of getItemFoils(item.foilCount); track foil) {
+                <div class="">
+                  {{ item.card.name }} {{ foil }} x {{ item.foilCount.get(foil) }} at
+                  {{ item.card.tcgplayer.prices[foil]!.low | currency }} for a total of
+                  {{ item | countItemPrice: foil | currency }}
+                  <div class="">
+                    <button mat-stroked-button class="button--near-square" (click)="add(item.card, foil)">
+                      <mat-icon aria-hidden="false" class="">add_shopping_cart</mat-icon>
+                    </button>
+                    <button mat-stroked-button class="button--near-square" (click)="remove(item.card, foil)">
+                      <mat-icon aria-hidden="false" class="">remove_shopping_cart</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              }
             </div>
+            <div class="cart-item__details__total">Total : {{ item | countItemPrice | currency }}</div>
           </div>
+        </div>
+        @if (index !== cartItems.length - 1) {
+          <mat-divider class=""></mat-divider>
         }
+      }
+      <div class="cart-checkout-spacer"></div>
+      <div class="cart-checkout">
+        <mat-divider></mat-divider>
+        <div class="cart-checkout__container">
+          <div class="cart-checkout__container__button">
+            <button mat-flat-button class="button--near-square">Checkout</button>
+          </div>
+          <div class="cart-checkout__container__total-price">
+            Total cart : {{ shoppingCartTotalPrice$ | async | currency }}
+          </div>
+        </div>
       </div>
-      <div class="total-item">Total : {{ countItemTotalPrice(item) }} $</div>
-    </div>
-    <mat-divider class="item-divider"></mat-divider>
+    }
   }
-  <div class="total-container">
-    <mat-divider></mat-divider>
-    <div class="total">Total cart : {{ shoppingCartTotalPrice$ | async }} $</div>
-  </div>
-}
+</div>

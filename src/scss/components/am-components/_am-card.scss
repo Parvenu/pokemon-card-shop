@@ -10,13 +10,14 @@ mat-card {
       }
     }
   }
-  &.mat-card__layout-horizontal {
-    display: flex;
-    flex-direction: row;
-  }
-
-  &.mat-card__vertical {
-    display: flex;
-    flex-direction: column;
+  &.mat-card {
+    &--layout-horizontal {
+      display: flex;
+      flex-direction: row;
+    }
+    &--vertical {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

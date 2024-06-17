@@ -1,8 +1,15 @@
 @use "/src/scss/variables/variables.scss" as vars;
-.title {
-  font-size: 20px;
-  line-height: 32px;
-  letter-spacing: 0.25px;
-  font-weight: normal;
-  font-family: vars.$font-family;
+.div-title {
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  &__title {
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: 0.25px;
+    font-weight: normal;
+    font-family: vars.$font-family;
+  }
 }

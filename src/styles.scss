@@ -14,3 +14,7 @@ html body {
   background-color: vars.$background-color;
   color: vars.$text-color;
 }
+
+.header-spacer {
+  height: vars.$header-height;
+}

@@ -1,3 +1,5 @@
+import { Card } from './card.model';
+
 export class ApiResponse<T> {
   data!: T[];
   count!: number;
@@ -5,6 +7,8 @@ export class ApiResponse<T> {
   pageSize!: number;
   totalCount!: number;
 }
+
+export type ApiCard = Omit<Card, 'isHorizontal'>;
 
 export class CardFilters {
   search?: string;

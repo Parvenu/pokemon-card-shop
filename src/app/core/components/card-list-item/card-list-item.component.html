@@ -1,29 +1,23 @@
 @defer (when !(isLoading$ | async)) {
   <mat-card
-    (click)="viewDetails()"
-    (mouseenter)="changeAnimationState('active')"
-    (mouseleave)="changeAnimationState('default')"
+    (click)="canViewDetails && viewDetails()"
+    (mouseenter)="canViewDetails && changeAnimationState('active')"
+    (mouseleave)="canViewDetails && changeAnimationState('default')"
     appearance="outlined"
-    class="mat-card__card-slim mat-card mat-card__layout-horizontal"
-    [class]="card.rarity === 'Rare BREAK' ? 'mat-card__image-break' : ''"
+    class="mat-card__card-slim mat-card mat-card--layout-horizontal"
+    [class]="card.isHorizontal ? 'mat-card--horizontal' : ''"
   >
-    <mat-card-header
-      class="mat-card-header"
-      [class]="card.rarity === 'Rare BREAK' ? 'mat-card-header__image-break' : ''"
-    >
-      <img [src]="card.images.small" [alt]="card.name" [@cardImg]="animationState" />
+    <mat-card-header class="mat-card-header" [class]="card.isHorizontal ? 'mat-card-header--horizontal' : ''">
+      <img [src]="card.images.small" [alt]="card.name" [@cardImg]="animationState" class="mat-card-header__image" />
       @if (animationState === "active") {
         <span class="mat-card-header__details-icon"><mat-icon aria-hidden="false">search</mat-icon></span>
       }
     </mat-card-header>
-    <mat-card-content
-      class="mat-card-content"
-      [class]="card.rarity === 'Rare BREAK' ? 'mat-card-content__image-break' : ''"
-    >
+    <mat-card-content class="mat-card-content" [class]="card.isHorizontal ? 'mat-card-content--horizontal' : ''">
+      <p>{{ card.set.name }}</p>
+      <p>{{ card.rarity ?? "Promo" }}, #{{ card.number }}/{{ card.set.printedTotal }}</p>
+      <p>{{ card.name }}</p>
       @if (lowestPrice !== null && displayLowestPrice) {
-        <p>{{ card.set.name }}</p>
-        <p>{{ card.rarity ?? "Promo" }}, #{{ card.number }}/{{ card.set.printedTotal }}</p>
-        <p>{{ card.name }}</p>
         <p i18n="item price tag|lowest price tag for an item">
           Prices from <span class="mat-card-content__pricetag">{{ lowestPrice | currency }}</span>
         </p>
@@ -32,8 +26,7 @@
         <p i18n="placeholder if no prices to display">No pricing available</p>
       }
     </mat-card-content>
-    <mat-card-footer> </mat-card-footer>
   </mat-card>
-} @loading (minimum 200ms) {
+} @placeholder {
   <app-card-list-item-placeholder class="list-item__mat-card"></app-card-list-item-placeholder>
 }

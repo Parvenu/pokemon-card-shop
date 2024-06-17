@@ -1,7 +1,5 @@
-<mat-icon
-  (click)="redirect('/cart')"
-  [matBadge]="shoppingCartItemsCount$ | async"
-  matBadgeColor="warn"
-  aria-hidden="false"
-  >shopping_cart</mat-icon
->
+<div class="div-shopping-button" (click)="redirect('/cart')">
+  <mat-icon [matBadge]="shoppingCartItemsCount$ | async" matBadgeColor="warn" aria-hidden="false"
+    >shopping_cart</mat-icon
+  >
+</div>
