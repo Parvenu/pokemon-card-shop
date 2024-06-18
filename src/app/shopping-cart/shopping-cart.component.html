@@ -3,40 +3,80 @@
     @if (cartItems?.length === 0) {
       <h2 class="empty-cart">Your cart is empty !</h2>
     } @else {
-      @for (item of cartItems; track item.card.id; let index = $index) {
-        <div class="cart-item">
-          <app-card-list-item
-            [card]="item.card"
-            [displayLowestPrice]="false"
-            [isLoading$]="isLoading$"
-            [canViewDetails]="false"
-            class="cart-item__card"
-          ></app-card-list-item>
-          <div class="cart-item__details">
-            <div class="cart-item__details__action-container">
-              @for (foil of getItemFoils(item.foilCount); track foil) {
-                <div class="">
-                  {{ item.card.name }} {{ foil }} x {{ item.foilCount.get(foil) }} at
-                  {{ item.card.tcgplayer.prices[foil]!.low | currency }} for a total of
-                  {{ item | countItemPrice: foil | currency }}
-                  <div class="">
-                    <button mat-stroked-button class="button--near-square" (click)="add(item.card, foil)">
-                      <mat-icon aria-hidden="false" class="">add_shopping_cart</mat-icon>
-                    </button>
-                    <button mat-stroked-button class="button--near-square" (click)="remove(item.card, foil)">
-                      <mat-icon aria-hidden="false" class="">remove_shopping_cart</mat-icon>
-                    </button>
+      <form [formGroup]="cartItemForm">
+        @for (item of cartItems; track item.card.id; let index = $index) {
+          <div class="cart-item">
+            <app-card-list-item
+              [card]="item.card"
+              [displayLowestPrice]="false"
+              [isLoading$]="isLoading$"
+              [canViewDetails]="false"
+              class="cart-item__card"
+            ></app-card-list-item>
+            <div class="cart-item__details">
+              <div class="cart-item__details__action-container">
+                @for (foil of getItemFoils(item.foilCount); track foil) {
+                  <div class="cart-item__details__action-container__item">
+                    <div class="cart-item__details__action-container__item-details">
+                      <div class="cart-item__details__action-container__item-details-count">
+                        <span class="cart-item__details__action-container__item--text-bold"
+                          >{{ item.card.name }} {{ foil }}</span
+                        >
+                        x
+                        @if (cartFormControls.get(item.card.name + "-" + foil); as formControl) {
+                          <mat-form-field class="mat-form-field--small mat-form-field--number--no-arrows">
+                            @if (formControl.value < 4) {
+                              <mat-select
+                                [formControl]="formControl"
+                                [panelWidth]="'150px'"
+                                [(value)]="formControl.value"
+                              >
+                                <mat-option [value]="0"
+                                  >0 (<span i18n="delete item from cart">Delete</span>)</mat-option
+                                >
+                                @for (i of "123"; track i) {
+                                  <mat-option [value]="+i">{{ i }}</mat-option>
+                                }
+                                <mat-option [value]="4">4+</mat-option>
+                              </mat-select>
+                            } @else {
+                              <input type="number" aria-label="item count" matInput [formControl]="formControl" />
+                            }
+                          </mat-form-field>
+                        } @else {
+                          {{ item.foilCount.get(foil) }}
+                        }
+                        at
+                        {{ item.card.tcgplayer.prices[foil]!.low | currency }}
+                      </div>
+                      <div class="cart-item__details__action-container__item-details-total">
+                        for a total of
+                        <span class="cart-item__details__action-container__item--text-bold">{{
+                          item | countItemPrice: foil | currency
+                        }}</span>
+                      </div>
+                    </div>
+                    <div class="cart-item__details__action-container__item-remove">
+                      <button mat-stroked-button class="button--near-square" (click)="remove(item.card, foil)">
+                        <mat-icon aria-hidden="false" class="">remove_shopping_cart</mat-icon>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              }
+                }
+              </div>
+              <div class="cart-item__details__total">
+                <span class="cart-item__details__total--text-larger"
+                  >Total :
+                  <span class="cart-item__details__total--text-bold">{{ item | countItemPrice | currency }}</span></span
+                >
+              </div>
             </div>
-            <div class="cart-item__details__total">Total : {{ item | countItemPrice | currency }}</div>
           </div>
-        </div>
-        @if (index !== cartItems.length - 1) {
-          <mat-divider class=""></mat-divider>
+          @if (index !== cartItems.length - 1) {
+            <mat-divider class=""></mat-divider>
+          }
         }
-      }
+      </form>
       <div class="cart-checkout-spacer"></div>
       <div class="cart-checkout">
         <mat-divider></mat-divider>

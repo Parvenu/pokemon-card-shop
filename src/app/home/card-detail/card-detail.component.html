@@ -47,20 +47,18 @@
           <h4>Product details</h4>
           <mat-list class="mat-card-content__div-details-container-section__text">
             <mat-list-item>
-              <span class="mat-card-content__div-details-container-section__text-highlight">Number / Rarity:</span> #{{
+              <span class="mat-card-content__div-details-container-section__text-bold">Number / Rarity:</span> #{{
                 card.number
               }}/{{ card.set.printedTotal }}, {{ card.rarity ?? "Promo" }}
             </mat-list-item>
             <mat-list-item class="mat-card-content__div-details-container-section__text">
-              <span class="mat-card-content__div-details-container-section__text-highlight"
-                >Card Type / HP / Stage:</span
-              >
+              <span class="mat-card-content__div-details-container-section__text-bold">Card Type / HP / Stage:</span>
               {{ card.types }} / {{ card.hp }} /
               {{ card.subtypes }}
             </mat-list-item>
             @for (attack of card.attacks; track attack; let index = $index) {
               <mat-list-item>
-                <span matListItemTitle class="mat-card-content__div-details-container-section__text-highlight"
+                <span matListItemTitle class="mat-card-content__div-details-container-section__text-bold"
                   >Attack {{ index + 1 }}: {{ attack.name }}, cost: {{ attack | formatAttackCost }}
                   @if (attack.damage) {
                     ({{ attack.damage }})
@@ -70,8 +68,7 @@
               </mat-list-item>
             }
             <mat-list-item>
-              <span class="mat-card-content__div-details-container-section__text-highlight">Artist: </span
-              >{{ card.artist }}
+              <span class="mat-card-content__div-details-container-section__text-bold">Artist: </span>{{ card.artist }}
             </mat-list-item>
           </mat-list>
         </div>

@@ -7,7 +7,7 @@ import { ShoppingCartAction } from '../actions/shopping-cart.action';
 export class ShoppingCartEffects {
   public updateShoppingCart$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ShoppingCartAction.addCard, ShoppingCartAction.removeCard),
+      ofType(ShoppingCartAction.addItem, ShoppingCartAction.deleteItem, ShoppingCartAction.changeItemCount),
       map(() => ShoppingCartAction.shoppingCartUpdated()),
     );
   });

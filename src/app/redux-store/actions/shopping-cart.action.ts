@@ -4,8 +4,9 @@ import { Card, FOIL } from '../../shared/models/card.model';
 export const ShoppingCartAction = createActionGroup({
   source: 'ShoppingCart',
   events: {
-    'Add Card': props<{ card: Card; foil: FOIL }>(),
-    'Remove Card': props<{ card: Card; foil: FOIL }>(),
+    'Add item': props<{ card: Card; foil: FOIL }>(),
+    'Delete Item': props<{ card: Card; foil: FOIL }>(),
+    'Change item count': props<{ card: Card; foil: FOIL; newCount: number }>(),
     'Shopping Cart updated': emptyProps(),
   },
 });

@@ -1,5 +1,5 @@
 import { FoilCount } from 'src/app/shared/models/shopping-cart.model';
-import { addCard, removeCard } from './shopping-cart.reducer';
+import { addItem, removeCard } from './shopping-cart.reducer';
 import { FOIL, Card } from 'src/app/shared/models/card.model';
 
 describe('ShoppingCartReduer', () => {
@@ -28,7 +28,7 @@ describe('ShoppingCartReduer', () => {
 
   it('should add item to cart', () => {
     const initialState = { items: [] };
-    const res = addCard(initialState, { card: cards[0], foil: FOIL.normal });
+    const res = addItem(initialState, { card: cards[0], foil: FOIL.normal });
     expect(res.items.length).toBe(1);
     expect(res.items[0]).toEqual({ card: cards[0], foilCount: { [FOIL.normal]: 1 } as FoilCount });
   });

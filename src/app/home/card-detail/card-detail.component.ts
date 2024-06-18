@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ShoppingCartAction } from '../../redux-store/actions/shopping-cart.action';
-import { Attack, Card, FOIL, Foil } from '../../shared/models/card.model';
+import { Card, FOIL, Foil } from '../../shared/models/card.model';
 
 @Component({
   selector: 'app-card-detail',
@@ -15,11 +15,7 @@ export class CardDetailDialogComponent {
   constructor(private store: Store) {}
 
   public add(foil: keyof typeof FOIL): void {
-    this.store.dispatch(ShoppingCartAction.addCard({ card: this.card, foil: FOIL[foil] }));
-  }
-
-  public remove(foil: keyof typeof FOIL): void {
-    this.store.dispatch(ShoppingCartAction.removeCard({ card: this.card, foil: FOIL[foil] }));
+    this.store.dispatch(ShoppingCartAction.addItem({ card: this.card, foil: FOIL[foil] }));
   }
 
   public close(): void {

@@ -1,5 +1,5 @@
 @use "/src/scss/variables/variables.scss" as vars;
-$total-bar-height: 50px;
+$cart-total-bar-height: 50px;
 
 .empty-cart {
   text-align: center;
@@ -21,8 +21,10 @@ $total-bar-height: 50px;
   width: 1000px;
   margin: auto;
   &__card {
+    display: flex;
+    align-items: center;
     width: 500px;
-    height: 375px;
+    height: 500px;
     margin: 15px 0;
   }
   &__details {
@@ -31,24 +33,56 @@ $total-bar-height: 50px;
     display: flex;
     flex-direction: column;
     &__action-container {
-      display: flex;
-      flex-direction: column;
       margin-top: auto;
+      &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &-details {
+          display: flex;
+          flex-direction: column;
+          &-count {
+          }
+          &-total {
+          }
+        }
+        &-remove {
+        }
+        &--text {
+          &-bold {
+            font-weight: bold;
+          }
+          &-highlight {
+            color: vars.$text-color-accent;
+          }
+        }
+      }
     }
     &__total {
       text-align: right;
       margin-top: auto;
+      &--text {
+        &-bold {
+          font-weight: bold;
+        }
+        &-larger {
+          font-size: larger;
+        }
+        &-highlight {
+          color: vars.$text-color-accent;
+        }
+      }
     }
   }
 }
 .cart-checkout {
-  height: $total-bar-height;
+  height: $cart-total-bar-height;
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
   &-spacer {
-    height: $total-bar-height;
+    height: $cart-total-bar-height;
   }
   &__container {
     display: flex;
