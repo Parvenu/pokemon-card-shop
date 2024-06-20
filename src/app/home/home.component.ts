@@ -14,19 +14,12 @@ import { Card } from '../shared/models/card.model';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [
-    trigger('toggleSpacer', [
-      state('false', style({ height: 0 })),
-      state('true', style({ height: '6rem' })),
-      transition('true <=> false', animate('50ms ease-in-out')),
-    ]),
-  ],
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('filtersNav') filtersDrawer!: MatDrawer;
   @ViewChild('detailsNav') detailsDrawer!: MatDrawer;
   @ViewChild(CdkScrollable) scrollable!: CdkScrollable;
-  public mobileQuery$!: Observable<BreakpointState>;
+  public isSmallScreen$!: Observable<BreakpointState>;
   public canScrollToTop$!: Observable<boolean>;
   public isFiltersDrawerOpen$!: Observable<boolean>;
   public detailsCard!: Card;
@@ -38,7 +31,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     private readonly cardsService: CardService,
     private readonly store: Store<{ isFiltersDrawerOpen: boolean }>,
   ) {
-    this.mobileQuery$ = this.breakpointObserver.observe(Breakpoints.XSmall);
+    this.isSmallScreen$ = this.breakpointObserver.observe(Breakpoints.Small);
     this.isFiltersDrawerOpen$ = this.store.select('isFiltersDrawerOpen');
   }
 

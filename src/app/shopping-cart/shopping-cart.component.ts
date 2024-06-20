@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, map, take, tap } from 'rxjs';
+import { Observable, Subject, concatWith, map, take, takeUntil, tap, withLatestFrom, zip } from 'rxjs';
 import { CartItem, ShoppingCart } from '../shared/models/shopping-cart.model';
 import { shoppingCartState } from '../redux-store/selectors/shopping-cart.selector';
 import { Card, FOIL } from '../shared/models/card.model';
@@ -14,12 +14,14 @@ import { FormControl, FormGroup } from '@angular/forms';
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.scss'],
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
   public shoppingCart$!: Observable<ShoppingCart>;
   public shoppingCartTotalPrice$!: Observable<string>;
   public isLoading$ = this.cardsService.isLoading$;
   public cartItemForm!: FormGroup;
   public cartFormControls = new Map<string, FormControl<number>>();
+  public confirmControlEmitter = new EventEmitter<{ formControl: FormControl; cartItem: CartItem }>();
+  private destroySubject = new Subject<void>();
   constructor(
     private readonly store: Store,
     private readonly cardsService: CardService,
@@ -51,11 +53,7 @@ export class ShoppingCartComponent implements OnInit {
       const control: FormControl<number> = new FormControl(i.count, { nonNullable: true });
       this.cartFormControls.set(controlName, control);
       fg.addControl(controlName, control);
-      control.valueChanges.subscribe((newCount) =>
-        this.store.dispatch(
-          ShoppingCartAction.changeItemCount({ card: i.card, foil: i.foil, newCount: newCount ?? 0 }),
-        ),
-      );
+      this.listenToControlChanges(control);
     });
 
     return fg;
@@ -63,5 +61,24 @@ export class ShoppingCartComponent implements OnInit {
 
   public remove(card: Card, foil: keyof typeof FOIL) {
     this.store.dispatch(ShoppingCartAction.deleteItem({ card, foil: FOIL[foil] }));
+  }
+
+  private listenToControlChanges(inputControl: FormControl) {
+    this.confirmControlEmitter
+      .pipe(takeUntil(this.destroySubject), withLatestFrom(inputControl.valueChanges))
+      .subscribe(([{ formControl, cartItem }, newValue]) => {
+        formControl.markAsPristine();
+        this.store.dispatch(
+          ShoppingCartAction.changeItemCount({ card: cartItem.card, foil: cartItem.foil, newCount: newValue ?? 0 }),
+        );
+      });
+  }
+
+  public confirmChange(formControl: FormControl, cartItem: CartItem) {
+    this.confirmControlEmitter.emit({ formControl, cartItem });
+  }
+
+  public ngOnDestroy(): void {
+    this.destroySubject.next();
   }
 }

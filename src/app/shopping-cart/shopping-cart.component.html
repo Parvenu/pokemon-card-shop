@@ -15,7 +15,6 @@
             ></app-card-list-item>
             <div class="cart-item__details">
               <div class="cart-item__details__action-container">
-                <!-- @for (foil of getItemFoils(item.foilCount); track foil) { -->
                 <div class="cart-item__details__action-container__item">
                   <div class="cart-item__details__action-container__item-details">
                     <div class="cart-item__details__action-container__item-details-count">
@@ -41,16 +40,13 @@
                             <input type="number" aria-label="item count" matInput [formControl]="formControl" />
                           }
                         </mat-form-field>
+                        @if (formControl.valid && !formControl.pristine) {
+                          <button mat-button (click)="confirmChange(formControl, item)">Confirm change</button>
+                        }
                       } @else {
                         {{ item.count }}
                       }
                     </div>
-                    <!-- <div class="cart-item__details__action-container__item-details-total">
-                        for a total of
-                        <span class="cart-item__details__action-container__item--text-bold">{{
-                          item | countItemPrice: foil | currency
-                        }}</span>
-                      </div> -->
                   </div>
                   <div class="cart-item__details__action-container__item-remove">
                     <button
@@ -62,7 +58,6 @@
                     </button>
                   </div>
                 </div>
-                <!-- } -->
               </div>
               <div class="cart-item__details__total">
                 <span class="cart-item__details__total--text-larger"

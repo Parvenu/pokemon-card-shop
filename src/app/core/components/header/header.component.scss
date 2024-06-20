@@ -1,27 +1,29 @@
 @use "/src/scss/variables/variables.scss" as vars;
 
-mat-toolbar {
+.toolbar {
   height: vars.$header-height;
   justify-content: space-between;
-  & app-logo {
+  &__logo {
     flex: 1;
   }
-  & app-search-cards {
+  &__search-container {
     flex: 3;
-  }
-  & .toolbar__filter-btn {
-    border-radius: 0 28px 28px 0;
-    width: 150px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: vars.$header-search-input-height;
-    background-color: vars.$background-tint;
-    & .toolbar__filter-btn__text {
-      font-size: large;
+    &__filter-btn {
+      border-radius: 0 28px 28px 0;
+      width: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: vars.$header-search-input-height;
+      background-color: vars.$background-tint;
+      &-text--large {
+        font-size: large;
+      }
     }
   }
-  & .toolbar__shopping-cart-btn {
+  &__shopping-cart-btn {
     flex: 1;
     text-align: right;
     height: 100%;

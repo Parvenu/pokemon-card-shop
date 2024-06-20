@@ -1,15 +1,13 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormBuilder } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { Store } from '@ngrx/store';
 import { Observable, debounceTime, distinctUntilChanged, of, startWith } from 'rxjs';
-import { CardsApiActions } from 'src/app/redux-store/actions/card.action';
+
 import { FilterActions } from 'src/app/redux-store/actions/filter.action';
 import { CardsState } from 'src/app/redux-store/reducers/card.reducer';
 import { CardFilters } from 'src/app/shared/models/api.model';
 import { FiltersData } from 'src/app/shared/models/filters-data.model';
-import { VisibilityState } from 'src/app/shared/models/visibility-state.enum';
 
 @Component({
   selector: 'app-search-cards',

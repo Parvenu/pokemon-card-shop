@@ -1,11 +1,36 @@
-<mat-toolbar [@toggle]="isVisible" color="primary">
-  <app-logo></app-logo>
-  @if (canSearch) {
-    <app-search-cards></app-search-cards>
-    <mat-divider [vertical]="true"></mat-divider>
-    <button mat-icon-button class="toolbar__filter-btn" (click)="toggleFiltersNav()">
-      <mat-icon>tune</mat-icon> <span class="toolbar__filter-btn__text">Filters</span>
-    </button>
-  }
-  <app-shopping-cart-button class="toolbar__shopping-cart-btn"></app-shopping-cart-button>
-</mat-toolbar>
+@if (isSmallScreen$ | async) {
+  <mat-toolbar [@toggle]="isVisible" color="primary" class="toolbar">
+    @if (!(isMobileSearchBarVisible$ | async)) {
+      <app-logo class="toolbar__logo"></app-logo>
+    }
+    @if (canSearch) {
+      @if (isMobileSearchBarVisible$ | async) {
+        <div class="toolbar__search-container">
+          <app-search-cards></app-search-cards>
+          <mat-divider [vertical]="true"></mat-divider>
+          <button mat-icon-button class="toolbar__search-container__filter-btn" (click)="toggleFiltersNav()">
+            <mat-icon>tune</mat-icon> <span class="toolbar__search-container__filter-btn-text--large">Filters</span>
+          </button>
+        </div>
+        <button mat-icon-button (click)="onToggleMobileSearchBar()"><mat-icon>close</mat-icon></button>
+      } @else {
+        <button mat-icon-button (click)="onToggleMobileSearchBar()"><mat-icon>search</mat-icon></button>
+      }
+    }
+    <app-shopping-cart-button class="toolbar__shopping-cart-btn"></app-shopping-cart-button>
+  </mat-toolbar>
+} @else {
+  <mat-toolbar [@toggle]="isVisible" color="primary" class="toolbar">
+    <app-logo class="toolbar__logo"></app-logo>
+    @if (canSearch) {
+      <div class="toolbar__search-container">
+        <app-search-cards></app-search-cards>
+        <mat-divider [vertical]="true"></mat-divider>
+        <button mat-icon-button class="toolbar__search-container__filter-btn" (click)="toggleFiltersNav()">
+          <mat-icon>tune</mat-icon> <span class="toolbar__search-container__filter-btn-text--large">Filters</span>
+        </button>
+      </div>
+    }
+    <app-shopping-cart-button class="toolbar__shopping-cart-btn"></app-shopping-cart-button>
+  </mat-toolbar>
+}
