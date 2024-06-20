@@ -41,13 +41,8 @@ $cart-total-bar-height: 50px;
         &-details {
           display: flex;
           flex-direction: column;
-          &-count {
-          }
-          &-total {
-          }
         }
-        &-remove {
-        }
+
         &--text {
           &-bold {
             font-weight: bold;
@@ -95,6 +90,15 @@ $cart-total-bar-height: 50px;
     }
     &__total-price {
       margin: 0 15px;
+    }
+  }
+}
+
+.button-delete-item {
+  padding: 0;
+  &.mat-mdc-outlined-button {
+    & .mat-icon {
+      margin: 0;
     }
   }
 }

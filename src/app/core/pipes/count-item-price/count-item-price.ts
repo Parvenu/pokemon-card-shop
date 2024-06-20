@@ -6,11 +6,7 @@ import { CartItem } from 'src/app/shared/models/shopping-cart.model';
   name: 'countItemPrice',
 })
 export class CountItemPricePipe implements PipeTransform {
-  transform(item: CartItem, foil?: FOIL): string {
-    return (foil ? [foil] : [...item.foilCount.keys()])
-      .reduce((acc, foil) => {
-        return (acc += (item.foilCount.get(foil) ?? 0) * item.card.tcgplayer.prices[foil]!.low);
-      }, 0)
-      .toFixed(2);
+  transform(item: CartItem): string {
+    return (item.count * item.card.tcgplayer.prices[item.foil]!.low).toFixed(2);
   }
 }

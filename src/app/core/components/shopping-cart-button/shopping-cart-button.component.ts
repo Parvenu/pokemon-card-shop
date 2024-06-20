@@ -21,12 +21,7 @@ export class ShoppingCartButtonComponent implements OnInit {
     this.shoppingCartItemsCount$ = this.store.select(shoppingCartState).pipe(
       map((sc) =>
         sc.items.reduce((acc, cartItem) => {
-          return (
-            acc +
-            [...cartItem.foilCount.values()].reduce((acc, foilCount) => {
-              return (acc += foilCount);
-            }, 0)
-          );
+          return acc + cartItem.count;
         }, 0),
       ),
     );

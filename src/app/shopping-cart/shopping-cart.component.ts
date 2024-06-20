@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, map, take, tap } from 'rxjs';
-import { CartItem, FoilCount, ShoppingCart } from '../shared/models/shopping-cart.model';
+import { CartItem, ShoppingCart } from '../shared/models/shopping-cart.model';
 import { shoppingCartState } from '../redux-store/selectors/shopping-cart.selector';
 import { Card, FOIL } from '../shared/models/card.model';
 import { ShoppingCartAction } from '../redux-store/actions/shopping-cart.action';
@@ -19,7 +19,7 @@ export class ShoppingCartComponent implements OnInit {
   public shoppingCartTotalPrice$!: Observable<string>;
   public isLoading$ = this.cardsService.isLoading$;
   public cartItemForm!: FormGroup;
-  public cartFormControls = new Map<string, FormControl>();
+  public cartFormControls = new Map<string, FormControl<number>>();
   constructor(
     private readonly store: Store,
     private readonly cardsService: CardService,
@@ -47,22 +47,18 @@ export class ShoppingCartComponent implements OnInit {
   public initForm(shoppingCartState: ShoppingCart): FormGroup {
     let fg = new FormGroup({});
     shoppingCartState.items.map((i) => {
-      i.foilCount.forEach((v, k) => {
-        const controlName = `${i.card.name}-${k}`;
-        const control = new FormControl<number>(v);
-        this.cartFormControls.set(controlName, control);
-        fg.addControl(controlName, control);
-        control.valueChanges.subscribe((newCount) =>
-          this.store.dispatch(ShoppingCartAction.changeItemCount({ card: i.card, foil: k, newCount: newCount ?? 0 })),
-        );
-      });
+      const controlName = `${i.card.name}-${i.foil}`;
+      const control: FormControl<number> = new FormControl(i.count, { nonNullable: true });
+      this.cartFormControls.set(controlName, control);
+      fg.addControl(controlName, control);
+      control.valueChanges.subscribe((newCount) =>
+        this.store.dispatch(
+          ShoppingCartAction.changeItemCount({ card: i.card, foil: i.foil, newCount: newCount ?? 0 }),
+        ),
+      );
     });
 
     return fg;
-  }
-
-  public getItemFoils(foilCount: FoilCount): FOIL[] {
-    return [...foilCount.keys()];
   }
 
   public remove(card: Card, foil: keyof typeof FOIL) {

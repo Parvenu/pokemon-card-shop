@@ -5,8 +5,10 @@ export class ShoppingCart {
 }
 
 export class CartItem {
-  foilCount!: FoilCount;
+  // foilCount!: FoilCount;
+  foil!: FOIL;
+  count!: number;
   card!: Card;
 }
 
-export type FoilCount = Map<FOIL, number>;
+// export type FoilCount = Map<FOIL, number>;

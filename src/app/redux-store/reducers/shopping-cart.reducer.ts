@@ -14,9 +14,9 @@ export const addItem = (shoppingCartState: ShoppingCart, { card, foil }: { card:
   return changeItemCount(shoppingCartState, { card, foil, newCount: currentItemCount + 1 });
 };
 
-export const deleteItem = (shoppingCartState: ShoppingCart, { card }: { card: Card; foil: FOIL }) => {
+export const deleteItem = (shoppingCartState: ShoppingCart, { card, foil }: { card: Card; foil: FOIL }) => {
   const cartItems = shoppingCartState.items;
-  const cardToUpdateIndex = cartItems.findIndex((ci) => ci.card.id === card.id);
+  const cardToUpdateIndex = cartItems.findIndex((ci) => ci.card.id === card.id && ci.foil === foil);
   const cardToUpdate = cartItems[cardToUpdateIndex];
   if (cardToUpdate === undefined) return shoppingCartState;
   const updatedCartItems = produce(cartItems, (draftState) => {
@@ -30,12 +30,12 @@ export const changeItemCount = (
   { card, foil, newCount }: { card: Card; foil: FOIL; newCount: number },
 ) => {
   const cartItems = shoppingCartState.items;
-  const cardToUpdateIndex = cartItems.findIndex((ci) => ci.card.id === card.id);
+  const cardToUpdateIndex = cartItems.findIndex((ci) => ci.card.id === card.id && ci.foil === foil);
   const cardToUpdate = cartItems[cardToUpdateIndex];
   if (cardToUpdate === undefined) return shoppingCartState;
   if (newCount === 0) return deleteItem(shoppingCartState, { card, foil });
   const updatedCartItem: CartItem = produce(cardToUpdate, (draftState) => {
-    draftState.foilCount.set(foil, newCount);
+    draftState.count = newCount;
   });
   const updatedCartItems: CartItem[] = produce(cartItems, (draftState) => {
     draftState[cardToUpdateIndex] = updatedCartItem;
@@ -45,14 +45,14 @@ export const changeItemCount = (
 
 function addNewItem(shoppingCartState: ShoppingCart, { card, foil }: { card: Card; foil: FOIL }) {
   const updatedCartItems: CartItem[] = produce(shoppingCartState.items, (draftState) => {
-    draftState.push({ card, foilCount: new Map().set(foil, 1) });
+    draftState.push({ card, foil, count: 1 });
   });
   return { ...shoppingCartState, items: updatedCartItems };
 }
 
 function getItemCount(shoppingCartState: ShoppingCart, { card, foil }: { card: Card; foil: FOIL }): number {
-  const cartItem = shoppingCartState.items.find((item) => item.card.id === card.id);
-  return cartItem === undefined ? 0 : cartItem.foilCount.get(foil) ?? 0;
+  const cartItem = shoppingCartState.items.find((item) => item.card.id === card.id && item.foil === foil);
+  return cartItem === undefined ? 0 : cartItem.count ?? 0;
 }
 
 export const shoppingCartReducer = createReducer(
