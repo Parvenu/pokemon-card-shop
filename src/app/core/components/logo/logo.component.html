@@ -1,3 +1,3 @@
-<div class="div-title" (click)="redirect('home')">
-  <h1 class="div-title__title">Pokémon Card Shop</h1>
+<div class="div-logo" (click)="redirect('home')">
+  <img [src]="logoPath" class="div-logo__logo" [class]="'div-logo__logo--' + (screenSize$ | async)" />
 </div>

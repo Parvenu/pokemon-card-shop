@@ -3,8 +3,9 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input } from '@angula
 import { VisibilityState } from '../../../shared/models/visibility-state.enum';
 import { FilterDataService } from '../../services/filter-data.service';
 import { CardService } from '../../services/card.service';
-import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { Observable, map, share, withLatestFrom } from 'rxjs';
+
+import { BreakpointService } from 'src/app/shared/services/breakpoint.service';
 
 @Component({
   selector: 'app-header',
@@ -23,18 +24,16 @@ export class HeaderComponent {
   @Input({ required: true }) isVisible!: VisibilityState;
   @Input({ required: true }) canSearch = false;
   public isLoading$ = this.cardsService.isLoading$;
-  public isSmallScreen$!: Observable<boolean>;
+  public screenSize$ = this.breakpointsService.screenSize$;
+  public isSmallScreen$ = this.breakpointsService.isSmallScreen$;
   public isMobileSearchBarVisible$!: Observable<boolean>;
   private displaySearchBarEmitter = new EventEmitter<void>();
   private isMobileSearchBarVisible = false;
   constructor(
     private readonly filterDataService: FilterDataService,
     private readonly cardsService: CardService,
-    private readonly breakpointObserver: BreakpointObserver,
+    private readonly breakpointsService: BreakpointService,
   ) {
-    this.isSmallScreen$ = this.breakpointObserver
-      .observe([Breakpoints.XSmall, Breakpoints.Small])
-      .pipe(map(({ matches }) => matches));
     this.isMobileSearchBarVisible$ = this.displaySearchBarEmitter.pipe(
       withLatestFrom(this.isSmallScreen$.pipe(map((matches) => !matches))),
       map(() => this.toggleMobileSearchBar()),

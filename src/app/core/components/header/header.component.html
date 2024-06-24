@@ -1,30 +1,46 @@
-@if (isSmallScreen$ | async) {
-  <mat-toolbar [@toggle]="isVisible" color="primary" class="toolbar">
+@if (isSmallScreen$ | async; as isSmallScreen) {
+  <mat-toolbar [@toggle]="isVisible" color="primary" class="toolbar" [class]="isSmallScreen ? 'toolbar--mobile' : ''">
     @if (!(isMobileSearchBarVisible$ | async)) {
+      <div class="toolbar__mobile-spacer"></div>
       <app-logo class="toolbar__logo"></app-logo>
     }
     @if (canSearch) {
       @if (isMobileSearchBarVisible$ | async) {
         <div class="toolbar__search-container">
-          <app-search-cards></app-search-cards>
+          <app-search-cards
+            [class]="'toolbar__search-container__input--screen-' + (screenSize$ | async)"
+          ></app-search-cards>
           <mat-divider [vertical]="true"></mat-divider>
-          <button mat-icon-button class="toolbar__search-container__filter-btn" (click)="toggleFiltersNav()">
-            <mat-icon>tune</mat-icon> <span class="toolbar__search-container__filter-btn-text--large">Filters</span>
+          <button
+            mat-icon-button
+            class="toolbar__search-container__filter-btn"
+            [class]="'toolbar__search-container__filter-btn--screen-' + (screenSize$ | async)"
+            (click)="toggleFiltersNav()"
+          >
+            <mat-icon>tune</mat-icon>
           </button>
         </div>
+      }
+      @if (isMobileSearchBarVisible$ | async) {
         <button mat-icon-button (click)="onToggleMobileSearchBar()"><mat-icon>close</mat-icon></button>
       } @else {
-        <button mat-icon-button (click)="onToggleMobileSearchBar()"><mat-icon>search</mat-icon></button>
+        <div class="toolbar__mobile-actions">
+          <button mat-icon-button (click)="onToggleMobileSearchBar()"><mat-icon>search</mat-icon></button>
+          <app-shopping-cart-button class="toolbar__shopping-cart-btn--mobile"></app-shopping-cart-button>
+        </div>
       }
+    } @else {
+      <app-shopping-cart-button class="toolbar__shopping-cart-btn--mobile"></app-shopping-cart-button>
     }
-    <app-shopping-cart-button class="toolbar__shopping-cart-btn"></app-shopping-cart-button>
   </mat-toolbar>
 } @else {
   <mat-toolbar [@toggle]="isVisible" color="primary" class="toolbar">
     <app-logo class="toolbar__logo"></app-logo>
     @if (canSearch) {
       <div class="toolbar__search-container">
-        <app-search-cards></app-search-cards>
+        <app-search-cards
+          [class]="'toolbar__search-container__input--screen-' + (screenSize$ | async)"
+        ></app-search-cards>
         <mat-divider [vertical]="true"></mat-divider>
         <button mat-icon-button class="toolbar__search-container__filter-btn" (click)="toggleFiltersNav()">
           <mat-icon>tune</mat-icon> <span class="toolbar__search-container__filter-btn-text--large">Filters</span>

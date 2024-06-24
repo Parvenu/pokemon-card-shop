@@ -39,7 +39,7 @@ export class AppComponent {
     this.isHeaderSearchable$ = merge(
       this.router.events.pipe(
         filter((e): e is NavigationEnd => e instanceof NavigationEnd),
-        map((e) => this.canSearch(e.url)),
+        map((e) => this.canSearch(e.urlAfterRedirects)),
       ),
     );
   }

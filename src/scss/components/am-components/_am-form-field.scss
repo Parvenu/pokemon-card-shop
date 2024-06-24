@@ -33,8 +33,11 @@ mat-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
 }
 
 .mat-mdc-form-field {
-  &.mat-form-field--small {
-    width: 70px;
+  // &.mat-form-field--small {
+  //   width: 70px;
+  // }
+  & .mat-mdc-form-field-infix {
+    width: inherit;
   }
   &.mat-form-field--number--no-arrows {
     /* Chrome, Safari, Edge, Opera */

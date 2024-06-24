@@ -1,15 +1,32 @@
 @use "/src/scss/variables/variables.scss" as vars;
-.div-title {
+.div-logo {
   height: 100%;
   width: 100%;
   align-items: center;
+  justify-content: center;
   display: flex;
   cursor: pointer;
-  &__title {
+  &__logo {
     font-size: 20px;
     line-height: 32px;
     letter-spacing: 0.25px;
     font-weight: normal;
     font-family: vars.$font-family;
+  }
+  &__logo {
+    max-width: 150px;
+    height: 100%;
+    &--large {
+      width: 150px;
+    }
+    &--medium {
+      width: 150px;
+    }
+    &--small {
+      width: 150px;
+    }
+    &--xsmall {
+      width: 100px;
+    }
   }
 }
