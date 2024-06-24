@@ -3,6 +3,7 @@ import { Card } from '../../../shared/models/card.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { CardService } from '../../services/card.service';
+import { BreakpointService } from 'src/app/shared/services/breakpoint.service';
 
 @Component({
   selector: 'app-card-list-item',
@@ -28,8 +29,13 @@ export class CardListItemComponent implements OnInit {
   @Input({ required: true }) isLoading$!: Observable<boolean>;
   public lowestPrice!: number | null;
   public animationState = 'default';
+  public screenSize$ = this.breakpointService.screenSize$;
+  public isSmallScreen$ = this.breakpointService.isSmallScreen$;
 
-  constructor(private readonly cardsService: CardService) {}
+  constructor(
+    private readonly cardsService: CardService,
+    private readonly breakpointService: BreakpointService,
+  ) {}
 
   public ngOnInit(): void {
     this.lowestPrice = this.getLowestPrice(this.card);

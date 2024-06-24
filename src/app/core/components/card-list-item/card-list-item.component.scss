@@ -3,6 +3,15 @@
 .mat-card {
   width: 445px;
 
+  &--screen {
+    &-xsmall,
+    &-small {
+      width: 245px;
+      height: 540px;
+      flex-direction: column;
+    }
+  }
+
   &--horizontal {
     margin-top: 25%;
     -webkit-transform: rotate(90deg) translatez(0) translateX(-50px);

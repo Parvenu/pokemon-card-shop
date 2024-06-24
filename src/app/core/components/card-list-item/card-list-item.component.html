@@ -6,6 +6,7 @@
     appearance="outlined"
     class="mat-card__card-slim mat-card mat-card--layout-horizontal"
     [class]="card.isHorizontal ? 'mat-card--horizontal' : ''"
+    [class]="'mat-card--screen-' + (screenSize$ | async)"
   >
     <mat-card-header class="mat-card-header" [class]="card.isHorizontal ? 'mat-card-header--horizontal' : ''">
       <img [src]="card.images.small" [alt]="card.name" [@cardImg]="animationState" class="mat-card-header__image" />
