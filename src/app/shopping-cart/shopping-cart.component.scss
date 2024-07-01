@@ -18,31 +18,71 @@ $cart-total-bar-height: 50px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  width: 1000px;
+  justify-content: center;
   margin: auto;
+  &--xsmall,
+  &--small {
+    width: 100%;
+  }
+  &--medium,
+  &--large,
+  &--xlarge {
+    width: 1000px;
+  }
   &__card {
     display: flex;
     align-items: center;
-    width: 500px;
-    height: 500px;
+    justify-content: center;
     margin: 15px 0;
+    &--xsmall,
+    &--small {
+      width: 320px;
+    }
+    &--medium,
+    &--large,
+    &--xlarge {
+      width: 500px;
+      height: 500px;
+    }
   }
   &__details {
-    width: 500px;
-    height: 375px;
     display: flex;
     flex-direction: column;
+    &--xsmall,
+    &--small {
+      width: 320px;
+    }
+    &--medium,
+    &--large,
+    &--xlarge {
+      width: 500px;
+      height: 375px;
+    }
     &__action-container {
       margin-top: auto;
       &__item {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-around;
+        padding: 15px;
+        &-section {
+          flex: 1;
+        }
         &-details {
           display: flex;
-          flex-direction: column;
-        }
 
+          &--xsmall,
+          &--small {
+            flex-direction: column;
+          }
+          &--medium,
+          &--large,
+          &--xlarge {
+            flex-direction: row;
+            width: 300px;
+            align-items: baseline;
+          }
+        }
         &--text {
           &-bold {
             font-weight: bold;
@@ -56,6 +96,7 @@ $cart-total-bar-height: 50px;
     &__total {
       text-align: right;
       margin-top: auto;
+      padding-right: 15px;
       &--text {
         &-bold {
           font-weight: bold;

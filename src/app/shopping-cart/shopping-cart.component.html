@@ -5,48 +5,57 @@
     } @else {
       <form [formGroup]="cartItemForm">
         @for (item of cartItems; track item.card.id; let index = $index) {
-          <div class="cart-item">
+          <div class="cart-item" [class]="'cart-item--' + (screenSize$ | async)">
             <app-card-list-item
               [card]="item.card"
               [displayLowestPrice]="false"
               [isLoading$]="isLoading$"
               [canViewDetails]="false"
               class="cart-item__card"
+              [class]="'cart-item__card--' + (screenSize$ | async)"
             ></app-card-list-item>
-            <div class="cart-item__details">
+            <div class="cart-item__details" [class]="'cart-item__details--' + (screenSize$ | async)">
               <div class="cart-item__details__action-container">
                 <div class="cart-item__details__action-container__item">
-                  <div class="cart-item__details__action-container__item-details">
-                    <div class="cart-item__details__action-container__item-details-count">
-                      <span class="cart-item__details__action-container__item--text-bold"
-                        >{{ item.card.name }} {{ item.foil }}</span
-                      >
+                  <div
+                    class="cart-item__details__action-container__item-details"
+                    [class]="'cart-item__details__action-container__item-details--' + (screenSize$ | async)"
+                  >
+                    <span
+                      class="cart-item__details__action-container__item--text-bold cart-item__details__action-container__item-section"
+                      >{{ item.card.name }} {{ item.foil }}</span
+                    >
+                    <span class="cart-item__details__action-container__item-section">
                       at {{ item.card.tcgplayer.prices[item.foil]!.low | currency }} x
-                      @if (cartFormControls.get(item.card.name + "-" + item.foil); as formControl) {
-                        <mat-form-field class="mat-form-field--small mat-form-field--number--no-arrows">
-                          @if (formControl.value < 4) {
-                            <mat-select
-                              [formControl]="formControl"
-                              [panelWidth]="'150px'"
-                              [(value)]="formControl.value"
-                            >
-                              <mat-option [value]="0">0 (<span i18n="delete item from cart">Delete</span>)</mat-option>
-                              @for (i of "123"; track i) {
-                                <mat-option [value]="+i">{{ i }}</mat-option>
-                              }
-                              <mat-option [value]="4">4+</mat-option>
-                            </mat-select>
-                          } @else {
-                            <input type="number" aria-label="item count" matInput [formControl]="formControl" />
-                          }
-                        </mat-form-field>
-                        @if (formControl.valid && !formControl.pristine) {
-                          <button mat-button (click)="confirmChange(formControl, item)">Confirm change</button>
+                    </span>
+                    @if (cartFormControls.get(item.card.name + "-" + item.foil); as formControl) {
+                      <mat-form-field
+                        class="mat-form-field--small mat-form-field--number--no-arrows cart-item__details__action-container__item-section"
+                      >
+                        @if (formControl.value < 4) {
+                          <mat-select [formControl]="formControl" [panelWidth]="'150px'" [(value)]="formControl.value">
+                            <mat-option [value]="0">0 (<span i18n="delete item from cart">Delete</span>)</mat-option>
+                            @for (i of "123"; track i) {
+                              <mat-option [value]="+i">{{ i }}</mat-option>
+                            }
+                            <mat-option [value]="4">4+</mat-option>
+                          </mat-select>
+                        } @else {
+                          <input type="number" aria-label="item count" matInput [formControl]="formControl" />
                         }
-                      } @else {
-                        {{ item.count }}
+                      </mat-form-field>
+                      @if (formControl.valid && !formControl.pristine) {
+                        <button
+                          mat-button
+                          class="cart-item__details__action-container__item-section"
+                          (click)="confirmChange(formControl, item)"
+                        >
+                          Confirm change
+                        </button>
                       }
-                    </div>
+                    } @else {
+                      {{ item.count }}
+                    }
                   </div>
                   <div class="cart-item__details__action-container__item-remove">
                     <button

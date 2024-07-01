@@ -8,6 +8,7 @@ import { ShoppingCartAction } from '../redux-store/actions/shopping-cart.action'
 import { CardService } from '../core/services/card.service';
 import { CountItemPricePipe } from '../core/pipes/count-item-price/count-item-price';
 import { FormControl, FormGroup } from '@angular/forms';
+import { BreakpointService } from '../shared/services/breakpoint.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -21,11 +22,13 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   public cartItemForm!: FormGroup;
   public cartFormControls = new Map<string, FormControl<number>>();
   public confirmControlEmitter = new EventEmitter<{ formControl: FormControl; cartItem: CartItem }>();
+  public screenSize$ = this.breakpointService.screenSize$;
   private destroySubject = new Subject<void>();
   constructor(
     private readonly store: Store,
     private readonly cardsService: CardService,
     private readonly countItemPrice: CountItemPricePipe,
+    private readonly breakpointService: BreakpointService,
   ) {}
   ngOnInit(): void {
     this.shoppingCart$ = this.store.select(shoppingCartState);

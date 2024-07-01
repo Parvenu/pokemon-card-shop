@@ -5,7 +5,7 @@
     </button>
   </mat-card-actions>
   <mat-card-content class="mat-card-content">
-    <div class="mat-card-content__div">
+    <div class="mat-card-content__div cart-actions">
       <mat-list>
         @for (f of foil; track f) {
           @if (card.tcgplayer && card.tcgplayer.prices[f]?.low) {
@@ -15,7 +15,11 @@
                   {{ f | titlecase }} : {{ card.tcgplayer.prices[f]?.low | currency }}
                 </div>
                 <div class="prices-container__container-button">
-                  <button mat-flat-button class="button--near-square" (click)="add(f)">Add to cart</button>
+                  @if ((screenSize$ | async) === "xsmall") {
+                    <button mat-icon-button (click)="add(f)"><mat-icon>add_shopping_cart</mat-icon></button>
+                  } @else {
+                    <button mat-flat-button class="button--near-square" (click)="add(f)">Add to cart</button>
+                  }
                 </div>
               </div>
             </mat-list-item>
@@ -29,20 +33,37 @@
     <div class="mat-card-content__div">
       <div
         class="mat-card-content__div-image-container"
-        [class]="card.isHorizontal ? 'mat-card-content__div-image-container--horizontal' : ''"
+        [class]="
+          'mat-card-content__div-image-container' +
+          (card.isHorizontal ? '--horizontal' : '') +
+          '--' +
+          (screenSize$ | async)
+        "
       >
         <img
-          class="mat-card-content__div-image-container__image--large"
-          [class]="card.isHorizontal ? 'mat-card-content__div-image-container__image--horizontal' : ''"
+          class="mat-card-content__div-image-container__image"
+          [class]="
+            'mat-card-content__div-image-container__image' +
+            (card.isHorizontal ? '--horizontal' : '') +
+            ' ' +
+            'mat-card-content__div-image-container__image' +
+            (card.isHorizontal ? '--horizontal--' + (screenSize$ | async) : '') +
+            ' ' +
+            'mat-card-content__div-image-container__image--' +
+            (screenSize$ | async)
+          "
           [src]="card.images.large"
           [alt]="card.name"
         />
       </div>
       <div
         class="mat-card-content__div-details-container"
-        [class]="card.isHorizontal ? 'mat-card-content__div-details-container--horizontal' : ''"
+        [class]="'mat-card-content__div-details-container' + '--' + (screenSize$ | async)"
       >
-        <div class="mat-card-content__div-details-container-section">
+        <div
+          class="mat-card-content__div-details-container-section"
+          [class]="'mat-card-content__div-details-container' + '--' + (screenSize$ | async)"
+        >
           <h3>{{ card.name }} - {{ card.set.name }}</h3>
           <h4>Product details</h4>
           <mat-list class="mat-card-content__div-details-container-section__text">

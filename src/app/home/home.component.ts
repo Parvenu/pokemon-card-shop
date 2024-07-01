@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { DrawerStateActions } from '../redux-store/actions/drawer-state.action';
 import { CardService } from '../core/services/card.service';
 import { Card } from '../shared/models/card.model';
+import { BreakpointService } from '../shared/services/breakpoint.service';
 
 @Component({
   selector: 'app-home',
@@ -19,19 +20,19 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('filtersNav') filtersDrawer!: MatDrawer;
   @ViewChild('detailsNav') detailsDrawer!: MatDrawer;
   @ViewChild(CdkScrollable) scrollable!: CdkScrollable;
-  public isSmallScreen$!: Observable<BreakpointState>;
+  public isSmallScreen$ = this.breakpointService.isSmallScreen$;
+  public screenSize$ = this.breakpointService.screenSize$;
   public canScrollToTop$!: Observable<boolean>;
   public isFiltersDrawerOpen$!: Observable<boolean>;
   public detailsCard!: Card;
   public isDetailsDrawerOpen$!: Observable<boolean>;
   private destroySubject = new Subject<boolean>();
   constructor(
-    private readonly breakpointObserver: BreakpointObserver,
+    private readonly breakpointService: BreakpointService,
     private readonly filterDataService: FilterDataService,
     private readonly cardsService: CardService,
     private readonly store: Store<{ isFiltersDrawerOpen: boolean }>,
   ) {
-    this.isSmallScreen$ = this.breakpointObserver.observe(Breakpoints.Small);
     this.isFiltersDrawerOpen$ = this.store.select('isFiltersDrawerOpen');
   }
 

@@ -5,16 +5,42 @@
     (mouseleave)="canViewDetails && changeAnimationState('default')"
     appearance="outlined"
     class="mat-card__card-slim mat-card mat-card--layout-horizontal"
-    [class]="card.isHorizontal ? 'mat-card--horizontal' : ''"
-    [class]="'mat-card--screen-' + (screenSize$ | async)"
+    [class]="
+      (card.isHorizontal && !(isSmallScreen$ | async) ? 'mat-card--horizontal' : '') +
+      ' mat-card--screen-' +
+      (screenSize$ | async) +
+      (card.isHorizontal ? '--horizontal' : '')
+    "
   >
     <mat-card-header class="mat-card-header" [class]="card.isHorizontal ? 'mat-card-header--horizontal' : ''">
-      <img [src]="card.images.small" [alt]="card.name" [@cardImg]="animationState" class="mat-card-header__image" />
+      <img
+        [src]="card.images.small"
+        [alt]="card.name"
+        [@cardImg]="animationState"
+        class="mat-card-header__image"
+        [class]="
+          'mat-card-header__image--screen-' +
+          (screenSize$ | async) +
+          ' ' +
+          (card.isHorizontal && (isSmallScreen$ | async)
+            ? 'mat-card-header__image--horizontal--screen-' + (screenSize$ | async)
+            : '')
+        "
+      />
       @if (animationState === "active") {
         <span class="mat-card-header__details-icon"><mat-icon aria-hidden="false">search</mat-icon></span>
       }
     </mat-card-header>
-    <mat-card-content class="mat-card-content" [class]="card.isHorizontal ? 'mat-card-content--horizontal' : ''">
+    <mat-card-content
+      class="mat-card-content"
+      [class]="
+        card.isHorizontal && !(isSmallScreen$ | async)
+          ? 'mat-card-content--horizontal'
+          : card.isHorizontal && (isSmallScreen$ | async)
+            ? 'mat-card-content--horizontal--screen-' + (screenSize$ | async)
+            : ''
+      "
+    >
       <p>{{ card.set.name }}</p>
       <p>{{ card.rarity ?? "Promo" }}, #{{ card.number }}/{{ card.set.printedTotal }}</p>
       <p>{{ card.name }}</p>

@@ -2,16 +2,16 @@
   <mat-drawer-container [style.marginTop.rem]="0" class="drawer-container" [autosize]="true">
     <mat-drawer
       #filtersNav
-      [mode]="(isSmallScreen$ | async)?.matches ? 'over' : 'side'"
       fixedTopGap="56"
       [opened]="isFiltersDrawerOpen$ | async"
       [position]="'start'"
+      [class]="(isSmallScreen$ | async) ? 'drawer-small' : ''"
     >
       <app-filter-cards class="filters-container" (closeDrawerEvent)="closeFiltersDrawer()"></app-filter-cards>
     </mat-drawer>
     <mat-drawer
       #detailsNav
-      class="mat-drawer__details-drawer"
+      [class]="'mat-drawer__details-drawer--screen-' + (screenSize$ | async)"
       [mode]="'over'"
       fixedTopGap="56"
       [opened]="isFiltersDrawerOpen$ | async"

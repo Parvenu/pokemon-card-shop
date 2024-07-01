@@ -11,6 +11,7 @@ import { environment } from 'src/environment/environment';
 export class LogoComponent {
   public logoPath = environment.logoPath;
   public screenSize$ = this.breakpointService.screenSize$;
+  public isSmallScreen$ = this.breakpointService.isSmallScreen$;
   constructor(
     private readonly router: Router,
     private readonly breakpointService: BreakpointService,

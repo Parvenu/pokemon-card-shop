@@ -3,11 +3,14 @@
 .toolbar {
   height: vars.$header-height;
   justify-content: space-between;
+  &-section {
+    flex: 1;
+    &--large {
+      flex: 2;
+    }
+  }
   &--mobile {
     padding: 0;
-  }
-  &__logo {
-    flex: 1;
   }
   &__search-container {
     flex: 3;
@@ -37,12 +40,8 @@
       height: vars.$header-search-input-height;
       background-color: vars.$background-tint;
       &--screen {
-        &-large {
-          width: 100px;
-        }
-        &-medium {
-          width: 100px;
-        }
+        &-large,
+        &-medium,
         &-small {
           width: 100px;
         }
@@ -62,21 +61,16 @@
     flex: 1;
     text-align: right;
     height: 100%;
-    &--mobile {
-      flex: unset;
-      text-align: unset;
-    }
+    // &--mobile {
+    //   flex: unset;
+    //   text-align: unset;
+    // }
   }
-  &__mobile {
-    &-spacer {
-      flex: 1;
-    }
-    &-actions {
-      flex: 1;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
+  &__mobile-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 }
 

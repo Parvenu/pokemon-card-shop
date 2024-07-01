@@ -9,6 +9,10 @@
       width: 245px;
       height: 540px;
       flex-direction: column;
+      &--horizontal {
+        width: 235px;
+        height: 350px;
+      }
     }
   }
 
@@ -23,6 +27,22 @@
   & .mat-card-header {
     &__image {
       max-height: 342px;
+
+      &--horizontal {
+        margin-top: 25%;
+        transform: rotate(90deg) translatez(0) translateX(-50px);
+        transform-origin: 50% 51%;
+        &--screen {
+          &-small,
+          &-xsmall {
+            margin-top: 25%;
+            transform: rotate(90deg) translate(-92px, -33px);
+            transform-origin: unset;
+            position: absolute;
+            height: 233px;
+          }
+        }
+      }
     }
     &__details-icon {
       position: absolute;
@@ -37,7 +57,14 @@
 
   & .mat-card-content {
     margin: auto 0 auto 0;
-
+    &--horizontal {
+      &--screen {
+        &-small,
+        &-xsmall {
+          margin-top: 160px;
+        }
+      }
+    }
     &__pricetag {
       color: vars.$text-color-accent;
     }

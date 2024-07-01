@@ -1,41 +1,62 @@
 @use "/src/scss/variables/variables.scss" as vars;
 
 .mat-card {
-  height: calc(100% - vars.$header-height);
   & .mat-card-content {
-    display: flex;
-    flex-direction: column;
+    display: block;
+    padding: 0;
     width: 100%;
     &__div {
       display: flex;
-      justify-content: flex-end;
-    }
-    &__div-image-container {
-      height: 100%;
-      width: 520px;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      &--horizontal {
-        display: block;
+      flex-wrap: wrap;
+      &.cart-actions {
+        justify-content: flex-end;
       }
-      &__image--large {
-        height: 520px;
+      &-image-container {
+        height: 100%;
+        width: 520px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &--horizontal {
+          display: block;
+        }
+        &--xsmall {
+          width: 450px;
+        }
+        &__image {
+          height: 520px;
+          &--xsmall {
+            height: 450px;
+          }
+          &--horizontal {
+            transform: rotate(90deg);
+            &--xsmall {
+              height: 320px;
+            }
+          }
+        }
+        // &__image--horizontal {
+        //   transform: rotate(90deg) translate(190px, -335px);
+        //   transform-origin: top;
+        //   // &--small {
+        //   //   transform: rotate(90deg) translate(190px, -205px);
+        //   // }
+        // }
       }
-      &__image--horizontal {
-        transform: rotate(90deg) translate(190px, -335px);
-        transform-origin: top;
-      }
-    }
-    &__div-details-container {
-      display: flex;
-      flex-direction: column;
-      width: 520px;
-      &-section {
-        padding: 15px;
-        &__text {
-          &-bold {
-            font-weight: bold;
+      &-details-container {
+        display: flex;
+        flex-direction: column;
+        width: 520px;
+        &--xsmall {
+          width: 320px;
+        }
+        &-section {
+          padding: 15px;
+          &__text {
+            &-bold {
+              font-weight: bold;
+            }
           }
         }
       }

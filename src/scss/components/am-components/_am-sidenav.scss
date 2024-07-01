@@ -12,7 +12,19 @@ div.mat-drawer-inner-container {
   padding: 0 10px;
   background-color: vars.$background-color;
   border-right-color: vars.$background-tint;
-  &__details-drawer {
-    width: 1070px;
+  &.drawer-small {
+    width: 100%;
+  }
+  &__details-drawer--screen {
+    &-xlarge,
+    &-large {
+      width: 1070px;
+    }
+    &-xsmall,
+    &-small,
+    &-medium {
+      width: 100%;
+      padding: 0;
+    }
   }
 }
